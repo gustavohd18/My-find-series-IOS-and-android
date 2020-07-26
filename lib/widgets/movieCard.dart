@@ -7,9 +7,12 @@ Widget movieCard(String posterUrl, String title, String description) {
     padding: EdgeInsets.all(32.0),
     child: Column(
       children: <Widget>[
-        Image.network(image),
+        Image.network(
+          image,
+          // width: 130 work in android,
+        ),
         Text(title),
-        Text(description),
+        // Text(description),
       ],
     ),
   ));
