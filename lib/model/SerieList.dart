@@ -5,6 +5,7 @@ class SerieList {
       {this.id,
       this.originalName,
       this.overview,
+      this.voteAverage,
       this.posterPath,
       this.backdropPath,
       this.releaseDate});
@@ -12,6 +13,7 @@ class SerieList {
   final String id,
       originalName,
       overview,
+      voteAverage,
       posterPath,
       backdropPath,
       releaseDate;
@@ -24,6 +26,7 @@ class SerieList {
       id: json['id'].toString(),
       originalName: json['original_name'].toString(),
       overview: json['overview'].toString(),
+      voteAverage: json['vote_average'].toString(),
       posterPath: json['poster_path'].toString(),
       backdropPath: json['backdrop_path'].toString() ?? null,
       releaseDate: finalDate.replaceAll(',', ''),

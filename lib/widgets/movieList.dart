@@ -14,7 +14,7 @@ Widget movieList(Future<List<MovieList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                return movieCard(item.posterPath, item.title, item.overview);
+                return movieCard(item.posterPath, item.title, item.voteAverage);
               })
           : Center(
               child: CircularProgressIndicator(),
@@ -35,7 +35,7 @@ Widget serieList(Future<List<SerieList>> future) {
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
                 return movieCard(
-                    item.posterPath, item.originalName, item.overview);
+                    item.posterPath, item.originalName, item.voteAverage);
               })
           : Center(
               child: CircularProgressIndicator(),

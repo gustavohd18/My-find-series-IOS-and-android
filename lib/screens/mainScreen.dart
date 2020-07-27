@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/appbar.dart';
 import 'package:myFindMovies/widgets/greeting.dart';
 import 'package:myFindMovies/widgets/movieList.dart';
+import 'package:myFindMovies/widgets/bottomBar.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/movie_list_handle.dart';
@@ -26,10 +27,12 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarMain(),
-      body: _buildScreen(),
-    );
+    return DefaultTabController(
+        length: 4,
+        child: Scaffold(
+            appBar: appBarMain(),
+            body: _buildScreen(),
+            bottomNavigationBar: bottomBar(context)));
   }
 
   Widget _buildScreen() {
