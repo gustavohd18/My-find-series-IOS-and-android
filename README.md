@@ -2,6 +2,9 @@
 
 A project build with Flutter.
 
+# Screenshot
+<img src="/screenshot/firstimage.png" height="400px"/> 
+
 ## Getting Started
 
 This project is a App which is cross plataform using Flutter for now the goal is create simple main screen and integrate with IMDB Api.

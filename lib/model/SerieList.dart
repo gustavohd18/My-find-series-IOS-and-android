@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 
-class MovieList {
-  MovieList(
+class SerieList {
+  SerieList(
       {this.id,
-      this.title,
+      this.originalName,
       this.overview,
       this.voteAverage,
       this.posterPath,
@@ -11,20 +11,20 @@ class MovieList {
       this.releaseDate});
 
   final String id,
-      title,
+      originalName,
       overview,
+      voteAverage,
       posterPath,
       backdropPath,
-      releaseDate,
-      voteAverage;
+      releaseDate;
 
-  factory MovieList.fromJSON(Map<String, dynamic> json) {
-    var dateParser = DateTime.parse(json['release_date']);
+  factory SerieList.fromJSON(Map<String, dynamic> json) {
+    var dateParser = DateTime.parse(json['first_air_date']);
     var dateFormatter = DateFormat('yMMM');
     String finalDate = (dateFormatter.format(dateParser)).toString();
-    return MovieList(
+    return SerieList(
       id: json['id'].toString(),
-      title: json['title'].toString(),
+      originalName: json['original_name'].toString(),
       overview: json['overview'].toString(),
       voteAverage: json['vote_average'].toString(),
       posterPath: json['poster_path'].toString(),
