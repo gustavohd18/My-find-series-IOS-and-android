@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget movieCard(String posterUrl, String title, String average) {
+Widget contentCard(String posterUrl, String title, String average) {
   final media = (average != null) ? double.parse(average).round() : 3;
   final image = "https://image.tmdb.org/t/p/w185$posterUrl";
   return Card(
@@ -30,8 +30,8 @@ Widget movieCard(String posterUrl, String title, String average) {
   ));
 }
 
-Widget stars(int number) {
-  if (number >= 0 && number <= 2) {
+Widget stars(int media) {
+  if (media >= 0 && media <= 2) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const <Widget>[
@@ -42,23 +42,7 @@ Widget stars(int number) {
         ),
       ],
     );
-  } else if (number >= 3 && number <= 5) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-      ],
-    );
-  } else if (number >= 6 && number <= 7) {
+  } else if (media >= 3 && media <= 5) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const <Widget>[
@@ -72,6 +56,22 @@ Widget stars(int number) {
           color: Colors.yellow,
           size: 10.0,
         ),
+      ],
+    );
+  } else if (media >= 6 && media <= 7) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const <Widget>[
+        Icon(
+          Icons.star,
+          color: Colors.yellow,
+          size: 10.0,
+        ),
+        Icon(
+          Icons.star,
+          color: Colors.yellow,
+          size: 10.0,
+        ),
         Icon(
           Icons.star,
           color: Colors.yellow,
@@ -79,7 +79,7 @@ Widget stars(int number) {
         ),
       ],
     );
-  } else if (number > 6 && number <= 8) {
+  } else if (media > 6 && media <= 8) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const <Widget>[

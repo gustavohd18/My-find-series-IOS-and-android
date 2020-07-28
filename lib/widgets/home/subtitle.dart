@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget greeting(String content) {
+Widget subtitle(String content) {
   return Padding(
     padding: const EdgeInsets.all(8),
     child: Text(

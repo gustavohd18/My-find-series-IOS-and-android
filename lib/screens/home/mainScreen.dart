@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/appbar.dart';
-import 'package:myFindMovies/widgets/greeting.dart';
-import 'package:myFindMovies/widgets/movieList.dart';
-import 'package:myFindMovies/widgets/bottomBar.dart';
+import 'package:myFindMovies/widgets/home/appbar.dart';
+import 'package:myFindMovies/widgets/home/subtitle.dart';
+import 'package:myFindMovies/widgets/home/contentList.dart';
+import 'package:myFindMovies/widgets/home/bottomBar.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
-import 'package:myFindMovies/service/movie_list_handle.dart';
+import 'package:myFindMovies/service/content_handle.dart';
 
 class Main extends StatefulWidget {
   @override
@@ -13,16 +13,15 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  Future<List<MovieList>> _test;
-  Future<List<SerieList>> _test2;
+  Future<List<MovieList>> _movieList;
+  Future<List<SerieList>> _serieList;
 
   @override
   void initState() {
     super.initState();
-    print(_test);
     // this should not be done in build method.
-    _test = MovieListHandler().getMovieList();
-    _test2 = MovieListHandler().getSerieList();
+    _movieList = ContentHandler().getMovieList();
+    _serieList = ContentHandler().getSerieList();
   }
 
   @override
@@ -42,11 +41,11 @@ class _MainState extends State<Main> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: greeting('Top 10 Movies'),
+          child: subtitle('Top 10 Movies'),
         ),
-        Expanded(flex: 1, child: movieList(_test)),
-        greeting('Top 10 Series'),
-        Expanded(flex: 1, child: serieList(_test2)),
+        Expanded(flex: 1, child: movieList(_movieList)),
+        subtitle('Top 10 Series'),
+        Expanded(flex: 1, child: serieList(_serieList)),
       ],
     );
   }

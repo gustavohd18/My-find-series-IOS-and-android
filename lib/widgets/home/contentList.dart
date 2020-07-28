@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/movieCard.dart';
+import 'package:myFindMovies/widgets/home/contentCard.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 
@@ -14,7 +14,8 @@ Widget movieList(Future<List<MovieList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                return movieCard(item.posterPath, item.title, item.voteAverage);
+                return contentCard(
+                    item.posterPath, item.title, item.voteAverage);
               })
           : Center(
               child: CircularProgressIndicator(),
@@ -34,7 +35,7 @@ Widget serieList(Future<List<SerieList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                return movieCard(
+                return contentCard(
                     item.posterPath, item.originalName, item.voteAverage);
               })
           : Center(
