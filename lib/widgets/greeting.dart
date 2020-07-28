@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 Widget greeting(String content) {
-  return Text(
-    content,
-    textAlign: TextAlign.center,
-    overflow: TextOverflow.ellipsis,
-    style: TextStyle(fontWeight: FontWeight.bold),
+  return Padding(
+    padding: const EdgeInsets.all(8),
+    child: Text(
+      content,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
   );
 }
