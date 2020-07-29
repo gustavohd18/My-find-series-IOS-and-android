@@ -6,6 +6,8 @@ import 'package:myFindMovies/widgets/home/bottomBar.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
+import 'package:myFindMovies/service/database/favoriteDatabase.dart';
+import 'package:myFindMovies/screens/favorite/favoriteScreen.dart';
 
 class Main extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   Future<List<MovieList>> _movieList;
   Future<List<SerieList>> _serieList;
+
+  // reference to our single class that manages the database
+  final dbHelper = FavoriteDatabase.instance;
 
   @override
   void initState() {
@@ -29,9 +34,17 @@ class _MainState extends State<Main> {
     return DefaultTabController(
         length: 4,
         child: Scaffold(
-            appBar: appBarMain(),
-            body: _buildScreen(),
-            bottomNavigationBar: bottomBar(context)));
+          body: TabBarView(
+            children: [
+              _buildScreen(),
+              Favorite(),
+              Text("This is notification Tab View"),
+              Text("This is notification Tab View"),
+            ],
+          ),
+          appBar: appBarMain(),
+          bottomNavigationBar: bottomBar(context),
+        ));
   }
 
   Widget _buildScreen() {
