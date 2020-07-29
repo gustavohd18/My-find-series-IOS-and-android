@@ -3,7 +3,7 @@
 A project build with Flutter.
 
 # Screenshot
-<img src="/screenshot/firstimage.png" height="400px"/> 
+<img src="/screenshot/main.png" height="400px"/> 
 <img src="/screenshot/second_image.png" height="400px"/> 
 
 ## Getting Started
