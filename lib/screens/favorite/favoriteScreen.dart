@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/favorite/favoriteAppBar.dart';
 import 'package:myFindMovies/widgets/favorite/favoriteList.dart';
-import 'package:myFindMovies/widgets/favorite/bottonFavoriteBar.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 
