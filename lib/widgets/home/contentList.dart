@@ -6,8 +6,9 @@ import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 
 Widget movieList(Future<List<MovieList>> future) {
-  // reference to our single class that manages the database
+  // reference to single class that manages the database
   final dbHelper = FavoriteDatabase.instance;
+
   return FutureBuilder<List<MovieList>>(
     future: future,
     builder: (context, snapshot) {
@@ -26,7 +27,7 @@ Widget movieList(Future<List<MovieList>> future) {
                     onTap: () => {
                           dbHelper.insertFavorite(favorite),
                           Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text('add to Favorite'),
+                            content: Text('added to Favorite'),
                           ))
                         });
               })
@@ -38,7 +39,9 @@ Widget movieList(Future<List<MovieList>> future) {
 }
 
 Widget serieList(Future<List<SerieList>> future) {
+  // reference to single class that manages the database
   final dbHelper = FavoriteDatabase.instance;
+
   return FutureBuilder<List<SerieList>>(
     future: future,
     builder: (context, snapshot) {
@@ -57,7 +60,7 @@ Widget serieList(Future<List<SerieList>> future) {
                     onTap: () => {
                           dbHelper.insertFavorite(favorite),
                           Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text('add to Favorite'),
+                            content: Text('added to Favorite'),
                           ))
                         });
               })

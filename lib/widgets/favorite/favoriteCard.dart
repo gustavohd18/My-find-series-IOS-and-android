@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/database/favoriteDatabase.dart';
+import 'package:myFindMovies/screens/favorite/favoriteScreen.dart';
 
-Widget favoriteCard(String title, String posterUrl, String average) {
+Widget favoriteCard(String id, String title, String posterUrl, String average,
+    BuildContext context) {
+  final dbHelper = FavoriteDatabase.instance;
+
   final image = "https://image.tmdb.org/t/p/w185$average";
   final media = (posterUrl != null) ? double.parse(posterUrl).round() : 3;
   return Card(
@@ -10,6 +15,13 @@ Widget favoriteCard(String title, String posterUrl, String average) {
     title: Text(title),
     subtitle: stars(media),
     trailing: Icon(Icons.favorite, color: Colors.red),
+    onTap: () {
+      dbHelper.delete(id);
+      Favorite();
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('removed to Favorite'),
+      ));
+    },
   )));
 }
 

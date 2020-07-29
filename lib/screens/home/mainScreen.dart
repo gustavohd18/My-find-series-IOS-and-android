@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/home/appbar.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
 import 'package:myFindMovies/widgets/home/contentList.dart';
-import 'package:myFindMovies/widgets/home/bottomBar.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
