@@ -6,6 +6,7 @@ import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/screens/favorite/favoriteScreen.dart';
+import 'package:myFindMovies/screens/movies/movieScreen.dart';
 
 class Main extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
               _buildScreen(),
               Favorite(),
               Text("This will be search series"),
-              Text("This will be search movies"),
+              Movie(),
             ],
           ),
           appBar: AppBar(
