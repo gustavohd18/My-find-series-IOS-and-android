@@ -95,7 +95,7 @@ Widget showAlertDialog(
 
 void playYoutubeVideo(key) {
   FlutterYoutube.playYoutubeVideoByUrl(
-    apiKey: "youtubekey",
+    apiKey: "key",
     videoUrl: "https://www.youtube.com/watch?v=$key",
   );
 }

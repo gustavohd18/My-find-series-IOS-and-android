@@ -1,5 +1,5 @@
-class VideoMovieList {
-  VideoMovieList(
+class VideoContentList {
+  VideoContentList(
       {this.id,
       this.iso,
       this.iso2,
@@ -11,8 +11,8 @@ class VideoMovieList {
 
   final String id, iso, iso2, key, name, site, size, type;
 
-  factory VideoMovieList.fromJSON(Map<String, dynamic> json) {
-    return VideoMovieList(
+  factory VideoContentList.fromJSON(Map<String, dynamic> json) {
+    return VideoContentList(
       id: json['id'].toString(),
       iso: json['iso_639_1'].toString(),
       iso2: json['iso_3166_1'].toString(),
