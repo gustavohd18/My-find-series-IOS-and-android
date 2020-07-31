@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/model/FavoriteList.dart';
-import 'package:myFindMovies/widgets/favorite/favoriteCard.dart';
+import 'package:myFindMovies/model/MovieList.dart';
+import 'package:myFindMovies/widgets/movies/movieCard.dart';
 
-Widget favoriteList(Future<List<FavoriteList>> future) {
-  return FutureBuilder<List<FavoriteList>>(
+Widget moviesListRequest(Future<List<MovieList>> future) {
+  return FutureBuilder<List<MovieList>>(
     future: future,
     builder: (context, snapshot) {
       return snapshot.hasData && snapshot.data.length > 0
@@ -13,20 +13,12 @@ Widget favoriteList(Future<List<FavoriteList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                bool _isMovies;
-
-                if (item.isMovie == 's') {
-                  _isMovies = true;
-                } else {
-                  _isMovies = false;
-                }
-
-                return favoriteCard(context, item.id, item.title, item.overview,
-                    item.voteAverage, item.posterPath, _isMovies);
+                return movieCard(context, item.id, item.title, item.overview,
+                    item.voteAverage, item.posterPath, true);
               })
           : Center(
               child: Text(
-                "No have Favorite",
+                "No have Content to word",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,

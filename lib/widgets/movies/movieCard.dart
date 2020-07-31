@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/dialog.dart';
 
-Widget favoriteCard(BuildContext context, String id, String title,
+Widget movieCard(BuildContext context, String id, String title,
     String information, String voteAverage, String posterPath, bool isMovie) {
-  final image = "https://image.tmdb.org/t/p/w185$posterPath";
   final media = (voteAverage != null) ? double.parse(voteAverage).round() : 3;
+  final image = "https://image.tmdb.org/t/p/w185$posterPath";
   return Card(
       child: Container(
           child: ListTile(
     leading: Image.network(image),
     title: Text(title),
     subtitle: stars(media),
-    trailing: Icon(Icons.favorite, color: Colors.red),
+    trailing: Icon(Icons.movie, color: Colors.black),
     onTap: () {
       showAlertDialog(context, id, title, information, voteAverage, posterPath,
-          isMovie, true);
+          isMovie, false);
     },
   )));
 }

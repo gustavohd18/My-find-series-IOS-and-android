@@ -12,6 +12,9 @@ class FavoriteDatabase {
   static final columnTitle = 'title';
   static final columnPosterPath = 'posterPath';
   static final columnAverage = 'voteAverage';
+  static final columnVideo = 'video';
+  static final columnOverview = 'overview';
+  static final columnIsMovie = 'isMovie';
 
   // make this a singleton class
   FavoriteDatabase._privateConstructor();
@@ -41,8 +44,11 @@ class FavoriteDatabase {
           CREATE TABLE $table (
             $columnId TEXT PRIMARY KEY,
             $columnTitle TEXT NOT NULL,
+            $columnOverview TEXT NOT NULL,
             $columnPosterPath TEXT NOT NULL,
-             $columnAverage TEXT
+            $columnAverage TEXT,
+            $columnVideo TEXT,
+            $columnIsMovie TEXT
           )
           ''');
   }
@@ -65,11 +71,12 @@ class FavoriteDatabase {
 
     return List.generate(maps.length, (i) {
       return FavoriteList(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        voteAverage: maps[i]['voteAverage'],
-        posterPath: maps[i]['posterPath'],
-      );
+          id: maps[i]['id'],
+          title: maps[i]['title'],
+          overview: maps[i]['overview'],
+          voteAverage: maps[i]['voteAverage'],
+          posterPath: maps[i]['posterPath'],
+          isMovie: maps[i]['isMovie']);
     });
   }
 
