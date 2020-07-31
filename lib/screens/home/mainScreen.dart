@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/screens/serie/serieScreen.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
 import 'package:myFindMovies/widgets/home/contentList.dart';
 import 'package:myFindMovies/model/MovieList.dart';
@@ -51,7 +52,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
             children: [
               _buildScreen(),
               Favorite(),
-              Text("This will be search series"),
+              Serie(),
               Movie(),
             ],
           ),

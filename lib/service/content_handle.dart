@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class ContentHandler {
   static const String baseURL = "api.themoviedb.org";
   static const String baseSearch = "http://www.omdbapi.com/?apikey=";
-  static const String key = "key";
+  static const String key = "";
   static const String TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
 
   final _httpClient = new HttpClient();
@@ -55,7 +55,21 @@ class ContentHandler {
     return list;
   }
 
-  // Get list of Videos related with video
+  // Get list of Series containing the search keyword
+  Future<List<SerieList>> searchSeries(keyword) async {
+    final response = await http
+        .get("$TMDB_API_BASE_URL/search/tv?query=$keyword&api_key=$key");
+
+    Map data = jsonDecode(response.body);
+
+    var list = (data['results'] as List)
+        .map((item) => SerieList.fromJSON(item))
+        .toList();
+
+    return list;
+  }
+
+  // Get list of Videos related with movies
   Future<List<VideoContentList>> videoMovies(id) async {
     final response =
         await http.get("$TMDB_API_BASE_URL/movie/$id/videos?api_key=$key");
@@ -68,7 +82,7 @@ class ContentHandler {
     return list;
   }
 
-  // Get list of Videos related with video
+  // Get list of Videos related with series
   Future<List<VideoContentList>> videoSeries(id) async {
     final response =
         await http.get("$TMDB_API_BASE_URL/tv/$id/videos?api_key=$key");
