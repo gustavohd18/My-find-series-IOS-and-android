@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/widgets/content/dialog.dart';
 
-Widget contentCard(String posterUrl, String title, String average) {
-  final media = (average != null) ? double.parse(average).round() : 3;
-  final image = "https://image.tmdb.org/t/p/w185$posterUrl";
-  return Card(
-      child: Container(
-    height: 10,
-    width: 200,
-    padding: EdgeInsets.all(32.0),
-    child: Column(
-      children: <Widget>[
-        Flexible(
-          child: Image.network(
-            image,
-            width: 130,
-          ),
+Widget contentCard(BuildContext context, String id, String title,
+    String information, String voteAverage, String posterPath, bool isMovie) {
+  final media = (voteAverage != null) ? double.parse(voteAverage).round() : 3;
+  final image = "https://image.tmdb.org/t/p/w185$posterPath";
+  return GestureDetector(
+      child: Card(
+          child: Container(
+        height: 10,
+        width: 200,
+        padding: EdgeInsets.all(32.0),
+        child: Column(
+          children: <Widget>[
+            Flexible(
+              child: Image.network(
+                image,
+                width: 130,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+            ),
+            Padding(padding: EdgeInsets.all(4.0), child: stars(media))
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          ),
-        ),
-        Padding(padding: EdgeInsets.all(4.0), child: stars(media))
-      ],
-    ),
-  ));
+      )),
+      onTap: () => {
+            showAlertDialog(context, id, title, information, voteAverage,
+                posterPath, isMovie, false)
+          });
 }
 
 Widget stars(int media) {

@@ -8,7 +8,8 @@ class SerieList {
       this.voteAverage,
       this.posterPath,
       this.backdropPath,
-      this.releaseDate});
+      this.releaseDate,
+      this.videoUrl});
 
   final String id,
       originalName,
@@ -17,6 +18,8 @@ class SerieList {
       posterPath,
       backdropPath,
       releaseDate;
+
+  String videoUrl;
 
   factory SerieList.fromJSON(Map<String, dynamic> json) {
     var dateParser = DateTime.parse(json['first_air_date']);

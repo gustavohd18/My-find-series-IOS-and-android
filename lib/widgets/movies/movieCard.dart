@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/service/database/favoriteDatabase.dart';
-import 'package:myFindMovies/model/FavoriteList.dart';
+import 'package:myFindMovies/widgets/content/dialog.dart';
 
-Widget movieCard(String id, String posterUrl, String title, String average,
-    BuildContext context) {
-  final dbHelper = FavoriteDatabase.instance;
-  final favorite = FavoriteList.origin(id, title, posterUrl, average);
-  final image = "https://image.tmdb.org/t/p/w185$posterUrl";
-  final media = (average != null) ? double.parse(average).round() : 3;
+Widget movieCard(BuildContext context, String id, String title,
+    String information, String voteAverage, String posterPath, bool isMovie) {
+  final media = (voteAverage != null) ? double.parse(voteAverage).round() : 3;
+  final image = "https://image.tmdb.org/t/p/w185$posterPath";
   return Card(
       child: Container(
           child: ListTile(
@@ -16,10 +13,8 @@ Widget movieCard(String id, String posterUrl, String title, String average,
     subtitle: stars(media),
     trailing: Icon(Icons.movie, color: Colors.black),
     onTap: () {
-      dbHelper.insertFavorite(favorite);
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('added to Favorite'),
-      ));
+      showAlertDialog(context, id, title, information, voteAverage, posterPath,
+          isMovie, false);
     },
   )));
 }

@@ -13,8 +13,8 @@ Widget moviesListRequest(Future<List<MovieList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                return movieCard(item.id, item.posterPath, item.title,
-                    item.voteAverage, context);
+                return movieCard(context, item.id, item.title, item.overview,
+                    item.voteAverage, item.posterPath, true);
               })
           : Center(
               child: Text(

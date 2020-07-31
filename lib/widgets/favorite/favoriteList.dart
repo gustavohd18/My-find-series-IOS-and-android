@@ -13,8 +13,16 @@ Widget favoriteList(Future<List<FavoriteList>> future) {
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
-                return favoriteCard(item.id, item.title, item.posterPath,
-                    item.voteAverage, context);
+                bool _isMovies;
+
+                if (item.isMovie == 's') {
+                  _isMovies = true;
+                } else {
+                  _isMovies = false;
+                }
+
+                return favoriteCard(context, item.id, item.title, item.overview,
+                    item.voteAverage, item.posterPath, _isMovies);
               })
           : Center(
               child: Text(

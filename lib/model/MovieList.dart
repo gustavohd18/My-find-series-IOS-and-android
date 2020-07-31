@@ -8,7 +8,8 @@ class MovieList {
       this.voteAverage,
       this.posterPath,
       this.backdropPath,
-      this.releaseDate});
+      this.releaseDate,
+      this.videoUrl});
 
   final String id,
       title,
@@ -17,6 +18,8 @@ class MovieList {
       backdropPath,
       releaseDate,
       voteAverage;
+
+  String videoUrl;
 
   factory MovieList.fromJSON(Map<String, dynamic> json) {
     var dateParser = DateTime.parse(json['release_date']);
