@@ -3,10 +3,8 @@
 A project build with Flutter.
 
 # Screenshot
-<img src="/screenshot/main.png" height="400px"/> 
-<img src="/screenshot/second_image.png" height="400px"/>
-<img src="/screenshot/movies.png" height="400px"/>  
-<img src="/screenshot/series.png" height="400px"/> 
+<img src="/screenshot/main.png" height="400px"/> <img src="/screenshot/second_image.png" height="400px"/>
+<img src="/screenshot/movies.png" height="400px"/> <img src="/screenshot/series.png" height="400px"/> 
 <img src="/screenshot/details.png" height="400px"/>   
 
 ## Getting Started
