@@ -113,13 +113,18 @@ class CustomDialog extends StatelessWidget {
                             Navigator.of(context).pop();
                             showDialog(
                                 context: context,
+                                barrierDismissible: false,
                                 builder: (context) {
-                                  Future.delayed(Duration(seconds: 1), () {
+                                  Future.delayed(Duration(milliseconds: 500),
+                                      () {
                                     Navigator.of(context).pop(true);
                                   });
                                   return AlertDialog(
                                     title: Icon(Icons.check),
-                                    content: Text('Removed with sucess'),
+                                    content: Text(
+                                      'Removed with sucess',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   );
                                 });
                           } else {
@@ -142,13 +147,18 @@ class CustomDialog extends StatelessWidget {
                             Navigator.of(context).pop();
                             showDialog(
                                 context: context,
+                                barrierDismissible: false,
                                 builder: (context) {
-                                  Future.delayed(Duration(seconds: 1), () {
+                                  Future.delayed(Duration(milliseconds: 500),
+                                      () {
                                     Navigator.of(context).pop();
                                   });
                                   return AlertDialog(
                                     title: Icon(Icons.check),
-                                    content: Text('Added with sucess'),
+                                    content: Text(
+                                      'Added with sucess',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   );
                                 });
                           }
