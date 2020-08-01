@@ -93,6 +93,7 @@ class CustomDialog extends StatelessWidget {
               Align(
                   alignment: Alignment.bottomRight,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Expanded(
                         child: FlatButton(
@@ -104,7 +105,7 @@ class CustomDialog extends StatelessWidget {
                       ),
                       FlatButton(
                         child: (isFavorite == true)
-                            ? Text("remove Favorite")
+                            ? Text("delete Favorite")
                             : Text("add favorite"),
                         onPressed: () {
                           if (isFavorite) {
@@ -117,7 +118,8 @@ class CustomDialog extends StatelessWidget {
                                     Navigator.of(context).pop(true);
                                   });
                                   return AlertDialog(
-                                    title: Text('Removed with sucessed'),
+                                    title: Icon(Icons.check),
+                                    content: Text('Removed with sucess'),
                                   );
                                 });
                           } else {
@@ -145,8 +147,8 @@ class CustomDialog extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   });
                                   return AlertDialog(
-                                    title: Text('Added with sucessed'),
-                                    content: Text("yes"),
+                                    title: Icon(Icons.check),
+                                    content: Text('Added with sucess'),
                                   );
                                 });
                           }
