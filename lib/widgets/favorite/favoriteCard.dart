@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog.dart';
+import 'package:myFindMovies/widgets/content/dialog_information.dart';
 
 Widget favoriteCard(BuildContext context, String id, String title,
     String information, String voteAverage, String posterPath, bool isMovie) {
@@ -13,8 +13,20 @@ Widget favoriteCard(BuildContext context, String id, String title,
     subtitle: stars(media),
     trailing: Icon(Icons.favorite, color: Colors.red),
     onTap: () {
-      showAlertDialog(context, id, title, information, voteAverage, posterPath,
-          isMovie, true);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          id: id,
+          title: title,
+          information: information,
+          voteAverage: voteAverage,
+          posterPath: posterPath,
+          isMovie: isMovie,
+          isFavorite: true,
+        ),
+      );
+      //showAlertDialog(context, id, title, information, voteAverage, posterPath,
+      //    isMovie, true);
     },
   )));
 }

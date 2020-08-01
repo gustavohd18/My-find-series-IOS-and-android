@@ -44,45 +44,45 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          body: TabBarView(
-            controller: _controller,
-            children: [
-              _buildScreen(),
-              Favorite(),
-              Serie(),
-              Movie(),
-            ],
-          ),
-          appBar: AppBar(
-            title: Text(_myHandler),
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            bottom: TabBar(
-              controller: _controller,
-              tabs: <Tab>[
-                Tab(
-                  icon: Icon(Icons.home),
-                  text: _tabs[0],
+    return Scaffold(
+        body: DefaultTabController(
+            length: 4,
+            child: Scaffold(
+              body: TabBarView(
+                controller: _controller,
+                children: [
+                  _buildScreen(),
+                  Favorite(),
+                  Serie(),
+                  Movie(),
+                ],
+              ),
+              appBar: AppBar(
+                title: Text(_myHandler),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                bottom: TabBar(
+                  controller: _controller,
+                  tabs: <Tab>[
+                    Tab(
+                      icon: Icon(Icons.home),
+                      text: _tabs[0],
+                    ),
+                    Tab(
+                      icon: Icon(Icons.favorite),
+                      text: _tabs[1],
+                    ),
+                    Tab(
+                      icon: Icon(Icons.slow_motion_video),
+                      text: _tabs[2],
+                    ),
+                    Tab(
+                      icon: Icon(Icons.movie),
+                      text: _tabs[3],
+                    )
+                  ],
                 ),
-                Tab(
-                  icon: Icon(Icons.favorite),
-                  text: _tabs[1],
-                ),
-                Tab(
-                  icon: Icon(Icons.slow_motion_video),
-                  text: _tabs[2],
-                ),
-                Tab(
-                  icon: Icon(Icons.movie),
-                  text: _tabs[3],
-                )
-              ],
-            ),
-          ),
-          // bottomNavigationBar: bottomBar(context),
-        ));
+              ),
+            )));
   }
 
   Widget _buildScreen() {

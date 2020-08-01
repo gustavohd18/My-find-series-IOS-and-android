@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog.dart';
+import 'package:myFindMovies/widgets/content/dialog_information.dart';
 
 Widget serieCard(BuildContext context, String id, String title,
     String information, String voteAverage, String posterPath, bool isMovie) {
@@ -13,8 +13,18 @@ Widget serieCard(BuildContext context, String id, String title,
     subtitle: stars(media),
     trailing: Icon(Icons.slow_motion_video, color: Colors.black),
     onTap: () {
-      showAlertDialog(context, id, title, information, voteAverage, posterPath,
-          isMovie, false);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          id: id,
+          title: title,
+          information: information,
+          voteAverage: voteAverage,
+          posterPath: posterPath,
+          isMovie: isMovie,
+          isFavorite: false,
+        ),
+      );
     },
   )));
 }

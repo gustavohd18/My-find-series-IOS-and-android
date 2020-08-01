@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class ContentHandler {
   static const String baseURL = "api.themoviedb.org";
   static const String baseSearch = "http://www.omdbapi.com/?apikey=";
-  static const String key = "";
+  static const String key = "c1abb65895a3fdceff4cfaa0d2dbdfc2";
   static const String TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
 
   final _httpClient = new HttpClient();
