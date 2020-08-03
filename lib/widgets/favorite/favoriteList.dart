@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/widgets/favorite/favoriteCard.dart';
 
-Widget favoriteList(Future<List<FavoriteList>> future) {
+Widget favoriteList(Future<List<FavoriteList>> future, Function() f) {
   return FutureBuilder<List<FavoriteList>>(
     future: future,
     builder: (context, snapshot) {
@@ -22,7 +22,7 @@ Widget favoriteList(Future<List<FavoriteList>> future) {
                 }
 
                 return favoriteCard(context, item.id, item.title, item.overview,
-                    item.voteAverage, item.posterPath, _isMovies);
+                    item.voteAverage, item.posterPath, _isMovies, f);
               })
           : Center(
               child: Text(
