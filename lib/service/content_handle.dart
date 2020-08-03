@@ -43,6 +43,7 @@ class ContentHandler {
 
   // Get list of Movies containing the search keyword
   Future<List<MovieList>> searchMovies(keyword) async {
+    // pagination how handle https://api.themoviedb.org/3/search/movie?api_key=c1abb65895a3fdceff4cfaa0d2dbdfc2&query=black&page=2
     final response = await http
         .get("$TMDB_API_BASE_URL/search/movie?query=$keyword&api_key=$key");
 

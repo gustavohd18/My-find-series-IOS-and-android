@@ -7,16 +7,17 @@ import 'package:myFindMovies/model/FavoriteList.dart';
 class CustomDialog extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
   final bool isMovie, isFavorite;
+  Function() f;
 
-  CustomDialog({
-    @required this.id,
-    @required this.title,
-    @required this.information,
-    @required this.voteAverage,
-    @required this.posterPath,
-    @required this.isMovie,
-    @required this.isFavorite,
-  });
+  CustomDialog(
+      {@required this.id,
+      @required this.title,
+      @required this.information,
+      @required this.voteAverage,
+      @required this.posterPath,
+      @required this.isMovie,
+      @required this.isFavorite,
+      this.f});
 
   String _url;
   // reference to our single class that manages the database
@@ -110,6 +111,7 @@ class CustomDialog extends StatelessWidget {
                         onPressed: () {
                           if (isFavorite) {
                             dbHelper.delete(id);
+                            f();
                             Navigator.of(context).pop();
                             showDialog(
                                 context: context,
@@ -187,7 +189,7 @@ class CustomDialog extends StatelessWidget {
 
   void playYoutubeVideo(key) {
     FlutterYoutube.playYoutubeVideoByUrl(
-      apiKey: "key",
+      apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
       videoUrl: "https://www.youtube.com/watch?v=$key",
     );
   }

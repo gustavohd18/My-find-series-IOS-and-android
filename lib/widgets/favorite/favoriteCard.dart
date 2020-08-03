@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/dialog_information.dart';
 
-Widget favoriteCard(BuildContext context, String id, String title,
-    String information, String voteAverage, String posterPath, bool isMovie) {
+Widget favoriteCard(
+    BuildContext context,
+    String id,
+    String title,
+    String information,
+    String voteAverage,
+    String posterPath,
+    bool isMovie,
+    Function() f) {
   final image = "https://image.tmdb.org/t/p/w185$posterPath";
   final media = (voteAverage != null) ? double.parse(voteAverage).round() : 3;
   return Card(
@@ -13,6 +20,7 @@ Widget favoriteCard(BuildContext context, String id, String title,
     subtitle: stars(media),
     trailing: Icon(Icons.favorite, color: Colors.red),
     onTap: () {
+      f();
       showDialog(
         context: context,
         builder: (BuildContext context) => CustomDialog(
@@ -23,6 +31,7 @@ Widget favoriteCard(BuildContext context, String id, String title,
           posterPath: posterPath,
           isMovie: isMovie,
           isFavorite: true,
+          f: f,
         ),
       );
       //showAlertDialog(context, id, title, information, voteAverage, posterPath,

@@ -31,8 +31,16 @@ class _FavoriteState extends State<Favorite> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Expanded(child: favoriteList(_favoriteList)),
+        Expanded(
+          child: favoriteList(_favoriteList, _reloadFavorite),
+        ),
       ],
     );
+  }
+
+  void _reloadFavorite() {
+    setState(() {
+      _favoriteList = dbHelper.getFavorites();
+    });
   }
 }
