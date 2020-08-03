@@ -99,28 +99,9 @@ class CustomDialog extends StatelessWidget {
                       Expanded(
                         child: FlatButton(
                           onPressed: () {
-                            if (_url != null) {
-                              playYoutubeVideo(_url);
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    Future.delayed(Duration(milliseconds: 700),
-                                        () {
-                                      Navigator.of(context).pop(true);
-                                    });
-                                    return AlertDialog(
-                                      title: Icon(Icons.error),
-                                      content: Text(
-                                        'No trailer available',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    );
-                                  });
-                            }
+                            playYoutubeVideo(_url);
                           },
-                          child: Text('Trailer'),
+                          child: (_url != null) ? Text('Trailer') : Wrap(),
                         ),
                       ),
                       FlatButton(
@@ -136,7 +117,7 @@ class CustomDialog extends StatelessWidget {
                                 context: context,
                                 barrierDismissible: false,
                                 builder: (context) {
-                                  Future.delayed(Duration(milliseconds: 500),
+                                  Future.delayed(Duration(milliseconds: 300),
                                       () {
                                     Navigator.of(context).pop(true);
                                   });
