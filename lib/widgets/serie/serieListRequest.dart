@@ -6,6 +6,10 @@ Widget serieListRequest(Future<List<SerieList>> future) {
   return FutureBuilder<List<SerieList>>(
     future: future,
     builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Wrap();
+      }
+
       return snapshot.hasData && snapshot.data.length > 0
           ? ListView.builder(
               scrollDirection: Axis.vertical,
