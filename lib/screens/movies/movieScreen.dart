@@ -11,11 +11,6 @@ class MovieState extends State<Movie> {
   final searchTextController = TextEditingController();
   String searchText = "";
 
-  List items;
-  List data;
-  String lastItemId = 'uZH_r4I7law';
-  bool isLoading = false;
-
   @override
   void dispose() {
     searchTextController.dispose();

@@ -6,6 +6,10 @@ Widget moviesListRequest(Future<List<MovieList>> future) {
   return FutureBuilder<List<MovieList>>(
     future: future,
     builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Wrap();
+      }
+
       return snapshot.hasData && snapshot.data.length > 0
           ? ListView.builder(
               scrollDirection: Axis.vertical,
