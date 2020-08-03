@@ -46,6 +46,7 @@ class MovieState extends State<Movie> {
                     icon: Icon(Icons.search),
                     tooltip: 'Search Movies',
                     onPressed: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
                         searchText = searchTextController.text;
                       });

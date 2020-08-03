@@ -41,6 +41,7 @@ class SerieState extends State<Serie> {
                     icon: Icon(Icons.search),
                     tooltip: 'Search Series',
                     onPressed: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
                         searchText = searchTextController.text;
                       });
