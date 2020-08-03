@@ -189,7 +189,7 @@ class CustomDialog extends StatelessWidget {
 
   void playYoutubeVideo(key) {
     FlutterYoutube.playYoutubeVideoByUrl(
-      apiKey: "key",
+      apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
       videoUrl: "https://www.youtube.com/watch?v=$key",
     );
   }
