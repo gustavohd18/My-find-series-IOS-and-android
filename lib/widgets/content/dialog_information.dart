@@ -98,10 +98,10 @@ class CustomDialog extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: FlatButton(
+                          child: (_url != null) ? Wrap() : Text('Trailer'),
                           onPressed: () {
                             playYoutubeVideo(_url);
                           },
-                          child: (_url != null) ? Text('Trailer') : Wrap(),
                         ),
                       ),
                       FlatButton(
