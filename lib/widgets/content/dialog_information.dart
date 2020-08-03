@@ -99,7 +99,26 @@ class CustomDialog extends StatelessWidget {
                       Expanded(
                         child: FlatButton(
                           onPressed: () {
-                            playYoutubeVideo(_url);
+                            if (_url != null) {
+                              playYoutubeVideo(_url);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    Future.delayed(Duration(milliseconds: 700),
+                                        () {
+                                      Navigator.of(context).pop(true);
+                                    });
+                                    return AlertDialog(
+                                      title: Icon(Icons.error),
+                                      content: Text(
+                                        'No trailer available',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  });
+                            }
                           },
                           child: Text('Trailer'),
                         ),
