@@ -7,7 +7,7 @@ import 'package:myFindMovies/model/FavoriteList.dart';
 class CustomDialog extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
   final bool isMovie, isFavorite;
-  Function() f;
+  final Function() f;
 
   CustomDialog(
       {@required this.id,
