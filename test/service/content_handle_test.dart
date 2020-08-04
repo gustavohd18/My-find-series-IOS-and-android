@@ -543,4 +543,130 @@ main() {
       expect(_result.length, 10);
     });
   });
+  group('search series', () {
+    test('returns a list empty when search series without result', () async {
+      final client = MockClient();
+
+      final content = ContentHandler();
+
+      content.https = client;
+
+      when(client.get("$TMDB_API_BASE_URL/search/tv?query=tetete&api_key=$key"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 1, "total_results": 0,"total_pages": 0, "results":[]}""",
+              200));
+
+      var _result = await content.searchSeries('tetete');
+
+      expect(_result, isA<List<SerieList>>());
+      expect(_result.length, 0);
+    });
+
+    test('returns a list with right size when search series with result',
+        () async {
+      final client = MockClient();
+
+      final content = ContentHandler();
+
+      content.https = client;
+
+      when(client.get("$TMDB_API_BASE_URL/search/tv?query=te&api_key=$key"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 1, "total_results": 2,"total_pages": 2, "results":[
+               { "original_name": "The Umbrella Academy",
+              "genre_ids": [
+        35,
+        18,
+        10759,
+        10765
+      ],
+       "name": "The Umbrella Academy",
+       "popularity": 210.186,
+         "origin_country": [
+        "US"
+      ],
+       "vote_count": 705,
+       "first_air_date": "2019-02-15",
+        "backdrop_path": "/qJxzjUjCpTPvDHldNnlbRC4OqEh.jpg",
+        "original_language": "en",
+         "id": 75006,
+          "vote_average": 8.2,
+           "overview": "A dysfunctional family of superheroes comes together to solve the mystery of their father's death, the threat of the apocalypse and more.",
+      "poster_path": "/mb7wQv0adK3kjOUr9n93mANHhPJ.jpg"
+    }
+              ]}""", 200));
+
+      when(client
+              .get("$TMDB_API_BASE_URL/search/tv?api_key=$key&query=te&page=2"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 2, "total_results": 0,"total_pages": 0, "results":[]}""",
+              200));
+
+      var _result = await content.searchSeries('te');
+
+      expect(_result, isA<List<SerieList>>());
+      expect(_result.length, 1);
+    });
+  });
+  group('search movies', () {
+    test('returns a list empty when search movie without result', () async {
+      final client = MockClient();
+
+      final content = ContentHandler();
+
+      content.https = client;
+
+      when(client
+              .get("$TMDB_API_BASE_URL/search/movie?query=tetete&api_key=$key"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 1, "total_results": 0,"total_pages": 0, "results":[]}""",
+              200));
+
+      var _result = await content.searchMovies('tetete');
+
+      expect(_result, isA<List<MovieList>>());
+      expect(_result.length, 0);
+    });
+
+    test('returns a list with right size when search movie with result',
+        () async {
+      final client = MockClient();
+
+      final content = ContentHandler();
+
+      content.https = client;
+
+      when(client.get("$TMDB_API_BASE_URL/search/movie?query=te&api_key=$key"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 1, "total_results": 2,"total_pages": 2, "results":[
+                {"popularity": 211.123,"vote_count": 2692, "video": false,
+      "poster_path": "/mb7wQv0adK3kjOUr9n93mANHhPJ.jpg",
+      "id": 583083,
+      "adult": false,
+      "backdrop_path": "/wO5QSWZPBT71gMLvrRex0bVc0V9.jpg",
+      "original_language": "en",
+      "original_title": "The Kissing Booth 2",
+      "genre_ids": [
+        35,
+        10749
+      ],
+      "title": "The Kissing Booth 2",
+      "vote_average": 8.2,
+      "overview": "With college decisions looming, Elle juggles her long-distance romance with Noah, changing relationship with bestie Lee and feelings for a new classmate.",
+      "release_date": "2020-07-24"
+    }
+              ]}""", 200));
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/movie?api_key=$key&query=te&page=2"))
+          .thenAnswer((_) async => http.Response(
+              """{"page": 2, "total_results": 0,"total_pages": 0, "results":[]}""",
+              200));
+
+      var _result = await content.searchMovies('te');
+
+      expect(_result, isA<List<MovieList>>());
+      expect(_result.length, 1);
+    });
+  });
 }
