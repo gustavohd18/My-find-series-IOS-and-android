@@ -7,7 +7,7 @@ import 'package:myFindMovies/model/FavoriteList.dart';
 class CustomDialog extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
   final bool isMovie, isFavorite;
-  Function() f;
+  final Function() f;
 
   CustomDialog(
       {@required this.id,
@@ -189,7 +189,7 @@ class CustomDialog extends StatelessWidget {
 
   void playYoutubeVideo(key) {
     FlutterYoutube.playYoutubeVideoByUrl(
-      apiKey: "key",
+      apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
       videoUrl: "https://www.youtube.com/watch?v=$key",
     );
   }
