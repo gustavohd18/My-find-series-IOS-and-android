@@ -54,7 +54,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
                 children: [
                   _buildScreen(),
                   Favorite(),
-                  Serie(),
+                  Series(),
                   Movie(),
                 ],
               ),

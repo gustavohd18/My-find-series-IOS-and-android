@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/serie/serieListRequest.dart';
+import 'package:myFindMovies/widgets/serie/seriesList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
-class Serie extends StatefulWidget {
+class Series extends StatefulWidget {
   @override
   SerieState createState() => SerieState();
 }
 
-class SerieState extends State<Serie> {
+class SerieState extends State<Series> {
   final searchTextController = TextEditingController();
   String searchText = "";
 
@@ -58,9 +58,7 @@ class SerieState extends State<Serie> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(
-              child:
-                  serieListRequest(ContentHandler().searchSeries(searchText)))
+          Expanded(child: SeriesList(ContentHandler().searchSeries(searchText)))
       ],
     ));
   }

@@ -12,6 +12,7 @@ class ContentHandler {
   static const String TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
 
   var https = http.Client();
+
   Future<List<MovieList>> getMovieList() async {
     final response =
         await https.get("$TMDB_API_BASE_URL/movie/popular?api_key=$key");
