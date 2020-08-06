@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/movies/moviesListRequest.dart';
+import 'package:myFindMovies/widgets/movies/movies_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
 class Movie extends StatefulWidget {
@@ -58,9 +58,7 @@ class MovieState extends State<Movie> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(
-              child:
-                  moviesListRequest(ContentHandler().searchMovies(searchText)))
+          Expanded(child: MoviesList(ContentHandler().searchMovies(searchText)))
       ],
     ));
   }
