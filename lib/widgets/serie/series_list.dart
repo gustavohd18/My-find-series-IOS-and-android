@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/model/SerieList.dart';
-import 'package:myFindMovies/widgets/serie/serieCard.dart';
+import 'package:myFindMovies/widgets/serie/series_card.dart';
 
 class SeriesList extends StatelessWidget {
   final Future<List<SerieList>> _future;
