@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/serie/seriesList.dart';
+import 'package:myFindMovies/widgets/serie/series_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
 class Series extends StatefulWidget {

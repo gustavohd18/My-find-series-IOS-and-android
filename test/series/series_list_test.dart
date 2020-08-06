@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/serie/seriesList.dart';
+import 'package:myFindMovies/widgets/serie/series_list.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 
 void main() {
@@ -21,10 +21,33 @@ void main() {
   }
 
   testWidgets("Test element present to UI without element",
-      (WidgetTester test) async {
-    await _createWidgetsWithoutElement(test);
+      (WidgetTester tester) async {
+    await _createWidgetsWithoutElement(tester);
+
+    final Finder textFinder = find.byType(Text);
+
+    expect(textFinder, findsOneWidget);
+
+    final Text text = tester.widget(textFinder);
 
     expect(find.text("No have Content to word"), findsOneWidget);
-    expect(find.byType(Center), findsOneWidget);
+
+    expect(text.textAlign, TextAlign.center);
+    expect(
+        text.style,
+        TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+        ));
+
+    final Finder centerFinder = find.byType(Center);
+
+    expect(centerFinder, findsOneWidget);
+
+    final Center center = tester.widget(centerFinder);
+
+    expect(centerFinder, findsOneWidget);
+
+    expect(center.child, text);
   });
 }

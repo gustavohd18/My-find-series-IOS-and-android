@@ -23,8 +23,8 @@ class SeriesList extends StatelessWidget {
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, int position) {
                   final item = snapshot.data[position];
-                  return serieCard(context, item.id, item.originalName,
-                      item.overview, item.voteAverage, item.posterPath, false);
+                  return SeriesCard(item.id, item.originalName, item.overview,
+                      item.voteAverage, item.posterPath, false);
                 })
             : Center(
                 child: Text(
