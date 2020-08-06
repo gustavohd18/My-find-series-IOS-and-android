@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/dialog_information.dart';
+import 'package:myFindMovies/widgets/utils/stars.dart';
 
 Widget favoriteCard(
     BuildContext context,
@@ -17,7 +18,7 @@ Widget favoriteCard(
           child: ListTile(
     leading: Image.network(image),
     title: Text(title),
-    subtitle: stars(media),
+    subtitle: Stars(media),
     trailing: Icon(Icons.favorite, color: Colors.red),
     onTap: () {
       f();
@@ -38,112 +39,4 @@ Widget favoriteCard(
       //    isMovie, true);
     },
   )));
-}
-
-Widget stars(int media) {
-  if (media >= 0 && media <= 2) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-      ],
-    );
-  } else if (media >= 3 && media <= 5) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-      ],
-    );
-  } else if (media >= 6 && media <= 7) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-      ],
-    );
-  } else if (media > 6 && media <= 8) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 10.0,
-        ),
-      ],
-    );
-  }
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: const <Widget>[
-      Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 10.0,
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 10.0,
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 10.0,
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 10.0,
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 10.0,
-      ),
-    ],
-  );
 }
