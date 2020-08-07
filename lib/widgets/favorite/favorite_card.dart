@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog_information.dart';
+import 'package:myFindMovies/widgets/content/dialog_content.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class FavoriteCard extends StatelessWidget {
@@ -29,7 +29,7 @@ class FavoriteCard extends StatelessWidget {
 
         showDialog(
           context: context,
-          builder: (BuildContext context) => CustomDialog(
+          builder: (BuildContext context) => ContentDialog(
             id: id,
             title: title,
             information: information,

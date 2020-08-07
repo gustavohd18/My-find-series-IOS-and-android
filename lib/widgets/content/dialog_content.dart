@@ -3,13 +3,14 @@ import 'package:myFindMovies/service/content_handle.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
+import 'package:myFindMovies/widgets/content/circle_image.dart';
 
-class CustomDialog extends StatelessWidget {
+class ContentDialog extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
   final bool isMovie, isFavorite;
   final Function() f;
 
-  CustomDialog(
+  ContentDialog(
       {@required this.id,
       @required this.title,
       @required this.information,
@@ -19,7 +20,6 @@ class CustomDialog extends StatelessWidget {
       @required this.isFavorite,
       this.f});
 
-  String _url;
   // reference to our single class that manages the database
   final dbHelper = FavoriteDatabase.instance;
 
@@ -36,6 +36,8 @@ class CustomDialog extends StatelessWidget {
   }
 
   Widget dialogContent(BuildContext context) {
+    String _url;
+
     if (isMovie) {
       ContentHandler().videoMovies(id).then((data) {
         _url = data[0].key;
@@ -59,7 +61,7 @@ class CustomDialog extends StatelessWidget {
             right: Consts.padding,
           ),
           margin: EdgeInsets.only(top: Consts.avatarRadius),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(Consts.padding),
@@ -111,7 +113,10 @@ class CustomDialog extends StatelessWidget {
                         onPressed: () {
                           if (isFavorite) {
                             dbHelper.delete(id);
-                            f();
+                            if (f != null) {
+                              f();
+                            }
+
                             Navigator.of(context).pop();
                             showDialog(
                                 context: context,
@@ -191,31 +196,6 @@ class CustomDialog extends StatelessWidget {
     FlutterYoutube.playYoutubeVideoByUrl(
       apiKey: "key",
       videoUrl: "https://www.youtube.com/watch?v=$key",
-    );
-  }
-}
-
-class CircleImage extends StatelessWidget {
-  final String image;
-
-  CircleImage({
-    @required this.image,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    double _size = 150.0;
-
-    return Center(
-      child: Container(
-          width: _size,
-          height: _size,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image:
-                      NetworkImage('https://image.tmdb.org/t/p/w185$image')))),
     );
   }
 }
