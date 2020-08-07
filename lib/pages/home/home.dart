@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/pages/serie/serieScreen.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
@@ -7,8 +7,8 @@ import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
-import 'package:myFindMovies/pages/favorite/favoriteScreen.dart';
-import 'package:myFindMovies/pages/movies/movieScreen.dart';
+import 'package:myFindMovies/pages/favorite/favorite.dart';
+import 'package:myFindMovies/pages/movies/movie.dart';
 
 class Main extends StatefulWidget {
   @override

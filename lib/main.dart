@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/pages/home/mainScreen.dart';
+import 'package:myFindMovies/pages/home/home.dart';
 
 void main() {
   runApp(MyApp());
