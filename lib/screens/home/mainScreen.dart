@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/screens/serie/serieScreen.dart';
+import 'package:myFindMovies/widgets/home/content_movies_list.dart';
+import 'package:myFindMovies/widgets/home/content_series_list.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
-import 'package:myFindMovies/widgets/home/contentList.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
@@ -95,9 +96,9 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
           padding: const EdgeInsets.all(2.0),
           child: Subtitle('Top 10 Movies'),
         ),
-        Expanded(flex: 1, child: movieList(_movieList)),
+        Expanded(flex: 1, child: ContentMoviesList(_movieList)),
         Subtitle('Top 10 Series'),
-        Expanded(flex: 1, child: serieList(_serieList)),
+        Expanded(flex: 1, child: ContentSeriesList(_serieList)),
       ],
     );
   }
