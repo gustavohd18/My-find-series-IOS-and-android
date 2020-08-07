@@ -10,7 +10,7 @@ Widget movieList(Future<List<MovieList>> future) {
       return snapshot.hasData
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(6.0),
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];
@@ -32,7 +32,7 @@ Widget serieList(Future<List<SerieList>> future) {
       return snapshot.hasData
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(6.0),
               itemCount: snapshot.data.length,
               itemBuilder: (_, int position) {
                 final item = snapshot.data[position];

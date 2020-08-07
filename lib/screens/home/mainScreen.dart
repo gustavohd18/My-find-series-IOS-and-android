@@ -93,10 +93,10 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: subtitle('Top 10 Movies'),
+          child: Subtitle('Top 10 Movies'),
         ),
         Expanded(flex: 1, child: movieList(_movieList)),
-        subtitle('Top 10 Series'),
+        Subtitle('Top 10 Series'),
         Expanded(flex: 1, child: serieList(_serieList)),
       ],
     );

@@ -35,8 +35,6 @@ Widget favoriteCard(
           f: f,
         ),
       );
-      //showAlertDialog(context, id, title, information, voteAverage, posterPath,
-      //    isMovie, true);
     },
   )));
 }

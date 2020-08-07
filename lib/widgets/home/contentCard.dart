@@ -44,8 +44,6 @@ Widget contentCard(BuildContext context, String id, String title,
                 isFavorite: false,
               ),
             )
-            //showAlertDialog(context, id, title, information, voteAverage,
-            //    posterPath, isMovie, false)
           });
 }
 
