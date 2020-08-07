@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/favorite/favoriteList.dart';
+import 'package:myFindMovies/widgets/favorite/favorites_list.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 
@@ -32,7 +32,7 @@ class _FavoriteState extends State<Favorite> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-          child: favoriteList(_favoriteList, _reloadFavorite),
+          child: FavoritesList(_favoriteList, _reloadFavorite),
         ),
       ],
     );
