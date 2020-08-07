@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/dialog_information.dart';
-import 'package:myFindMovies/widgets/movies/movies_card.dart';
+import 'package:myFindMovies/widgets/favorite/favorite_card.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
@@ -17,7 +17,7 @@ void main() {
         voteAverage = '1',
         posterPath = '/2u1cyQgBpWWypISdbUDCu2hasGV.jpg';
     final bool isMovie = true;
-
+    Function() _f;
     await mockNetworkImagesFor(() => tester.pumpWidget(makeTestableWidget()));
 
     await tester.pumpWidget(
@@ -27,8 +27,8 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MoviesCard(
-            id, title, information, voteAverage, posterPath, isMovie),
+        home: FavoriteCard(
+            id, title, information, voteAverage, posterPath, isMovie, _f),
       ),
     );
 
@@ -50,8 +50,8 @@ void main() {
     expect(icon2.size, 10.0);
     expect(icon2.icon, Icons.star);
 
-    expect(icon.color, Colors.black);
-    expect(icon.icon, Icons.movie);
+    expect(icon.color, Colors.red);
+    expect(icon.icon, Icons.favorite);
 
     expect(find.text("abc"), findsOneWidget);
 
