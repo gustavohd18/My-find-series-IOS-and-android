@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/screens/serie/serieScreen.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
@@ -7,8 +7,8 @@ import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
-import 'package:myFindMovies/screens/favorite/favoriteScreen.dart';
-import 'package:myFindMovies/screens/movies/movieScreen.dart';
+import 'package:myFindMovies/pages/favorite/favorite.dart';
+import 'package:myFindMovies/pages/movies/movie.dart';
 
 class Main extends StatefulWidget {
   @override
@@ -38,7 +38,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   }
 
   void _handleSelected() {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     setState(() {
       _myHandler = _tabs[_controller.index];
     });
