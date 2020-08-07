@@ -38,7 +38,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   }
 
   void _handleSelected() {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     setState(() {
       _myHandler = _tabs[_controller.index];
     });
