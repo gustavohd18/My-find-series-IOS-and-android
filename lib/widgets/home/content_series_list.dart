@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/model/SerieList.dart';
-import 'package:myFindMovies/widgets/home/contentCard.dart';
+import 'package:myFindMovies/widgets/home/content_card.dart';
 
 class ContentSeriesList extends StatelessWidget {
   final Future<List<SerieList>> _future;
@@ -20,8 +20,8 @@ class ContentSeriesList extends StatelessWidget {
                 itemBuilder: (_, int position) {
                   final item = snapshot.data[position];
 
-                  return contentCard(context, item.id, item.originalName,
-                      item.overview, item.voteAverage, item.posterPath, false);
+                  return ContentCard(item.id, item.originalName, item.overview,
+                      item.voteAverage, item.posterPath, false);
                 })
             : Center(
                 child: CircularProgressIndicator(),

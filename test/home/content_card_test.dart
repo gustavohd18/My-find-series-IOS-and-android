@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/dialog_information.dart';
-import 'package:myFindMovies/widgets/movies/movies_card.dart';
+import 'package:myFindMovies/widgets/home/content_card.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
@@ -16,7 +16,7 @@ void main() {
         information = 'test',
         voteAverage = '1',
         posterPath = '/2u1cyQgBpWWypISdbUDCu2hasGV.jpg';
-    final bool isMovie = true;
+    final bool isMovie = false;
 
     await mockNetworkImagesFor(() => tester.pumpWidget(makeTestableWidget()));
 
@@ -27,7 +27,7 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MoviesCard(
+        home: ContentCard(
             id, title, information, voteAverage, posterPath, isMovie),
       ),
     );
@@ -35,29 +35,20 @@ void main() {
     await tester.pump();
   }
 
-  testWidgets("Test element present UI Movie card",
+  testWidgets("Test element present UI Content card",
       (WidgetTester tester) async {
     await _createWidgetsCards(tester);
     final Finder iconFinder = find.byType(Icon);
 
-    expect(iconFinder, findsNWidgets(2));
+    expect(iconFinder, findsOneWidget);
 
-    final Icon icon = tester.widget(iconFinder.at(1));
-
-    final Icon icon2 = tester.widget(iconFinder.at(0));
+    final Icon icon2 = tester.widget(iconFinder);
 
     expect(icon2.color, Colors.yellow);
     expect(icon2.size, 10.0);
     expect(icon2.icon, Icons.star);
 
-    expect(icon.color, Colors.black);
-    expect(icon.icon, Icons.movie);
-
     expect(find.text("abc"), findsOneWidget);
-
-    final Finder listFinder = find.byType(ListTile);
-
-    expect(listFinder, findsOneWidget);
 
     final Finder textFinder = find.byType(Text);
 
@@ -67,9 +58,9 @@ void main() {
 
     expect(starsFinder, findsOneWidget);
 
-    final Finder containerFinder = find.byType(Container);
+    final Finder flexFinder = find.byType(Flexible);
 
-    expect(containerFinder, findsNWidgets(2));
+    expect(flexFinder, findsOneWidget);
 
     final Finder cardFinder = find.byType(Card);
 
@@ -77,22 +68,57 @@ void main() {
 
     final Card card = tester.widget(cardFinder);
 
-    final Container container = tester.widget(containerFinder.at(1));
+    final Flexible flex = tester.widget(flexFinder);
 
     final Stars stars = tester.widget(starsFinder);
 
     final Text text = tester.widget(textFinder);
 
-    final ListTile listTile = tester.widget(listFinder);
+    final Finder paddingFinder = find.byType(Padding);
 
-    expect(listTile.title, text);
-    expect(listTile.trailing, icon);
-    expect(listTile.subtitle, stars);
-    expect(container.child, listTile);
+    expect(paddingFinder, findsNWidgets(4));
+
+    final Padding padding = tester.widget(paddingFinder.at(2));
+
+    final Padding padding2 = tester.widget(paddingFinder.at(3));
+
+    expect(padding.padding, EdgeInsets.all(8.0));
+    expect(padding.child, text);
+    expect(text.style, TextStyle(fontWeight: FontWeight.bold, fontSize: 12));
+    expect(text.overflow, TextOverflow.ellipsis);
+
+    expect(padding2.padding, EdgeInsets.all(4.0));
+    expect(padding2.child, stars);
+
+    final Finder columnFinder = find.byType(Column);
+
+    expect(columnFinder, findsOneWidget);
+
+    final Column column = tester.widget(columnFinder);
+
+    expect(column.children, [flex, padding, padding2]);
+
+    final Finder containerFinder = find.byType(Container);
+
+    expect(containerFinder, findsNWidgets(2));
+
+    final Container container = tester.widget(containerFinder.at(1));
+
+    expect(container.child, column);
+    expect(container.padding, EdgeInsets.all(32.0));
+
     expect(card.child, container);
 
-    // Tap the list title.
-    await tester.tap(find.byType(ListTile));
+    final Finder gestureFinder = find.byType(GestureDetector);
+
+    expect(gestureFinder, findsOneWidget);
+
+    final GestureDetector gesture = tester.widget(gestureFinder);
+
+    expect(gesture.child, card);
+
+    // Tap the card.
+    await tester.tap(find.byType(GestureDetector));
 
     // Rebuild the widget after the state has changed.
     await tester.pump();
