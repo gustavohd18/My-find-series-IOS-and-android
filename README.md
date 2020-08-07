@@ -10,7 +10,7 @@ This project comes from my need to be able find series and movies and get inform
 
 ## Getting Started
 
-Too use project which goal is just developing things you'll need get youtube API key and put inside dialog_content file in function called playYoutubeVideo. 
+To use project which goal is just developing things you'll need get youtube API key and put inside dialog_content file in function called playYoutubeVideo. 
 Also, you'll need install Flutter to run project documentation below.
 
 [online documentation](https://flutter.dev/docs), which offers tutorials,
