@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog_information.dart';
+import 'package:myFindMovies/widgets/content/dialog_content.dart';
 import 'package:myFindMovies/widgets/favorite/favorite_card.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -97,7 +97,7 @@ void main() {
     // Rebuild the widget after the state has changed.
     await tester.pump();
 
-    final Finder customFinder = find.byType(CustomDialog);
+    final Finder customFinder = find.byType(ContentDialog);
 
     // Expect to find the item on screen.
     expect(find.text('test'), findsOneWidget);
