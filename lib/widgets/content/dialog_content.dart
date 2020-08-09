@@ -85,11 +85,13 @@ class ContentDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.0),
-              Text(
-                information,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 16.0,
+              Flexible(
+                child: Text(
+                  information,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
               SizedBox(height: 24.0),
