@@ -106,70 +106,72 @@ class ContentDialog extends StatelessWidget {
                           },
                         ),
                       ),
-                      FlatButton(
-                        child: (isFavorite == true)
-                            ? Text("delete Favorite")
-                            : Text("add favorite"),
-                        onPressed: () {
-                          if (isFavorite) {
-                            dbHelper.delete(id);
-                            if (f != null) {
-                              f();
-                            }
+                      Expanded(
+                        child: FlatButton(
+                          child: (isFavorite == true)
+                              ? Text("delete Favorite")
+                              : Text("add favorite"),
+                          onPressed: () {
+                            if (isFavorite) {
+                              dbHelper.delete(id);
+                              if (f != null) {
+                                f();
+                              }
 
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  Future.delayed(Duration(milliseconds: 300),
-                                      () {
-                                    Navigator.of(context).pop(true);
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    Future.delayed(Duration(milliseconds: 300),
+                                        () {
+                                      Navigator.of(context).pop(true);
+                                    });
+                                    return AlertDialog(
+                                      title: Icon(Icons.check),
+                                      content: Text(
+                                        'Removed with sucess',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
                                   });
-                                  return AlertDialog(
-                                    title: Icon(Icons.check),
-                                    content: Text(
-                                      'Removed with sucess',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                });
-                          } else {
-                            String _isMovies;
-
-                            if (isMovie) {
-                              _isMovies = 's';
                             } else {
-                              _isMovies = 'n';
-                            }
-                            final _favorite = FavoriteList.origin(
-                                id,
-                                title,
-                                information,
-                                voteAverage,
-                                posterPath,
-                                _url,
-                                _isMovies);
-                            dbHelper.insertFavorite(_favorite);
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  Future.delayed(Duration(milliseconds: 500),
-                                      () {
-                                    Navigator.of(context).pop();
+                              String _isMovies;
+
+                              if (isMovie) {
+                                _isMovies = 's';
+                              } else {
+                                _isMovies = 'n';
+                              }
+                              final _favorite = FavoriteList.origin(
+                                  id,
+                                  title,
+                                  information,
+                                  voteAverage,
+                                  posterPath,
+                                  _url,
+                                  _isMovies);
+                              dbHelper.insertFavorite(_favorite);
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    Future.delayed(Duration(milliseconds: 500),
+                                        () {
+                                      Navigator.of(context).pop();
+                                    });
+                                    return AlertDialog(
+                                      title: Icon(Icons.check),
+                                      content: Text(
+                                        'Added with sucess',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
                                   });
-                                  return AlertDialog(
-                                    title: Icon(Icons.check),
-                                    content: Text(
-                                      'Added with sucess',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                });
-                          }
-                        },
+                            }
+                          },
+                        ),
                       ),
                       Expanded(
                         child: FlatButton(
