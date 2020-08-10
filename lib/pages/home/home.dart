@@ -23,13 +23,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
 
   bool isPortugues;
 
-  final List<String> _tabs = [
-    "Home",
-    "Favorite",
-    "Series",
-    "Movies",
-    "Settings"
-  ];
+  List<String> _tabs = ["Home", "Favorite", "Series", "Movies", "Settings"];
   String _myHandler;
   TabController _controller;
 
@@ -68,7 +62,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
                   Favorite(),
                   Series(),
                   Movie(),
-                  Settings()
+                  Settings(_reloadTab)
                 ],
               ),
               appBar: AppBar(
@@ -103,6 +97,13 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
             )));
   }
 
+  void _reloadTab() {
+    setState(() {
+      getLanguage();
+      print("setei");
+    });
+  }
+
   Widget _buildScreen() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,6 +124,18 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
       isPortugues = isPortuguese;
+
+      if (!isPortuguese) {
+        _tabs[0] = "Inicio";
+        _tabs[1] = "Favoritos";
+        _tabs[3] = "Filmes";
+        _tabs[4] = "Configurar";
+      } else {
+        _tabs[0] = "Home";
+        _tabs[1] = "Favorite";
+        _tabs[3] = "Movies";
+        _tabs[4] = "Settings";
+      }
     });
   }
 }

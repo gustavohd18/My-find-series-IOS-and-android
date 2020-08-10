@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/traslator.dart';
 
 class Settings extends StatefulWidget {
-  Settings();
+  final Function() func;
+
+  Settings(this.func);
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -69,6 +72,8 @@ class _SettingsState extends State<Settings> {
       isPortuguese = isPortuguese;
       _english = (isPortuguese == false) ? "Inglês" : "English";
       _portuguese = (isPortuguese == false) ? "Português" : "Portuguese";
+
+      widget.func();
     });
   }
 }
