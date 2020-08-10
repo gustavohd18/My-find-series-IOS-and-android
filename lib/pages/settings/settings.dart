@@ -12,13 +12,10 @@ class _SettingsState extends State<Settings> {
   String _selectedLanguage;
   int _radioGroupValue;
 
-  bool isPortugues;
+  bool isPortuguese;
 
   void _radioOnChanged(int index) async {
     await Traslator().setLanguage(_selectedLanguage);
-
-    // _portuguese =  Traslator().portuguese();
-    //  _english = await Traslator().english();
 
     setState(() {
       _radioGroupValue = index;
@@ -51,13 +48,13 @@ class _SettingsState extends State<Settings> {
                   _radioOnChanged(index),
                 },
               ),
-              Text((isPortugues == false) ? "Inglês" : "English"),
+              Text((isPortuguese == false) ? "Inglês" : "English"),
               Radio(
                 value: 1,
                 groupValue: _radioGroupValue,
                 onChanged: (index) => _radioOnChanged(index),
               ),
-              Text((isPortugues == false) ? "Português" : "Portuguese"),
+              Text((isPortuguese == false) ? "Português" : "Portuguese"),
             ],
           ),
         ),
@@ -68,7 +65,7 @@ class _SettingsState extends State<Settings> {
   Future<Null> getLanguage() async {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
-      isPortugues = isPortuguese;
+      isPortuguese = isPortuguese;
     });
   }
 }

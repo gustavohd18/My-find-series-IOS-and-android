@@ -12,7 +12,7 @@ class MovieState extends State<Movie> {
   final searchTextController = TextEditingController();
   String searchText = "";
 
-  bool isPortugues;
+  bool isPortuguese;
 
   @override
   void dispose() {
@@ -45,13 +45,13 @@ class MovieState extends State<Movie> {
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: (isPortugues == false)
+                  labelText: (isPortuguese == false)
                       ? "Pesquisa para Filmes"
                       : "Search for movies",
-                  hintText: (isPortugues == false) ? "Pesquisar " : "Search",
+                  hintText: (isPortuguese == false) ? "Pesquisar " : "Search",
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: (isPortugues == false)
+                    tooltip: (isPortuguese == false)
                         ? "Pesquisar Filme"
                         : 'Search Movies',
                     onPressed: () {
@@ -80,7 +80,7 @@ class MovieState extends State<Movie> {
   Future<Null> getLanguage() async {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
-      isPortugues = isPortuguese;
+      isPortuguese = isPortuguese;
     });
   }
 }
