@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/movies/movies_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
@@ -11,10 +12,19 @@ class MovieState extends State<Movie> {
   final searchTextController = TextEditingController();
   String searchText = "";
 
+  bool isPortugues;
+
   @override
   void dispose() {
     searchTextController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // this should not be done in build method.
+    getLanguage();
   }
 
   @override
@@ -35,11 +45,15 @@ class MovieState extends State<Movie> {
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: "Search for movies",
-                  hintText: "Search",
+                  labelText: (isPortugues == false)
+                      ? "Pesquisa para Filmes"
+                      : "Search for movies",
+                  hintText: (isPortugues == false) ? "Pesquisar " : "Search",
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: 'Search Movies',
+                    tooltip: (isPortugues == false)
+                        ? "Pesquisar Filme"
+                        : 'Search Movies',
                     onPressed: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
@@ -61,5 +75,12 @@ class MovieState extends State<Movie> {
           Expanded(child: MoviesList(ContentHandler().searchMovies(searchText)))
       ],
     ));
+  }
+
+  Future<Null> getLanguage() async {
+    bool isPortuguese = await Traslator().isPortuguese();
+    setState(() {
+      isPortugues = isPortuguese;
+    });
   }
 }
