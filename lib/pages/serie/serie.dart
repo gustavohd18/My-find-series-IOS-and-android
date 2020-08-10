@@ -12,18 +12,21 @@ class SerieState extends State<Series> {
   final searchTextController = TextEditingController();
   String searchText = "";
   bool isPortuguese;
-
-  @override
-  void dispose() {
-    searchTextController.dispose();
-    super.dispose();
-  }
+  String _searchSeries;
+  String _search;
+  String _searchPerSeries;
 
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
     getLanguage();
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,15 +47,11 @@ class SerieState extends State<Series> {
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: (isPortuguese == false)
-                      ? "Pesquisa por Series"
-                      : "Search for Series",
-                  hintText: (isPortuguese == false) ? "Pesquisar" : "Search",
+                  labelText: _searchSeries,
+                  hintText: _search,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: (isPortuguese == false)
-                        ? "Pesquisar Series"
-                        : 'Search Series',
+                    tooltip: _searchPerSeries,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
@@ -80,6 +79,13 @@ class SerieState extends State<Series> {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
       isPortuguese = isPortuguese;
+      _searchSeries =
+          (isPortuguese == false) ? "Pesquisa por Series" : "Search for Series";
+
+      _search = (isPortuguese == false) ? "Pesquisar" : "Search";
+
+      _searchPerSeries =
+          (isPortuguese == false) ? "Pesquisar Series" : 'Search Series';
     });
   }
 }

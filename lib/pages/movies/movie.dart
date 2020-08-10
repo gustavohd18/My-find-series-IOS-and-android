@@ -13,18 +13,21 @@ class MovieState extends State<Movie> {
   String searchText = "";
 
   bool isPortuguese;
-
-  @override
-  void dispose() {
-    searchTextController.dispose();
-    super.dispose();
-  }
+  String _searchMovies;
+  String _search;
+  String _searchPerMovies;
 
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
     getLanguage();
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,15 +48,11 @@ class MovieState extends State<Movie> {
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: (isPortuguese == false)
-                      ? "Pesquisa para Filmes"
-                      : "Search for movies",
-                  hintText: (isPortuguese == false) ? "Pesquisar " : "Search",
+                  labelText: _searchMovies,
+                  hintText: _search,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: (isPortuguese == false)
-                        ? "Pesquisar Filme"
-                        : 'Search Movies',
+                    tooltip: _searchPerMovies,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
@@ -81,6 +80,14 @@ class MovieState extends State<Movie> {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
       isPortuguese = isPortuguese;
+      _searchMovies = (isPortuguese == false)
+          ? "Pesquisa para Filmes"
+          : "Search for movies";
+
+      _search = (isPortuguese == false) ? "Pesquisar " : "Search";
+
+      _searchPerMovies =
+          (isPortuguese == false) ? "Pesquisar Filme" : 'Search Movies';
     });
   }
 }
