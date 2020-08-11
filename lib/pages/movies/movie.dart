@@ -12,7 +12,7 @@ class MovieState extends State<Movie> {
   final searchTextController = TextEditingController();
   String searchText = "";
 
-  bool isPortuguese;
+  bool isPortugues;
   String _searchMovies;
   String _search;
   String _searchPerMovies;
@@ -71,7 +71,9 @@ class MovieState extends State<Movie> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(child: MoviesList(ContentHandler().searchMovies(searchText)))
+          Expanded(
+              child: MoviesList(
+                  ContentHandler().searchMovies(searchText), isPortugues))
       ],
     ));
   }
@@ -79,7 +81,7 @@ class MovieState extends State<Movie> {
   Future<Null> getLanguage() async {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
-      isPortuguese = isPortuguese;
+      isPortugues = isPortuguese;
       _searchMovies = (isPortuguese == false)
           ? "Pesquisa para Filmes"
           : "Search for movies";

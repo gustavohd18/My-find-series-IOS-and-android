@@ -19,21 +19,20 @@ class _SettingsState extends State<Settings> {
   bool isPortuguese;
 
   void _radioOnChanged(int index) async {
+    _selectedLanguage = _languageList[index];
     await Traslator().setLanguage(_selectedLanguage);
 
     setState(() {
+      getLanguage();
       _radioGroupValue = index;
       _selectedLanguage = _languageList[index];
-      getLanguage();
-      print('_selectedRadioValue $_selectedLanguage');
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _languageList..add('English')..add('Portuguese');
-    _radioGroupValue = 1;
+    _languageList..add('Portuguese')..add('English');
     getLanguage();
   }
 
@@ -48,7 +47,7 @@ class _SettingsState extends State<Settings> {
               Radio(
                 value: 0,
                 groupValue: _radioGroupValue,
-                onChanged: (index) async => {
+                onChanged: (index) => {
                   _radioOnChanged(index),
                 },
               ),

@@ -11,7 +11,7 @@ class Series extends StatefulWidget {
 class SerieState extends State<Series> {
   final searchTextController = TextEditingController();
   String searchText = "";
-  bool isPortuguese;
+  bool isPortugues;
   String _searchSeries;
   String _search;
   String _searchPerSeries;
@@ -42,6 +42,7 @@ class SerieState extends State<Series> {
                 onSubmitted: (value) {
                   setState(() {
                     searchText = searchTextController.text;
+                    //getLanguage();
                   });
                 },
                 controller: searchTextController,
@@ -70,7 +71,9 @@ class SerieState extends State<Series> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(child: SeriesList(ContentHandler().searchSeries(searchText)))
+          Expanded(
+              child: SeriesList(
+                  ContentHandler().searchSeries(searchText), isPortugues))
       ],
     ));
   }
@@ -78,7 +81,7 @@ class SerieState extends State<Series> {
   Future<Null> getLanguage() async {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
-      isPortuguese = isPortuguese;
+      isPortugues = isPortuguese;
       _searchSeries =
           (isPortuguese == false) ? "Pesquisa por Series" : "Search for Series";
 

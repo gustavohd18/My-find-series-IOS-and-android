@@ -68,8 +68,16 @@ class ContentHandler {
 
   // Get list of Movies containing the search keyword
   Future<List<MovieList>> searchMovies(keyword) async {
-    final response = await https
-        .get("$TMDB_API_BASE_URL/search/movie?query=$keyword&api_key=$key");
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
+    final response = await https.get(
+        "$TMDB_API_BASE_URL/search/movie?query=$keyword&api_key=$key&language=$_language");
 
     Map data = jsonDecode(response.body);
 
@@ -95,8 +103,16 @@ class ContentHandler {
 
   // Get list of Series containing the search keyword
   Future<List<SerieList>> searchSeries(keyword) async {
-    final response = await https
-        .get("$TMDB_API_BASE_URL/search/tv?query=$keyword&api_key=$key");
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
+
+    final response = await https.get(
+        "$TMDB_API_BASE_URL/search/tv?query=$keyword&api_key=$key&language=$_language");
 
     Map data = jsonDecode(response.body);
 
@@ -147,8 +163,15 @@ class ContentHandler {
   }
 
   Future<List<MovieList>> _searchMoviesPage(keyword, page) async {
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
     final response = await https.get(
-        "$TMDB_API_BASE_URL/search/movie?api_key=$key&query=$keyword&page=$page");
+        "$TMDB_API_BASE_URL/search/movie?api_key=$key&query=$keyword&page=$page&language=$_language");
 
     Map data = jsonDecode(response.body);
 
@@ -160,8 +183,15 @@ class ContentHandler {
   }
 
   Future<List<SerieList>> _searchSeriesPage(keyword, page) async {
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
     final response = await https.get(
-        "$TMDB_API_BASE_URL/search/tv?api_key=$key&query=$keyword&page=$page");
+        "$TMDB_API_BASE_URL/search/tv?api_key=$key&query=$keyword&page=$page&language=$_language");
 
     Map data = jsonDecode(response.body);
 

@@ -4,10 +4,10 @@ import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class SeriesCard extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
-  final bool isMovie;
+  final bool isMovie, isPortuguese;
 
   SeriesCard(this.id, this.title, this.information, this.voteAverage,
-      this.posterPath, this.isMovie);
+      this.posterPath, this.isMovie, this.isPortuguese);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class SeriesCard extends StatelessWidget {
             posterPath: posterPath,
             isMovie: isMovie,
             isFavorite: false,
+            isPortuguese: isPortuguese,
           ),
         );
       },

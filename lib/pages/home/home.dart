@@ -107,9 +107,9 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
           padding: const EdgeInsets.all(2.0),
           child: Subtitle(_topMovies),
         ),
-        Expanded(flex: 1, child: ContentMoviesList(_movieList)),
+        Expanded(flex: 1, child: ContentMoviesList(_movieList, isPortugues)),
         Subtitle(_topSeries),
-        Expanded(flex: 1, child: ContentSeriesList(_serieList)),
+        Expanded(flex: 1, child: ContentSeriesList(_serieList, isPortugues)),
       ],
     );
   }
