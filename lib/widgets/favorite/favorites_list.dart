@@ -6,8 +6,9 @@ class FavoritesList extends StatelessWidget {
   final Future<List<FavoriteList>> _future;
   final Function() _f;
   final bool isPortuguese;
+  final String text;
 
-  FavoritesList(this._future, this._f, this.isPortuguese);
+  FavoritesList(this._future, this._f, this.isPortuguese, this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class FavoritesList extends StatelessWidget {
                 })
             : Center(
                 child: Text(
-                  "No have Favorite",
+                  text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,

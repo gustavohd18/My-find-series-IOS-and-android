@@ -15,6 +15,7 @@ class _FavoriteState extends State<Favorite> {
 
   Future<List<FavoriteList>> _favoriteList;
   bool isPortuguese = true;
+  String _text;
 
   @override
   void initState() {
@@ -36,7 +37,8 @@ class _FavoriteState extends State<Favorite> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-          child: _favoriteListScreen,
+          child: FavoritesList(
+              _favoriteList, _reloadFavorite, isPortuguese, _text),
         ),
       ],
     );
@@ -52,8 +54,10 @@ class _FavoriteState extends State<Favorite> {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
       isPortuguese = isPortuguese;
-      _favoriteListScreen =
-          FavoritesList(_favoriteList, _reloadFavorite, isPortuguese);
+      _favoriteList = dbHelper.getFavorites();
+      _text = (isPortuguese == false)
+          ? "Nenhum favorito na lista"
+          : "No have Favorite";
     });
   }
 }
