@@ -4,6 +4,7 @@ import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/model/VideoContentList.dart';
 import 'package:http/http.dart' as http;
+import 'package:myFindMovies/service/traslator.dart';
 
 class ContentHandler {
   static const String baseURL = "api.themoviedb.org";
@@ -14,8 +15,17 @@ class ContentHandler {
   var https = http.Client();
 
   Future<List<MovieList>> getMovieList() async {
-    final response =
-        await https.get("$TMDB_API_BASE_URL/movie/popular?api_key=$key");
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
+
+    final response = await https.get(
+        "$TMDB_API_BASE_URL/movie/popular?api_key=$key&language=$_language");
 
     Map data = jsonDecode(response.body);
 
@@ -31,8 +41,17 @@ class ContentHandler {
   }
 
   Future<List<SerieList>> getSerieList() async {
-    final response =
-        await https.get("$TMDB_API_BASE_URL/tv/popular?api_key=$key");
+    String _language;
+    bool isPortuguese = await Traslator().isPortuguese();
+
+    if (!isPortuguese) {
+      _language = 'pt-BR';
+    } else {
+      _language = 'en-US';
+    }
+
+    final response = await https
+        .get("$TMDB_API_BASE_URL/tv/popular?api_key=$key&language=$_language");
 
     Map data = jsonDecode(response.body);
 

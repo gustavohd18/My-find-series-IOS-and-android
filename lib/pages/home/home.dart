@@ -7,7 +7,6 @@ import 'package:myFindMovies/widgets/home/subtitle.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/pages/favorite/favorite.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
@@ -23,20 +22,16 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
 
   bool isPortugues;
 
+  String _topMovies = 'top', _topSeries = 'top';
   List<String> _tabs = ["Home", "Favorite", "Series", "Movies", "Settings"];
   String _myHandler;
   TabController _controller;
-
-  // reference to our single class that manages the database
-  final dbHelper = FavoriteDatabase.instance;
 
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
     getLanguage();
-    _movieList = ContentHandler().getMovieList();
-    _serieList = ContentHandler().getSerieList();
     _controller = TabController(length: 5, vsync: this);
     _myHandler = _tabs[0];
     _controller.addListener(_handleSelected);
@@ -100,7 +95,6 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   void _reloadTab() {
     setState(() {
       getLanguage();
-      print("setei");
     });
   }
 
@@ -111,10 +105,10 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: Subtitle('Top 10 Movies'),
+          child: Subtitle(_topMovies),
         ),
         Expanded(flex: 1, child: ContentMoviesList(_movieList)),
-        Subtitle('Top 10 Series'),
+        Subtitle(_topSeries),
         Expanded(flex: 1, child: ContentSeriesList(_serieList)),
       ],
     );
@@ -130,12 +124,19 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
         _tabs[1] = "Favoritos";
         _tabs[3] = "Filmes";
         _tabs[4] = "Configurar";
+        _topSeries = "Top 10 Series no mundo";
+        _topMovies = "Top 10 Filmes no mundo";
       } else {
         _tabs[0] = "Home";
         _tabs[1] = "Favorite";
         _tabs[3] = "Movies";
         _tabs[4] = "Settings";
+        _topSeries = "Top 10 Series in the World";
+        _topMovies = "Top 10 Movies in the World";
       }
+
+      _movieList = ContentHandler().getMovieList();
+      _serieList = ContentHandler().getSerieList();
     });
   }
 }
