@@ -14,7 +14,7 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: FavoritesList(_future, _f),
+        home: FavoritesList(_future, _f, false, "No have Favorite"),
       ),
     );
 

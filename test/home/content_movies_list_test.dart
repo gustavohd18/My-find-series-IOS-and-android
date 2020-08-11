@@ -13,7 +13,7 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: ContentMoviesList(_future),
+        home: ContentMoviesList(_future, false),
       ),
     );
 
