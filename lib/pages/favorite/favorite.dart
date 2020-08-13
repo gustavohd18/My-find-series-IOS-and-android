@@ -11,11 +11,10 @@ class Favorite extends StatefulWidget {
 
 class _FavoriteState extends State<Favorite> {
   final dbHelper = FavoriteDatabase.instance;
-  FavoritesList _favoriteListScreen;
 
   Future<List<FavoriteList>> _favoriteList;
   bool isPortuguese = true;
-  String _text;
+  String _text = " ";
 
   @override
   void initState() {

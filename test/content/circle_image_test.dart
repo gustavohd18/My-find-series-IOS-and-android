@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/widgets/content/circle_image.dart';
-import 'package:myFindMovies/widgets/content/dialog_content.dart';
-import 'package:myFindMovies/widgets/utils/stars.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 Widget makeTestableWidget() => MaterialApp(
@@ -12,8 +10,6 @@ Widget makeTestableWidget() => MaterialApp(
 void main() {
   Future _createWidgets(WidgetTester tester) async {
     final posterPath = '/2u1cyQgBpWWypISdbUDCu2hasGV.jpg';
-    final bool isMovie = true;
-    Function() _f;
     await mockNetworkImagesFor(() => tester.pumpWidget(makeTestableWidget()));
 
     await tester.pumpWidget(

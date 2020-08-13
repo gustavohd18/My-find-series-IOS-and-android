@@ -1,9 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/pages/favorite/favorite.dart';
 import 'package:myFindMovies/pages/home/home.dart';
-import 'package:myFindMovies/pages/movies/movie.dart';
-import 'package:myFindMovies/pages/serie/serie.dart';
 
 void main() {
   Future _createWidgets(WidgetTester test) async {
@@ -41,7 +38,7 @@ void main() {
 
     final Finder columnFinder = find.byType(Column);
 
-    expect(columnFinder, findsNWidgets(6));
+    expect(columnFinder, findsNWidgets(7));
 
     final Finder tab1Finder = find.byType(DefaultTabController);
 
