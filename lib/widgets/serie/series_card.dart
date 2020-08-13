@@ -19,7 +19,7 @@ class SeriesCard extends StatelessWidget {
       leading: Image.network(image),
       title: Text(title),
       subtitle: Stars(media),
-      trailing: Icon(Icons.slow_motion_video, color: Colors.black),
+      trailing: Icon(Icons.slow_motion_video, color: Colors.white),
       onTap: () {
         showDialog(
           context: context,

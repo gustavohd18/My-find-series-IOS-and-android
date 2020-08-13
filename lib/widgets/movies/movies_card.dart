@@ -19,7 +19,7 @@ class MoviesCard extends StatelessWidget {
       leading: Image.network(image),
       title: Text(title),
       subtitle: Stars(media),
-      trailing: Icon(Icons.movie, color: Colors.black),
+      trailing: Icon(Icons.movie, color: Colors.white),
       onTap: () {
         showDialog(
           context: context,

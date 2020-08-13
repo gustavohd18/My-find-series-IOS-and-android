@@ -18,7 +18,6 @@ class ImageWidget extends StatelessWidget {
               fit: BoxFit.fill,
               width: 410,
               height: 300),
-          // Image.network(image, width: 430, height: 300),
           Positioned(
             child: Align(
               alignment: Alignment.center,
