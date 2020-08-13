@@ -14,9 +14,11 @@ class ContentHandler {
 
   var https = http.Client();
 
+  var traslator = Traslator();
+
   Future<List<MovieList>> getMovieList() async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
 
     if (!isPortuguese) {
       _language = 'pt-BR';
@@ -42,7 +44,7 @@ class ContentHandler {
 
   Future<List<SerieList>> getSerieList() async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
 
     if (!isPortuguese) {
       _language = 'pt-BR';
@@ -69,7 +71,7 @@ class ContentHandler {
   // Get list of Movies containing the search keyword
   Future<List<MovieList>> searchMovies(keyword) async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
 
     if (!isPortuguese) {
       _language = 'pt-BR';
@@ -104,7 +106,7 @@ class ContentHandler {
   // Get list of Series containing the search keyword
   Future<List<SerieList>> searchSeries(keyword) async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
     if (!isPortuguese) {
       _language = 'pt-BR';
     } else {
@@ -164,7 +166,7 @@ class ContentHandler {
 
   Future<List<MovieList>> _searchMoviesPage(keyword, page) async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
     if (!isPortuguese) {
       _language = 'pt-BR';
     } else {
@@ -184,7 +186,7 @@ class ContentHandler {
 
   Future<List<SerieList>> _searchSeriesPage(keyword, page) async {
     String _language;
-    bool isPortuguese = await Traslator().isPortuguese();
+    bool isPortuguese = await traslator.isPortuguese();
     if (!isPortuguese) {
       _language = 'pt-BR';
     } else {

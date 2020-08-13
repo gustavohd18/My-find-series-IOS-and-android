@@ -31,7 +31,9 @@ main() {
 
       content.https = client;
 
-      when(traslator.isPortuguese()).thenAnswer((_) => false);
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
 
       when(client
               .get("$TMDB_API_BASE_URL/tv/popular?api_key=$key&language=en-US"))
@@ -65,14 +67,25 @@ main() {
     });
 
     test('returns a list with top 10 series with 10 series', () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client.get("$TMDB_API_BASE_URL/tv/popular?api_key=$key")).thenAnswer(
-          (_) async => http.Response(
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client
+              .get("$TMDB_API_BASE_URL/tv/popular?api_key=$key&language=en-US"))
+          .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 10000,"total_pages": 500, "results":[ { "original_name": "The Umbrella Academy",
               "genre_ids": [
         35,
@@ -314,13 +327,24 @@ main() {
   });
   group('get top 10 movies', () {
     test('returns a list with top 10 movies with just 1 movie', () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client.get("$TMDB_API_BASE_URL/movie/popular?api_key=$key"))
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/movie/popular?api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 10000,"total_pages": 500, "results":[ {"popularity": 211.123,"vote_count": 2692, "video": false,
       "poster_path": "/mb7wQv0adK3kjOUr9n93mANHhPJ.jpg",
@@ -346,15 +370,26 @@ main() {
     });
 
     test('returns a list with top 10 series with 10 movies', () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
       // Use Mockito to return a successful response when it calls the
       // provided http.Client.
-      when(client.get("$TMDB_API_BASE_URL/movie/popular?api_key=$key"))
+      when(client.get(
+              "$TMDB_API_BASE_URL/movie/popular?api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 10000,"total_pages": 500, "results":[ {"popularity": 211.123,"vote_count": 2692, "video": false,
       "poster_path": "/mb7wQv0adK3kjOUr9n93mANHhPJ.jpg",
@@ -558,13 +593,24 @@ main() {
   });
   group('search series', () {
     test('returns a list empty when search series without result', () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client.get("$TMDB_API_BASE_URL/search/tv?query=tetete&api_key=$key"))
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/tv?query=tetete&api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 0,"total_pages": 0, "results":[]}""",
               200));
@@ -577,13 +623,24 @@ main() {
 
     test('returns a list with right size when search series with result',
         () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client.get("$TMDB_API_BASE_URL/search/tv?query=te&api_key=$key"))
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/tv?query=te&api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 2,"total_pages": 2, "results":[
                { "original_name": "The Umbrella Academy",
@@ -609,8 +666,8 @@ main() {
     }
               ]}""", 200));
 
-      when(client
-              .get("$TMDB_API_BASE_URL/search/tv?api_key=$key&query=te&page=2"))
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/tv?api_key=$key&query=te&page=2&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 2, "total_results": 0,"total_pages": 0, "results":[]}""",
               200));
@@ -623,14 +680,24 @@ main() {
   });
   group('search movies', () {
     test('returns a list empty when search movie without result', () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client
-              .get("$TMDB_API_BASE_URL/search/movie?query=tetete&api_key=$key"))
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/movie?query=tetete&api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 0,"total_pages": 0, "results":[]}""",
               200));
@@ -643,13 +710,24 @@ main() {
 
     test('returns a list with right size when search movie with result',
         () async {
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('pt', 'es');
+
+      final traslator = MockTranslator();
+
       final client = MockClient();
 
       final content = ContentHandler();
 
       content.https = client;
 
-      when(client.get("$TMDB_API_BASE_URL/search/movie?query=te&api_key=$key"))
+      content.traslator = traslator;
+
+      when(traslator.isPortuguese()).thenAnswer((_) => true);
+
+      when(client.get(
+              "$TMDB_API_BASE_URL/search/movie?query=te&api_key=$key&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 1, "total_results": 2,"total_pages": 2, "results":[
                 {"popularity": 211.123,"vote_count": 2692, "video": false,
@@ -671,7 +749,7 @@ main() {
               ]}""", 200));
 
       when(client.get(
-              "$TMDB_API_BASE_URL/search/movie?api_key=$key&query=te&page=2"))
+              "$TMDB_API_BASE_URL/search/movie?api_key=$key&query=te&page=2&language=en-US"))
           .thenAnswer((_) async => http.Response(
               """{"page": 2, "total_results": 0,"total_pages": 0, "results":[]}""",
               200));
