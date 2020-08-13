@@ -29,7 +29,7 @@ If you have any questions send me message or you like join feel free to made Pul
 - [ ] Share movies and serie with other users
 - [ ] Add User's area which will have some informations
 - [ ] New UI/UX to show movies and series
-- [ ] Traslate to portuguese too.
+- [X] Traslate to portuguese too.
 
 ## License:
 My Find Series and Movies is under Apache license 2.0.
