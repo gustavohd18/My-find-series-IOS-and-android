@@ -4,8 +4,9 @@ import 'package:myFindMovies/widgets/home/content_card.dart';
 
 class ContentMoviesList extends StatelessWidget {
   final Future<List<MovieList>> _future;
+  final bool isPortuguese;
 
-  ContentMoviesList(this._future);
+  ContentMoviesList(this._future, this.isPortuguese);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ContentMoviesList extends StatelessWidget {
                   final item = snapshot.data[position];
 
                   return ContentCard(item.id, item.title, item.overview,
-                      item.voteAverage, item.posterPath, true);
+                      item.voteAverage, item.posterPath, true, isPortuguese);
                 })
             : Center(
                 child: CircularProgressIndicator(),

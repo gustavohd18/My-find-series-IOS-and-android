@@ -7,7 +7,7 @@ import 'package:myFindMovies/widgets/content/circle_image.dart';
 
 class ContentDialog extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
-  final bool isMovie, isFavorite;
+  final bool isMovie, isFavorite, isPortuguese;
   final Function() f;
 
   ContentDialog(
@@ -18,6 +18,7 @@ class ContentDialog extends StatelessWidget {
       @required this.posterPath,
       @required this.isMovie,
       @required this.isFavorite,
+      @required this.isPortuguese,
       this.f});
 
   // reference to our single class that manages the database
@@ -37,6 +38,25 @@ class ContentDialog extends StatelessWidget {
 
   Widget dialogContent(BuildContext context) {
     String _url;
+    String delete;
+    String add;
+    String cancel;
+    String added;
+    String removed;
+
+    if (isPortuguese) {
+      delete = 'delete Favorite';
+      add = 'add favorite';
+      cancel = 'Close';
+      added = 'Added with sucess';
+      removed = 'Removed with sucess';
+    } else {
+      delete = 'deletar dos Favoritos';
+      add = 'Adicionar aos favoritos';
+      cancel = 'Fechar';
+      added = 'Adicionado com sucesso';
+      removed = 'Removidos com sucesso';
+    }
 
     if (isMovie) {
       ContentHandler().videoMovies(id).then((data) {
@@ -110,9 +130,8 @@ class ContentDialog extends StatelessWidget {
                       ),
                       Expanded(
                         child: FlatButton(
-                          child: (isFavorite == true)
-                              ? Text("delete Favorite")
-                              : Text("add favorite"),
+                          child:
+                              (isFavorite == true) ? Text(delete) : Text(add),
                           onPressed: () {
                             if (isFavorite) {
                               dbHelper.delete(id);
@@ -132,7 +151,7 @@ class ContentDialog extends StatelessWidget {
                                     return AlertDialog(
                                       title: Icon(Icons.check),
                                       content: Text(
-                                        'Removed with sucess',
+                                        removed,
                                         textAlign: TextAlign.center,
                                       ),
                                     );
@@ -166,7 +185,7 @@ class ContentDialog extends StatelessWidget {
                                     return AlertDialog(
                                       title: Icon(Icons.check),
                                       content: Text(
-                                        'Added with sucess',
+                                        added,
                                         textAlign: TextAlign.center,
                                       ),
                                     );
@@ -180,7 +199,7 @@ class ContentDialog extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('cancel'),
+                          child: Text(cancel),
                         ),
                       ),
                     ],

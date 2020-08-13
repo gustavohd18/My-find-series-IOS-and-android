@@ -58,9 +58,6 @@ void main() {
 
     final TextField text = tester.widget(textFinder);
 
-    expect(find.text("Search for movies"), findsOneWidget);
-    expect(find.text("Search"), findsOneWidget);
-
     expect(scaffold.body, column);
     expect(container.child, row);
     expect(row.children, [flex]);

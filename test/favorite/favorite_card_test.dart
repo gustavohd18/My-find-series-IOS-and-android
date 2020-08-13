@@ -27,8 +27,8 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: FavoriteCard(
-            id, title, information, voteAverage, posterPath, isMovie, _f),
+        home: FavoriteCard(id, title, information, voteAverage, posterPath,
+            isMovie, _f, false),
       ),
     );
 

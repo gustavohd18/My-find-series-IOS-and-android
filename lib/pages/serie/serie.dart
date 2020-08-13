@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/serie/series_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
@@ -10,6 +11,17 @@ class Series extends StatefulWidget {
 class SerieState extends State<Series> {
   final searchTextController = TextEditingController();
   String searchText = "";
+  bool isPortugues;
+  String _searchSeries;
+  String _search;
+  String _searchPerSeries;
+
+  @override
+  void initState() {
+    super.initState();
+    // this should not be done in build method.
+    getLanguage();
+  }
 
   @override
   void dispose() {
@@ -30,16 +42,17 @@ class SerieState extends State<Series> {
                 onSubmitted: (value) {
                   setState(() {
                     searchText = searchTextController.text;
+                    //getLanguage();
                   });
                 },
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: "Search for series",
-                  hintText: "Search",
+                  labelText: _searchSeries,
+                  hintText: _search,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: 'Search Series',
+                    tooltip: _searchPerSeries,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
@@ -58,8 +71,24 @@ class SerieState extends State<Series> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(child: SeriesList(ContentHandler().searchSeries(searchText)))
+          Expanded(
+              child: SeriesList(
+                  ContentHandler().searchSeries(searchText), isPortugues))
       ],
     ));
+  }
+
+  Future<Null> getLanguage() async {
+    bool isPortuguese = await Traslator().isPortuguese();
+    setState(() {
+      isPortugues = isPortuguese;
+      _searchSeries =
+          (isPortuguese == false) ? "Pesquisa por Series" : "Search for Series";
+
+      _search = (isPortuguese == false) ? "Pesquisar" : "Search";
+
+      _searchPerSeries =
+          (isPortuguese == false) ? "Pesquisar Series" : 'Search Series';
+    });
   }
 }

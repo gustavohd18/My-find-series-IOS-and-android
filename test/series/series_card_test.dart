@@ -28,7 +28,7 @@ void main() {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: SeriesCard(
-            id, title, information, voteAverage, posterPath, isMovie),
+            id, title, information, voteAverage, posterPath, isMovie, false),
       ),
     );
 

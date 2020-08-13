@@ -5,11 +5,12 @@ import 'package:myFindMovies/widgets/utils/stars.dart';
 class FavoriteCard extends StatelessWidget {
   final String id, title, information, voteAverage, posterPath;
   final bool isMovie;
+  final bool isPortuguese;
 
   final Function() f;
 
   FavoriteCard(this.id, this.title, this.information, this.voteAverage,
-      this.posterPath, this.isMovie, this.f);
+      this.posterPath, this.isMovie, this.f, this.isPortuguese);
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class FavoriteCard extends StatelessWidget {
             isMovie: isMovie,
             isFavorite: true,
             f: f,
+            isPortuguese: isPortuguese,
           ),
         );
       },

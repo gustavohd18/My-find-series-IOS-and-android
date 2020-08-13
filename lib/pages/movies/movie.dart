@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/movies/movies_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 
@@ -10,6 +11,18 @@ class Movie extends StatefulWidget {
 class MovieState extends State<Movie> {
   final searchTextController = TextEditingController();
   String searchText = "";
+
+  bool isPortugues;
+  String _searchMovies;
+  String _search;
+  String _searchPerMovies;
+
+  @override
+  void initState() {
+    super.initState();
+    // this should not be done in build method.
+    getLanguage();
+  }
 
   @override
   void dispose() {
@@ -35,11 +48,11 @@ class MovieState extends State<Movie> {
                 controller: searchTextController,
                 decoration: InputDecoration(
                   focusColor: Colors.black,
-                  labelText: "Search for movies",
-                  hintText: "Search",
+                  labelText: _searchMovies,
+                  hintText: _search,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    tooltip: 'Search Movies',
+                    tooltip: _searchPerMovies,
                     onPressed: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       setState(() {
@@ -58,8 +71,25 @@ class MovieState extends State<Movie> {
           padding: EdgeInsets.all(10),
         ),
         if (searchText.length > 0)
-          Expanded(child: MoviesList(ContentHandler().searchMovies(searchText)))
+          Expanded(
+              child: MoviesList(
+                  ContentHandler().searchMovies(searchText), isPortugues))
       ],
     ));
+  }
+
+  Future<Null> getLanguage() async {
+    bool isPortuguese = await Traslator().isPortuguese();
+    setState(() {
+      isPortugues = isPortuguese;
+      _searchMovies = (isPortuguese == false)
+          ? "Pesquisa para Filmes"
+          : "Search for movies";
+
+      _search = (isPortuguese == false) ? "Pesquisar " : "Search";
+
+      _searchPerMovies =
+          (isPortuguese == false) ? "Pesquisar Filme" : 'Search Movies';
+    });
   }
 }
