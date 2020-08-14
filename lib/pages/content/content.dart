@@ -178,17 +178,13 @@ class Content extends StatelessWidget {
               ],
             )),
         SizedBox(height: 16.0),
-        Container(
-          child: Flexible(
-            child: Padding(
-              padding: EdgeInsets.only(left: 12.0, right: 12.0),
-              child: Text(
-                information,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
+        Padding(
+          padding: EdgeInsets.only(left: 12.0, right: 12.0),
+          child: Text(
+            information,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: 16.0,
             ),
           ),
         ),
