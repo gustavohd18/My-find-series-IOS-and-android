@@ -47,7 +47,7 @@ class MovieState extends State<Movie> {
                 },
                 controller: searchTextController,
                 decoration: InputDecoration(
-                  focusColor: Colors.black,
+                  focusColor: Colors.white,
                   labelText: _searchMovies,
                   hintText: _search,
                   suffixIcon: IconButton(
@@ -62,7 +62,7 @@ class MovieState extends State<Movie> {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
               ),
