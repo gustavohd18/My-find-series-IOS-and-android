@@ -3,6 +3,7 @@ import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
+import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
@@ -47,6 +48,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: DrawerMenu(),
         body: DefaultTabController(
             length: 5,
             child: Scaffold(

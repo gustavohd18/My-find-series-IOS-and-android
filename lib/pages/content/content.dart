@@ -198,7 +198,6 @@ class Content extends StatelessWidget {
       height: 50,
       child: FlutterYoutube.playYoutubeVideoById(
         apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
-        // videoUrl: "https://www.youtube.com/watch?v=$key",
         videoId: key,
         autoPlay: false,
       ),
