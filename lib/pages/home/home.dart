@@ -27,6 +27,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   List<String> _tabs = ["Home", "Favorite", "Series", "Movies", "Settings"];
   String _myHandler;
   TabController _controller;
+  String _homeName = 'Home';
 
   @override
   void initState() {
@@ -47,51 +48,12 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: DrawerMenu(),
-        body: DefaultTabController(
-            length: 5,
-            child: Scaffold(
-              body: TabBarView(
-                controller: _controller,
-                children: [
-                  _buildScreen(),
-                  Favorite(),
-                  Series(),
-                  Movie(),
-                  Settings(_reloadTab)
-                ],
-              ),
-              appBar: AppBar(
-                title: Text(_myHandler),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                bottom: TabBar(
-                  controller: _controller,
-                  tabs: <Tab>[
-                    Tab(
-                      icon: Icon(Icons.home),
-                      text: _tabs[0],
-                    ),
-                    Tab(
-                      icon: Icon(Icons.favorite),
-                      text: _tabs[1],
-                    ),
-                    Tab(
-                      icon: Icon(Icons.slow_motion_video),
-                      text: _tabs[2],
-                    ),
-                    Tab(
-                      icon: Icon(Icons.movie),
-                      text: _tabs[3],
-                    ),
-                    Tab(
-                      icon: Icon(Icons.settings),
-                      text: _tabs[4],
-                    )
-                  ],
-                ),
-              ),
-            )));
+    return SafeArea(
+        child: Scaffold(
+      drawer: DrawerMenu(_buildScreen(), Favorite(), Series(), Movie(),
+          Settings(_reloadTab), isPortugues),
+      body: _buildScreen(),
+    ));
   }
 
   void _reloadTab() {
@@ -101,7 +63,8 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   }
 
   Widget _buildScreen() {
-    return Column(
+    return SafeArea(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
@@ -113,7 +76,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
         Subtitle(_topSeries),
         Expanded(flex: 1, child: ContentSeriesList(_serieList, isPortugues)),
       ],
-    );
+    ));
   }
 
   Future<Null> getLanguage() async {
@@ -123,6 +86,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
 
       if (!isPortuguese) {
         _tabs[0] = "Inicio";
+        _homeName = "Inicio";
         _tabs[1] = "Favoritos";
         _tabs[3] = "Filmes";
         _tabs[4] = "Configurar";
@@ -130,6 +94,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
         _topMovies = "Top 10 Filmes no mundo";
       } else {
         _tabs[0] = "Home";
+        _homeName = "Home";
         _tabs[1] = "Favorite";
         _tabs[3] = "Movies";
         _tabs[4] = "Settings";

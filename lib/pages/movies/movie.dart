@@ -33,7 +33,8 @@ class MovieState extends State<Movie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: SafeArea(
+            child: Column(
       children: <Widget>[
         Container(
           child: Row(children: <Widget>[
@@ -75,7 +76,7 @@ class MovieState extends State<Movie> {
               child: MoviesList(
                   ContentHandler().searchMovies(searchText), isPortugues))
       ],
-    ));
+    )));
   }
 
   Future<Null> getLanguage() async {

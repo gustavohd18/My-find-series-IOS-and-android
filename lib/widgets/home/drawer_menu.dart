@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
+  final Widget home, favorite, series, movies, settings;
+  final bool isPortugues;
+
+  DrawerMenu(this.home, this.favorite, this.series, this.movies, this.settings,
+      this.isPortugues);
   @override
   Widget build(BuildContext context) {
+    String _homeName, _favoriteName, _moviesName, _settingsName;
+
+    if (!isPortugues) {
+      _homeName = "Inicio";
+      _favoriteName = "Favoritos";
+      _moviesName = "Filmes";
+      _settingsName = "Configurar";
+    } else {
+      _homeName = "Home";
+      _favoriteName = "Favorite";
+      _moviesName = "Movies";
+      _settingsName = "Settings";
+    }
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Drawer Header'),
+            child: Text('My find'),
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
@@ -25,7 +44,7 @@ class DrawerMenu extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(left: 10, top: 2),
                     child: Text(
-                      "Home",
+                      _homeName,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18),
@@ -33,8 +52,9 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pop(context);
+              // Navigator.push(context,
+              //    MaterialPageRoute(builder: (BuildContext context) => /////home));
             },
           ),
           ListTile(
@@ -49,7 +69,7 @@ class DrawerMenu extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(left: 10, top: 2),
                     child: Text(
-                      "Favoritos",
+                      _favoriteName,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18),
@@ -57,8 +77,11 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => favorite));
             },
           ),
           ListTile(
@@ -81,8 +104,9 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) => series));
             },
           ),
           ListTile(
@@ -97,7 +121,7 @@ class DrawerMenu extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(left: 10, top: 2),
                     child: Text(
-                      "Movies",
+                      _moviesName,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18),
@@ -105,8 +129,9 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) => movies));
             },
           ),
           ListTile(
@@ -129,8 +154,11 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => settings));
             },
           ),
         ],

@@ -32,7 +32,8 @@ class SerieState extends State<Series> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: SafeArea(
+            child: Column(
       children: <Widget>[
         Container(
           child: Row(children: <Widget>[
@@ -75,7 +76,7 @@ class SerieState extends State<Series> {
               child: SeriesList(
                   ContentHandler().searchSeries(searchText), isPortugues))
       ],
-    ));
+    )));
   }
 
   Future<Null> getLanguage() async {
