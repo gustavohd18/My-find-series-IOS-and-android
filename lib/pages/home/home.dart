@@ -53,6 +53,9 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
       drawer: DrawerMenu(_buildScreen(), Favorite(), Series(), Movie(),
           Settings(_reloadTab), isPortugues),
       body: _buildScreen(),
+      appBar: AppBar(
+        title: Text(_myHandler),
+      ),
     ));
   }
 

@@ -146,7 +146,7 @@ class DrawerMenu extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(left: 10, top: 2),
                     child: Text(
-                      "Settings",
+                      _settingsName,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18),

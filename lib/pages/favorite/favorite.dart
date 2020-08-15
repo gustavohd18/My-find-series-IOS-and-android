@@ -31,7 +31,8 @@ class _FavoriteState extends State<Favorite> {
   }
 
   Widget _buildScreen() {
-    return Column(
+    return SafeArea(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
@@ -40,7 +41,7 @@ class _FavoriteState extends State<Favorite> {
               _favoriteList, _reloadFavorite, _isPortugues, _text),
         ),
       ],
-    );
+    ));
   }
 
   void _reloadFavorite() {
