@@ -4,9 +4,10 @@ My Find Series and Movies will help you find series and movies !
 This project comes from my need to be able find series and movies and get information about they, I really like share with friends but somethings send message to social midia is not cool and with this project you can share with your friend anytime! 
 
 # Screenshot
-<img src="/screenshot/main.png" height="400px"/> <img src="/screenshot/second_image.png" height="400px"/>
+<img src="/screenshot/home.png" height="400px"/> <img src="/screenshot/drawer.png" height="400px"/>
+<img src="/screenshot/favorites.png" height="400px"/> <img src="/screenshot/settings.png" height="400px"/> 
 <img src="/screenshot/movies.png" height="400px"/> <img src="/screenshot/series.png" height="400px"/> 
-<img src="/screenshot/details.png" height="400px"/>   
+<img src="/screenshot/details.png" height="400px"/> <img src="/screenshot/portuguese.png" height="400px"/>   
 
 ## Getting Started
 
@@ -28,7 +29,7 @@ If you have any questions send me message or you like join feel free to made Pul
 ## Next update changes:
 - [ ] Share movies and serie with other users
 - [ ] Add User's area which will have some informations
-- [ ] New UI/UX to show movies and series
+- [X] New UI/UX to show movies and series
 - [X] Traslate to portuguese too.
 
 ## License:

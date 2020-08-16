@@ -27,7 +27,7 @@ class DrawerMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('My find'),
+            child: Text('My find Series and Movies'),
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
