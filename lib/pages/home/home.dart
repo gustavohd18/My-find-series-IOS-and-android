@@ -50,11 +50,17 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      drawer: DrawerMenu(_buildScreen(), Favorite(), Series(), Movie(),
+      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
           Settings(_reloadTab), isPortugues),
       body: _buildScreen(),
       appBar: AppBar(
         title: Text(_myHandler),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
       ),
     ));
   }

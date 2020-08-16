@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/movies/movies_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
+import 'package:myFindMovies/pages/settings/settings.dart';
+import 'package:myFindMovies/widgets/home/drawer_menu.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
+import 'package:myFindMovies/pages/home/home.dart';
+import 'package:myFindMovies/pages/favorite/favorite.dart';
 
 class Movie extends StatefulWidget {
   @override
@@ -34,8 +39,16 @@ class MovieState extends State<Movie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
+            Settings(_reloadTab), isPortugues),
         appBar: AppBar(
           title: Text(_moviesTitle),
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
         ),
         body: SafeArea(
             child: Column(
@@ -81,6 +94,12 @@ class MovieState extends State<Movie> {
                       ContentHandler().searchMovies(searchText), isPortugues))
           ],
         )));
+  }
+
+  void _reloadTab() {
+    setState(() {
+      getLanguage();
+    });
   }
 
   Future<Null> getLanguage() async {

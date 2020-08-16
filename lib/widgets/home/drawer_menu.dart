@@ -14,10 +14,10 @@ class DrawerMenu extends StatelessWidget {
       _homeName = "Inicio";
       _favoriteName = "Favoritos";
       _moviesName = "Filmes";
-      _settingsName = "Configurar";
+      _settingsName = "Configurações";
     } else {
       _homeName = "Home";
-      _favoriteName = "Favorite";
+      _favoriteName = "Favorites";
       _moviesName = "Movies";
       _settingsName = "Settings";
     }
@@ -53,8 +53,8 @@ class DrawerMenu extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              // Navigator.push(context,
-              //    MaterialPageRoute(builder: (BuildContext context) => /////home));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) => home));
             },
           ),
           ListTile(

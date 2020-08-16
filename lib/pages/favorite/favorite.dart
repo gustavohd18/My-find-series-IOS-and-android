@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/favorite/favorites_list.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
+import 'package:myFindMovies/pages/movies/movie.dart';
+import 'package:myFindMovies/pages/settings/settings.dart';
+import 'package:myFindMovies/widgets/home/drawer_menu.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
 
 class Favorite extends StatefulWidget {
   @override
@@ -16,6 +21,8 @@ class _FavoriteState extends State<Favorite> {
   bool _isPortugues = true;
   String _text = " ";
 
+  String _myHandler;
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +34,17 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildScreen(),
+      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
+          Settings(_reloadTab), _isPortugues),
+      appBar: AppBar(
+        title: Text(_myHandler),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -50,6 +68,12 @@ class _FavoriteState extends State<Favorite> {
     });
   }
 
+  void _reloadTab() {
+    setState(() {
+      getLanguage();
+    });
+  }
+
   Future<Null> getLanguage() async {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
@@ -58,6 +82,8 @@ class _FavoriteState extends State<Favorite> {
       _text = (isPortuguese == false)
           ? "Nenhum favorito na lista"
           : "No have Favorite";
+
+      _myHandler = (isPortuguese == false) ? "Favoritos" : "Favorites";
     });
   }
 }
