@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog_content.dart';
+import 'package:myFindMovies/pages/content/content.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class FavoriteCard extends StatelessWidget {
@@ -24,24 +24,26 @@ class FavoriteCard extends StatelessWidget {
       subtitle: Stars(media),
       trailing: Icon(Icons.favorite, color: Colors.red),
       onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => Content(
+              id: id,
+              title: title,
+              information: information,
+              voteAverage: voteAverage,
+              posterPath: posterPath,
+              isMovie: isMovie,
+              isFavorite: true,
+              f: f,
+              isPortuguese: isPortuguese,
+            ),
+          ),
+        );
+
         if (f != null) {
           f();
         }
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => ContentDialog(
-            id: id,
-            title: title,
-            information: information,
-            voteAverage: voteAverage,
-            posterPath: posterPath,
-            isMovie: isMovie,
-            isFavorite: true,
-            f: f,
-            isPortuguese: isPortuguese,
-          ),
-        );
       },
     )));
   }
