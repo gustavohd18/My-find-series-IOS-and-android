@@ -6,7 +6,8 @@ This project comes from my need to be able find series and movies and get inform
 # Screenshot
 <img src="/screenshot/home.png" height="400px"/> <img src="/screenshot/drawer.png" height="400px"/>
 <img src="/screenshot/favorites.png" height="400px"/> <img src="/screenshot/settings.png" height="400px"/> 
- <img src="/screenshot/portuguese.png" height="400px"/>   
+<img src="/screenshot/movies.png" height="400px"/> <img src="/screenshot/series.png" height="400px"/> 
+<img src="/screenshot/details.png" height="400px"/> <img src="/screenshot/portuguese.png" height="400px"/>   
 
 ## Getting Started
 
