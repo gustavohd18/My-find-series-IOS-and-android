@@ -1,4 +1,4 @@
-package com.example.myFindMovies
+package com.gustavo.myFindMovies
 
 import io.flutter.embedding.android.FlutterActivity
 
