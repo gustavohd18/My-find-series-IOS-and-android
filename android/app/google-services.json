@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "426777969081",
+    "firebase_url": "https://myfindseriesandmovies.firebaseio.com",
+    "project_id": "myfindseriesandmovies",
+    "storage_bucket": "myfindseriesandmovies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426777969081:android:6ad0a35e4a80073d603668",
+        "android_client_info": {
+          "package_name": "com.gustavo.myFindMovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426777969081-bphpb4ksm312f2midqb4r88knmidr9mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8NPsAv1oMcrn3XYoAvtkrm5sH61ir-E0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426777969081-bphpb4ksm312f2midqb4r88knmidr9mf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "426777969081-f7o6d9sgcuc5gbh2g0hf0ebralmcbrur.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gustavo.myFindMovies"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
