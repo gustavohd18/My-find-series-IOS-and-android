@@ -21,14 +21,14 @@ class AuthenticationService implements Authentication {
       {String email, String password}) async {
     var user = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    return user.credential.providerId;
+    return user.user.email;
   }
 
   Future<String> createUserWithEmailAndPassword(
       {String email, String password}) async {
     var user = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    return user.credential.providerId;
+    return user.user.uid;
   }
 
   Future<void> sendEmailVerification() async {

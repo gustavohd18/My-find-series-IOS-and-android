@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
-import 'package:myFindMovies/service/authentication/login_block.dart';
+import 'package:myFindMovies/service/authentication/login_bloc.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -9,10 +9,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   LoginBloc _loginBloc;
+
+  AuthenticationService authenticationService = AuthenticationService();
+
+  final myController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    _loginBloc = LoginBloc(AuthenticationService());
+    _loginBloc = LoginBloc(authenticationService);
   }
 
   @override
@@ -59,6 +63,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 48.0),
               _buildLoginAndCreateButtons(),
+              _buttonResetPassword(),
             ],
           ),
         ),
@@ -97,10 +102,14 @@ class _LoginState extends State<Login> {
               RaisedButton(
             elevation: 16.0,
             child: Text('Login'),
-            color: Colors.lightGreen.shade200,
-            disabledColor: Colors.grey.shade100,
+            color: Colors.blue.shade200,
+            disabledColor: Colors.transparent,
             onPressed: snapshot.data
-                ? () => _loginBloc.loginOrCreateChanged.add('Login')
+                ? () => {
+                      _loginBloc.loginOrCreateChanged.add('Login'),
+                      print("Snap button login"),
+                      print(snapshot.data.toString())
+                    }
                 : null,
           ),
         ),
@@ -125,10 +134,12 @@ class _LoginState extends State<Login> {
               RaisedButton(
             elevation: 16.0,
             child: Text('Create Account'),
-            color: Colors.lightGreen.shade200,
-            disabledColor: Colors.grey.shade100,
+            color: Colors.blue.shade200,
+            disabledColor: Colors.transparent,
             onPressed: snapshot.data
-                ? () => _loginBloc.loginOrCreateChanged.add('Create Account')
+                ? () => {
+                      _loginBloc.loginOrCreateChanged.add('Create Account'),
+                    }
                 : null,
           ),
         ),
@@ -139,6 +150,105 @@ class _LoginState extends State<Login> {
           },
         ),
       ],
+    );
+  }
+
+  Column _buttonResetPassword() {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop(true);
+      },
+    );
+
+    Widget confirmButton = FlatButton(
+      child: Text("Send"),
+      onPressed: () {
+        if (myController.text != '') {
+          authenticationService.resetPassword(myController.text);
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                Future.delayed(Duration(milliseconds: 300), () {
+                  Navigator.of(context).pop(true);
+                  //x  Navigator.of(context).
+                });
+                return AlertDialog(
+                  title: Icon(Icons.check),
+                  content: Text(
+                    "Email sended",
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              });
+        } else {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                Future.delayed(Duration(milliseconds: 300), () {
+                  Navigator.of(context).pop(true);
+                  //x  Navigator.of(context).
+                });
+                return AlertDialog(
+                  title: Icon(Icons.error),
+                  content: Text(
+                    "Email not send try again",
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              });
+        }
+      },
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RaisedButton(
+          elevation: 16.0,
+          child: Text('Reset password'),
+          color: Colors.blue.shade200,
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text(
+                      "Reset password",
+                      textAlign: TextAlign.center,
+                    ),
+                    content: _dialogReset(),
+                    actions: [confirmButton, cancelButton],
+                  );
+                });
+          },
+        ),
+      ],
+    );
+  }
+
+  Container _dialogReset() {
+    return Container(
+      width: 300,
+      height: 150,
+      child: Column(
+        children: [
+          Text(
+            "To reset password please, type your email and follow instruction send to  email",
+            textAlign: TextAlign.center,
+          ),
+          TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: 'Email Address',
+              icon: Icon(Icons.mail_outline),
+            ),
+            controller: myController,
+          ),
+        ],
+      ),
     );
   }
 }
