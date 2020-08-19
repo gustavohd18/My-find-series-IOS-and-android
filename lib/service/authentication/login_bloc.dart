@@ -69,13 +69,7 @@ class LoginBloc with Validators {
       _updateEnableLoginCreateButtonStream();
     });
     loginOrCreate.listen((action) {
-      if (action == 'Login') {
-        _logIn();
-      } else if (action == 'Create Account') {
-        _createAccount();
-      } else {
-        return 'error';
-      }
+      action == 'Login' ? _logIn() : _createAccount();
     });
   }
 
@@ -98,6 +92,7 @@ class LoginBloc with Validators {
         print('Login error: $error');
         _result = 'Email and Password are not valid';
         print(_result);
+        print(loginOrCreate);
       });
 
       return _result;
@@ -119,7 +114,7 @@ class LoginBloc with Validators {
             .then((user) {})
             .catchError((error) async {
           print('Login error: $error');
-          _result = 'Error creating user';
+          _result = error;
         });
       }).catchError((error) async {
         print('Creating user error: $error');
