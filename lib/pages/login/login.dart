@@ -21,6 +21,11 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    _loginBloc.loginOrCreateError.listen((event) {
+      if (event) {
+        showAlertDialogError(context);
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
@@ -107,8 +112,6 @@ class _LoginState extends State<Login> {
             onPressed: snapshot.data
                 ? () => {
                       _loginBloc.loginOrCreateChanged.add('Login'),
-                      print("Snap button login"),
-                      print(snapshot.data.toString())
                     }
                 : null,
           ),
@@ -249,6 +252,28 @@ class _LoginState extends State<Login> {
           ),
         ],
       ),
+    );
+  }
+
+  showAlertDialogError(BuildContext context) {
+    Widget cancelaButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop(true);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      content: Text("Error with login"),
+      actions: [
+        cancelaButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

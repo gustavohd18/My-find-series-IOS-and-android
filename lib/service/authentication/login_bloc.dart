@@ -17,6 +17,7 @@ class LoginBloc with Validators {
   void dispose() {
     _passwordController.close();
     _emailController.close();
+    _loginOrCreateErrorController.close();
     _enableLoginCreateButtonController.close();
     _loginOrCreateButtonController.close();
     _loginOrCreateController.close();
@@ -44,10 +45,18 @@ class LoginBloc with Validators {
       _loginOrCreateButtonController.sink;
   Stream<String> get loginOrCreateButton =>
       _loginOrCreateButtonController.stream;
+
   final StreamController<String> _loginOrCreateController =
       StreamController<String>();
   Sink<String> get loginOrCreateChanged => _loginOrCreateController.sink;
   Stream<String> get loginOrCreate => _loginOrCreateController.stream;
+
+  final StreamController<bool> _loginOrCreateErrorController =
+      StreamController<bool>();
+  Sink<bool> get loginOrCreateErrorChanged =>
+      _loginOrCreateErrorController.sink;
+
+  Stream<bool> get loginOrCreateError => _loginOrCreateErrorController.stream;
 
   void _startListenersIfEmailPasswordAreValid() {
     email.listen((email) {
@@ -88,15 +97,17 @@ class LoginBloc with Validators {
           .signInWithEmailAndPassword(email: _email, password: _password)
           .then((user) {
         _result = 'Success';
+        loginOrCreateErrorChanged.add(false);
       }).catchError((error) {
         print('Login error: $error');
         _result = 'Email and Password are not valid';
         print(_result);
-        print(loginOrCreate);
+        loginOrCreateErrorChanged.add(true);
       });
 
       return _result;
     } else {
+      loginOrCreateErrorChanged.add(true);
       return 'Email and Password are not valid';
     }
   }
@@ -108,19 +119,23 @@ class LoginBloc with Validators {
           .createUserWithEmailAndPassword(email: _email, password: _password)
           .then((user) {
         print('Created user: $user');
+        loginOrCreateErrorChanged.add(false);
         _result = 'Created user: $user';
         authenticationApi
             .signInWithEmailAndPassword(email: _email, password: _password)
             .then((user) {})
             .catchError((error) async {
           print('Login error: $error');
+          loginOrCreateErrorChanged.add(true);
           _result = error;
         });
       }).catchError((error) async {
+        loginOrCreateErrorChanged.add(true);
         print('Creating user error: $error');
       });
       return _result;
     } else {
+      loginOrCreateErrorChanged.add(true);
       return 'Error creating user';
     }
   }
