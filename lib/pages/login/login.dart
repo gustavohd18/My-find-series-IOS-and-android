@@ -59,11 +59,7 @@ class _LoginState extends State<Login> {
       _sendButtonOk = "Email sent";
       _errorSendReset = "Email não enviado, tente novamente";
     }
-    //_loginBloc.loginOrCreateError.listen((event) {
-    // if (event) {
-    //   showAlertDialogError(context);
-    //  }
-    // });
+
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(

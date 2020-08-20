@@ -127,8 +127,9 @@ class LoginBloc with Validators {
         _result = 'Created user: $user';
         authenticationApi
             .signInWithEmailAndPassword(email: _email, password: _password)
-            .then((user) {})
-            .catchError((error) async {
+            .then((user) {
+          loginOrCreateErrorChanged.add(false);
+        }).catchError((error) async {
           print('Login error: $error');
           loginOrCreateErrorChanged.add(true);
           _result = error;
