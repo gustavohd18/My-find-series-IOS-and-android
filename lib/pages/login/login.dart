@@ -3,12 +3,27 @@ import 'package:myFindMovies/service/authentication/authentication_service.dart'
 import 'package:myFindMovies/service/authentication/login_bloc.dart';
 
 class Login extends StatefulWidget {
+  final bool isPortuguese;
+
+  const Login(this.isPortuguese);
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
   LoginBloc _loginBloc;
+
+  bool isPortugues;
+
+  String _password = '',
+      _errorLoginMessage = '',
+      _resetPasswordMessage = '',
+      _resetPasswordTitle = '',
+      _createAccount = '',
+      _sendButton = '',
+      _errorSendReset = '',
+      _cancelButton = '',
+      _sendButtonOk = '';
 
   AuthenticationService authenticationService = AuthenticationService();
 
@@ -21,11 +36,34 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    _loginBloc.loginOrCreateError.listen((event) {
-      if (event) {
-        showAlertDialogError(context);
-      }
-    });
+    if (!widget.isPortuguese) {
+      _password = "Senha";
+      _errorLoginMessage = "Erro com o login: Senha ou Email invalido";
+      _resetPasswordMessage =
+          "Para redefinir a senha, por favor digite seu email e siga as instruções enviadas para o Email";
+      _resetPasswordTitle = "Redefinir a senha";
+      _createAccount = "Criar uma conta";
+      _sendButton = "Enviar";
+      _cancelButton = "Cancelar";
+      _sendButtonOk = "Email enviado";
+      _errorSendReset = "Email not send try again";
+    } else {
+      _password = "Password";
+      _cancelButton = "Cancel";
+      _errorLoginMessage = "Error with login: Password or email invalid";
+      _resetPasswordMessage =
+          "To reset password, please type your email and follow instruction sent to email";
+      _resetPasswordTitle = "Reset password";
+      _createAccount = "Create Account";
+      _sendButton = "Send";
+      _sendButtonOk = "Email sent";
+      _errorSendReset = "Email não enviado, tente novamente";
+    }
+    //_loginBloc.loginOrCreateError.listen((event) {
+    // if (event) {
+    //   showAlertDialogError(context);
+    //  }
+    // });
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
@@ -48,7 +86,7 @@ class _LoginState extends State<Login> {
                     TextField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      labelText: 'Email Address',
+                      labelText: 'Email',
                       icon: Icon(Icons.mail_outline),
                       errorText: snapshot.error),
                   onChanged: _loginBloc.emailChanged.add,
@@ -60,7 +98,7 @@ class _LoginState extends State<Login> {
                     TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: _password,
                       icon: Icon(Icons.security),
                       errorText: snapshot.error),
                   onChanged: _loginBloc.passwordChanged.add,
@@ -112,12 +150,17 @@ class _LoginState extends State<Login> {
             onPressed: snapshot.data
                 ? () => {
                       _loginBloc.loginOrCreateChanged.add('Login'),
+                      _loginBloc.loginOrCreateError.listen((event) {
+                        if (event) {
+                          showAlertDialogError(context);
+                        }
+                      })
                     }
                 : null,
           ),
         ),
         FlatButton(
-          child: Text('Create Account'),
+          child: Text(_createAccount),
           onPressed: () {
             _loginBloc.loginOrCreateButtonChanged.add('Create Account');
           },
@@ -136,12 +179,17 @@ class _LoginState extends State<Login> {
           builder: (BuildContext context, AsyncSnapshot snapshot) =>
               RaisedButton(
             elevation: 16.0,
-            child: Text('Create Account'),
+            child: Text(_createAccount),
             color: Colors.blue.shade200,
             disabledColor: Colors.transparent,
             onPressed: snapshot.data
                 ? () => {
                       _loginBloc.loginOrCreateChanged.add('Create Account'),
+                      _loginBloc.loginOrCreateError.listen((event) {
+                        if (event) {
+                          showAlertDialogError(context);
+                        }
+                      })
                     }
                 : null,
           ),
@@ -158,14 +206,14 @@ class _LoginState extends State<Login> {
 
   Column _buttonResetPassword() {
     Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
+      child: Text(_cancelButton),
       onPressed: () {
         Navigator.of(context).pop(true);
       },
     );
 
     Widget confirmButton = FlatButton(
-      child: Text("Send"),
+      child: Text(_sendButton),
       onPressed: () {
         if (myController.text != '') {
           authenticationService.resetPassword(myController.text);
@@ -175,12 +223,11 @@ class _LoginState extends State<Login> {
               builder: (context) {
                 Future.delayed(Duration(milliseconds: 300), () {
                   Navigator.of(context).pop(true);
-                  //x  Navigator.of(context).
                 });
                 return AlertDialog(
                   title: Icon(Icons.check),
                   content: Text(
-                    "Email sended",
+                    _sendButtonOk,
                     textAlign: TextAlign.center,
                   ),
                 );
@@ -192,12 +239,11 @@ class _LoginState extends State<Login> {
               builder: (context) {
                 Future.delayed(Duration(milliseconds: 300), () {
                   Navigator.of(context).pop(true);
-                  //x  Navigator.of(context).
                 });
                 return AlertDialog(
                   title: Icon(Icons.error),
                   content: Text(
-                    "Email not send try again",
+                    _errorSendReset,
                     textAlign: TextAlign.center,
                   ),
                 );
@@ -210,7 +256,7 @@ class _LoginState extends State<Login> {
       children: <Widget>[
         RaisedButton(
           elevation: 16.0,
-          child: Text('Reset password'),
+          child: Text(_resetPasswordTitle),
           color: Colors.blue.shade200,
           onPressed: () {
             showDialog(
@@ -219,7 +265,7 @@ class _LoginState extends State<Login> {
                 builder: (context) {
                   return AlertDialog(
                     title: Text(
-                      "Reset password",
+                      _resetPasswordTitle,
                       textAlign: TextAlign.center,
                     ),
                     content: _dialogReset(),
@@ -239,13 +285,13 @@ class _LoginState extends State<Login> {
       child: Column(
         children: [
           Text(
-            "To reset password please, type your email and follow instruction send to  email",
+            _resetPasswordMessage,
             textAlign: TextAlign.center,
           ),
           TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: 'Email Address',
+              labelText: 'Email',
               icon: Icon(Icons.mail_outline),
             ),
             controller: myController,
@@ -256,7 +302,7 @@ class _LoginState extends State<Login> {
   }
 
   showAlertDialogError(BuildContext context) {
-    Widget cancelaButton = FlatButton(
+    Widget cancelButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
         Navigator.of(context).pop(true);
@@ -264,9 +310,9 @@ class _LoginState extends State<Login> {
     );
 
     AlertDialog alert = AlertDialog(
-      content: Text("Error with login"),
+      content: Text(_errorLoginMessage),
       actions: [
-        cancelaButton,
+        cancelButton,
       ],
     );
     showDialog(

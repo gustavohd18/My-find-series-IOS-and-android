@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:myFindMovies/pages/login/login.dart';
-import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/service/authentication/authenticationBloc.dart';
 import 'package:myFindMovies/service/authentication/authentication_provider.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
+import 'package:myFindMovies/service/traslator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  bool isPortuguese = await Traslator().isPortuguese();
+  print(isPortuguese);
+  runApp(MyApp(isPortuguese));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final bool isPortuguese;
+
+  MyApp(this.isPortuguese);
+
   @override
   Widget build(BuildContext context) {
     final AuthenticationService _authenticationService =
@@ -39,7 +46,7 @@ class MyApp extends StatelessWidget {
               Main(),
             );
           } else {
-            return _buildMaterialApp(Login());
+            return _buildMaterialApp(Login(isPortuguese));
           }
         },
       ),

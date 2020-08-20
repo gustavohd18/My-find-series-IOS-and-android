@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/authentication/validators.dart';
+import 'package:myFindMovies/service/traslator.dart';
 
 class LoginBloc with Validators {
   final AuthenticationService authenticationApi;
@@ -33,14 +34,17 @@ class LoginBloc with Validators {
   Sink<String> get passwordChanged => _passwordController.sink;
   Stream<String> get password =>
       _passwordController.stream.transform(validatePassword);
+
   final StreamController<bool> _enableLoginCreateButtonController =
       StreamController<bool>.broadcast();
   Sink<bool> get enableLoginCreateButtonChanged =>
       _enableLoginCreateButtonController.sink;
+
   Stream<bool> get enableLoginCreateButton =>
       _enableLoginCreateButtonController.stream;
   final StreamController<String> _loginOrCreateButtonController =
       StreamController<String>();
+
   Sink<String> get loginOrCreateButtonChanged =>
       _loginOrCreateButtonController.sink;
   Stream<String> get loginOrCreateButton =>
