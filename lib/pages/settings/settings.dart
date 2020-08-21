@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
+import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
@@ -47,7 +48,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), isPortugues),
+          Settings(_reloadTab), Share(), isPortugues),
       appBar: AppBar(
         title: Text(_myHandler),
         leading: Builder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
+import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
@@ -51,7 +52,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
     return SafeArea(
         child: Scaffold(
       drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), isPortugues),
+          Settings(_reloadTab), Share(), isPortugues),
       body: _buildScreen(),
       appBar: AppBar(
         title: Text(_myHandler),

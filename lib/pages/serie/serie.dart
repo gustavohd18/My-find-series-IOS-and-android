@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
+import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/widgets/serie/series_list.dart';
 import 'package:myFindMovies/service/content_handle.dart';
@@ -38,7 +39,7 @@ class SerieState extends State<Series> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-            Settings(_reloadTab), isPortugues),
+            Settings(_reloadTab), Share(), isPortugues),
         appBar: AppBar(
           title: Text("Series"),
           leading: Builder(
