@@ -316,7 +316,7 @@ class Content extends StatelessWidget {
                   ),
                   Text(
                     messages,
-                    textAlign: TextAlign.right,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 14.0,
                     ),

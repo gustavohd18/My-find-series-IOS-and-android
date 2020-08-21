@@ -15,12 +15,6 @@ class ShareList extends StatelessWidget {
       initialData: null,
       stream: _future,
       builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            color: Colors.blue,
-            child: CircularProgressIndicator(),
-          );
-        }
         return snapshot.hasData && snapshot.data.length > 0
             ? ListView.builder(
                 scrollDirection: Axis.vertical,
