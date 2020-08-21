@@ -121,7 +121,6 @@ class Content extends StatelessWidget {
                             builder: (context) {
                               Future.delayed(Duration(milliseconds: 300), () {
                                 Navigator.of(context).pop(true);
-                                //x  Navigator.of(context).
                               });
                               return AlertDialog(
                                 title: Icon(Icons.check),

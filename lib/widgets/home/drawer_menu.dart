@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/authentication/authentication_service.dart';
 
 class DrawerMenu extends StatelessWidget {
   final Widget home, favorite, series, movies, settings;
@@ -8,18 +9,22 @@ class DrawerMenu extends StatelessWidget {
       this.isPortugues);
   @override
   Widget build(BuildContext context) {
-    String _homeName, _favoriteName, _moviesName, _settingsName;
+    String _homeName, _favoriteName, _moviesName, _settingsName, _logoutName;
+    final AuthenticationService _authenticationService =
+        AuthenticationService();
 
     if (!isPortugues) {
       _homeName = "Inicio";
       _favoriteName = "Favoritos";
       _moviesName = "Filmes";
       _settingsName = "Configurações";
+      _logoutName = "Sair";
     } else {
       _homeName = "Home";
       _favoriteName = "Favorites";
       _moviesName = "Movies";
       _settingsName = "Settings";
+      _logoutName = "Logout";
     }
 
     return Drawer(
@@ -27,7 +32,15 @@ class DrawerMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('My find Series and Movies'),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                _authenticationService.getFirebaseAuth().currentUser.email,
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
@@ -159,6 +172,30 @@ class DrawerMenu extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => settings));
+            },
+          ),
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 10, top: 2),
+                    child: Text(
+                      _logoutName,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 18),
+                    )),
+              ],
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              _authenticationService.signOut();
             },
           ),
         ],
