@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/model/VideoContentList.dart';
 import 'package:http/http.dart' as http;
+import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/traslator.dart';
 
 class ContentHandler {
@@ -11,6 +14,9 @@ class ContentHandler {
   static const String baseSearch = "http://www.omdbapi.com/?apikey=";
   static const String key = "c1abb65895a3fdceff4cfaa0d2dbdfc2";
   static const String TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String _collectionShares = 'shares';
 
   var https = http.Client();
 
@@ -202,5 +208,41 @@ class ContentHandler {
         .toList();
 
     return list;
+  }
+
+  Stream<List<ShareContent>> getEmailList(String email) {
+    return _firestore
+        .collection(_collectionShares)
+        .where('email', isEqualTo: email)
+        .snapshots()
+        .map((QuerySnapshot snapshot) {
+      List<ShareContent> _shareDocs =
+          snapshot.docs.map((doc) => ShareContent.fromDoc(doc)).toList();
+      return _shareDocs;
+    });
+  }
+
+  Future<bool> addShareContent(ShareContent shareContent) async {
+    DocumentReference _documentReference =
+        await _firestore.collection(_collectionShares).add({
+      "id": shareContent.id,
+      "title": shareContent.title,
+      "overview": shareContent.overview,
+      "voteAverage": shareContent.voteAverage,
+      "posterPath": shareContent.posterPath,
+      "isMovie": shareContent.isMovie,
+      "url": shareContent.url,
+      "email": shareContent.email,
+      "message": shareContent.message
+    });
+    return _documentReference.id != null;
+  }
+
+  void deleteShareContent(ShareContent shareContent) async {
+    await _firestore
+        .collection(_collectionShares)
+        .doc(shareContent.documentID)
+        .delete()
+        .catchError((error) => print('Error deleting: $error'));
   }
 }

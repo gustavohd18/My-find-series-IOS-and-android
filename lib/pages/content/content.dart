@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/model/shareContent.dart';
+import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
@@ -11,6 +13,8 @@ class Content extends StatelessWidget {
   final bool isMovie, isFavorite, isPortuguese;
   final BuildContext contextFinal;
   final Function() f;
+
+  final AuthenticationService authenticationService = AuthenticationService();
 
   Content(
       {@required this.id,
@@ -27,6 +31,10 @@ class Content extends StatelessWidget {
   // reference to our single class that manages the database
   final dbHelper = FavoriteDatabase.instance;
 
+  final myController = TextEditingController();
+
+  final myController2 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +50,12 @@ class Content extends StatelessWidget {
     String cancel;
     String added;
     String removed;
+    String _sendContent;
+    String _message;
+    String _error;
+    String _ok;
+    String _close;
+    String _send;
 
     if (isPortuguese) {
       delete = 'delete Favorite';
@@ -49,12 +63,24 @@ class Content extends StatelessWidget {
       cancel = 'Share';
       added = 'Added with sucess';
       removed = 'Removed with sucess';
+      _sendContent = "Share";
+      _message = "Message";
+      _error = "error with share, email blank";
+      _ok = "shared with success";
+      _close = "Close";
+      _send = "Send";
     } else {
       delete = 'deletar dos Favoritos';
       add = 'Adicionar aos favoritos';
       cancel = 'Compartilhar';
       added = 'Adicionado com sucesso';
       removed = 'Removidos com sucesso';
+      _sendContent = "Compartilhar";
+      _message = "Mensagem";
+      _error = "falha com o compartilhamento, email em branco";
+      _ok = "Compartilhado com sucesso";
+      _close = "Fechar";
+      _send = "Enviar";
     }
 
     if (isMovie) {
@@ -170,6 +196,92 @@ class Content extends StatelessWidget {
                   child: FlatButton(
                     onPressed: () {
                       //will be implement
+                      String _isMovies;
+
+                      if (isMovie) {
+                        _isMovies = 's';
+                      } else {
+                        _isMovies = 'n';
+                      }
+
+                      String overview = information;
+
+                      final shareContent = ShareContent(
+                          id: id,
+                          title: title,
+                          overview: overview,
+                          voteAverage: voteAverage,
+                          posterPath: posterPath,
+                          url: _url,
+                          isMovie: _isMovies,
+                          email: "",
+                          message: "");
+
+                      Widget cancelButton = FlatButton(
+                        child: Text(_close),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      );
+
+                      Widget confirmButton = FlatButton(
+                        child: Text(_send),
+                        onPressed: () {
+                          if (myController.text != '') {
+                            shareContent.email = myController.text;
+                            shareContent.message =
+                                "${authenticationService.getFirebaseAuth().currentUser.email}: ${myController2.text}";
+                            ContentHandler().addShareContent(shareContent);
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  Future.delayed(Duration(milliseconds: 300),
+                                      () {
+                                    Navigator.of(context).pop(true);
+                                  });
+                                  return AlertDialog(
+                                    title: Icon(Icons.check),
+                                    content: Text(
+                                      _ok,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                });
+                          } else {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  Future.delayed(Duration(milliseconds: 300),
+                                      () {
+                                    Navigator.of(context).pop(true);
+                                  });
+                                  return AlertDialog(
+                                    title: Icon(Icons.error),
+                                    content: Text(
+                                      _error,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                });
+                          }
+                        },
+                      );
+
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                "${_sendContent}: ${title}",
+                                textAlign: TextAlign.center,
+                              ),
+                              content: _dialogReset(_message),
+                              actions: [confirmButton, cancelButton],
+                            );
+                          });
                     },
                     child: Text(cancel),
                   ),
@@ -199,6 +311,33 @@ class Content extends StatelessWidget {
         apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
         videoId: key,
         autoPlay: false,
+      ),
+    );
+  }
+
+  Container _dialogReset(String _message) {
+    return Container(
+      width: 300,
+      height: 150,
+      child: Column(
+        children: [
+          TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: 'Email',
+              icon: Icon(Icons.mail_outline),
+            ),
+            controller: myController,
+          ),
+          TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: _message,
+              icon: Icon(Icons.message),
+            ),
+            controller: myController2,
+          ),
+        ],
       ),
     );
   }

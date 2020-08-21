@@ -4,7 +4,7 @@ My Find Series and Movies will help you find series and movies !
 This project comes from my need to be able find series and movies and get information about they, I really like share with friends but somethings send message to social midia is not cool and with this project you can share with your friend anytime! 
 
 # Screenshot
-<img src="/screenshot/login.png" width = "300" height="300px"/> 
+<img src="/screenshot/login.png" width = "300" height="300px"/> <img src="/screenshot/share.png" width = "300" height="300px"/> 
 <img src="/screenshot/home.png"  width = "300" height="300px"/> <img src="/screenshot/drawer.png"  width = "300" height="300px"/>
 <img src="/screenshot/favorites.png"  width = "300" height="300px"/> <img src="/screenshot/settings.png" width ="300" height="300px"/> 
 <img src="/screenshot/movies1.png"  width = "300" height="300px"/> <img src="/screenshot/series1.png"  width = "300" height="300px"/> 
