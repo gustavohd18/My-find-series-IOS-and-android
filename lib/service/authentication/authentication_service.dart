@@ -28,7 +28,7 @@ class AuthenticationService implements Authentication {
       {String email, String password}) async {
     var user = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    return user.user.uid;
+    return user.credential.toString();
   }
 
   Future<void> sendEmailVerification() async {

@@ -35,7 +35,7 @@ class _MainState extends State<Main> with TickerProviderStateMixin {
     // this should not be done in build method.
     getLanguage();
     _controller = TabController(length: 5, vsync: this);
-    _myHandler = _tabs[0];
+    _myHandler = _homeName;
     _controller.addListener(_handleSelected);
   }
 
