@@ -3,12 +3,12 @@ import 'package:myFindMovies/pages/content/content.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class ShareCard extends StatelessWidget {
-  final String id, title, information, voteAverage, posterPath;
+  final String id, title, information, voteAverage, posterPath, messages;
   final bool isMovie;
   final bool isPortuguese;
 
   ShareCard(this.id, this.title, this.information, this.voteAverage,
-      this.posterPath, this.isMovie, this.isPortuguese);
+      this.posterPath, this.isMovie, this.isPortuguese, this.messages);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class ShareCard extends StatelessWidget {
               isMovie: isMovie,
               isFavorite: false,
               isPortuguese: isPortuguese,
+              messages: messages,
             ),
           ),
         );

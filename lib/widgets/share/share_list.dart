@@ -43,7 +43,8 @@ class ShareList extends StatelessWidget {
                       item.voteAverage,
                       item.posterPath,
                       _isMovies,
-                      isPortuguese);
+                      isPortuguese,
+                      item.message);
                 })
             : Center(
                 child: Text(

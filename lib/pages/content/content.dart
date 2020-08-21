@@ -9,7 +9,7 @@ import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class Content extends StatelessWidget {
-  final String id, title, information, voteAverage, posterPath;
+  final String id, title, information, voteAverage, posterPath, messages;
   final bool isMovie, isFavorite, isPortuguese;
   final BuildContext contextFinal;
   final Function() f;
@@ -26,6 +26,7 @@ class Content extends StatelessWidget {
       @required this.isFavorite,
       @required this.isPortuguese,
       this.contextFinal,
+      this.messages,
       this.f});
 
   // reference to our single class that manages the database
@@ -56,6 +57,7 @@ class Content extends StatelessWidget {
     String _ok;
     String _close;
     String _send;
+    String _messageField;
 
     if (isPortuguese) {
       delete = 'delete Favorite';
@@ -69,6 +71,7 @@ class Content extends StatelessWidget {
       _ok = "shared with success";
       _close = "Close";
       _send = "Send";
+      _messageField = "Comment";
     } else {
       delete = 'deletar dos Favoritos';
       add = 'Adicionar aos favoritos';
@@ -81,6 +84,7 @@ class Content extends StatelessWidget {
       _ok = "Compartilhado com sucesso";
       _close = "Fechar";
       _send = "Enviar";
+      _messageField = "Comentário";
     }
 
     if (isMovie) {
@@ -195,7 +199,6 @@ class Content extends StatelessWidget {
                 Expanded(
                   child: FlatButton(
                     onPressed: () {
-                      //will be implement
                       String _isMovies;
 
                       if (isMovie) {
@@ -299,6 +302,28 @@ class Content extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 16.0),
+        (messages != null)
+            ? Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: Column(children: [
+                  Text(
+                    _messageField,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text(
+                    messages,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ]),
+              )
+            : Wrap()
       ],
     );
   }
