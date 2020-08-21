@@ -231,7 +231,9 @@ class ContentHandler {
       "voteAverage": shareContent.voteAverage,
       "posterPath": shareContent.posterPath,
       "isMovie": shareContent.isMovie,
+      "url": shareContent.url,
       "email": shareContent.email,
+      "message": shareContent.message
     });
     return _documentReference.id != null;
   }
