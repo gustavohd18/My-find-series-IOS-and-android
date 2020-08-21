@@ -3,18 +3,24 @@ import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/widgets/share/share_card.dart';
 
 class ShareList extends StatelessWidget {
-  final Future<List<ShareContent>> _future;
-  final Function() _f;
+  final Stream<List<ShareContent>> _future;
   final bool isPortuguese;
   final String text;
 
-  ShareList(this._future, this._f, this.isPortuguese, this.text);
+  ShareList(this._future, this.isPortuguese, this.text);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ShareContent>>(
-      future: _future,
-      builder: (context, snapshot) {
+    return StreamBuilder(
+      initialData: null,
+      stream: _future,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            color: Colors.blue,
+            child: CircularProgressIndicator(),
+          );
+        }
         return snapshot.hasData && snapshot.data.length > 0
             ? ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -37,7 +43,6 @@ class ShareList extends StatelessWidget {
                       item.voteAverage,
                       item.posterPath,
                       _isMovies,
-                      _f,
                       isPortuguese);
                 })
             : Center(

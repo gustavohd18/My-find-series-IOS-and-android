@@ -7,10 +7,8 @@ class ShareCard extends StatelessWidget {
   final bool isMovie;
   final bool isPortuguese;
 
-  final Function() f;
-
   ShareCard(this.id, this.title, this.information, this.voteAverage,
-      this.posterPath, this.isMovie, this.f, this.isPortuguese);
+      this.posterPath, this.isMovie, this.isPortuguese);
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +33,10 @@ class ShareCard extends StatelessWidget {
               posterPath: posterPath,
               isMovie: isMovie,
               isFavorite: false,
-              f: f,
               isPortuguese: isPortuguese,
             ),
           ),
         );
-
-        if (f != null) {
-          f();
-        }
       },
     )));
   }

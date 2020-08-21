@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/model/shareContent.dart';
+import 'package:myFindMovies/pages/favorite/favorite.dart';
 import 'package:myFindMovies/pages/home/home.dart';
-import 'package:myFindMovies/pages/share/share.dart';
+import 'package:myFindMovies/service/authentication/authentication_service.dart';
+import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/service/traslator.dart';
-import 'package:myFindMovies/widgets/favorite/favorites_list.dart';
-import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
+import 'package:myFindMovies/widgets/share/share_list.dart';
 
-class Favorite extends StatefulWidget {
+class Share extends StatefulWidget {
   @override
-  _FavoriteState createState() => _FavoriteState();
+  _ShareState createState() => _ShareState();
 }
 
-class _FavoriteState extends State<Favorite> {
+class _ShareState extends State<Share> {
   final dbHelper = FavoriteDatabase.instance;
+  final AuthenticationService authenticationService = AuthenticationService();
 
-  Future<List<FavoriteList>> _favoriteList;
+  Stream<List<ShareContent>> _shareList;
   bool _isPortugues = true;
   String _text = " ";
 
-  String _myHandler;
+  String _myHandler = "";
 
   @override
   void initState() {
     super.initState();
-    _favoriteList = dbHelper.getFavorites();
     getLanguage();
   }
 
@@ -56,17 +58,10 @@ class _FavoriteState extends State<Favorite> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-          child: FavoritesList(
-              _favoriteList, _reloadFavorite, _isPortugues, _text),
+          child: ShareList(_shareList, _isPortugues, _text),
         ),
       ],
     ));
-  }
-
-  void _reloadFavorite() {
-    setState(() {
-      _favoriteList = dbHelper.getFavorites();
-    });
   }
 
   void _reloadTab() {
@@ -79,12 +74,14 @@ class _FavoriteState extends State<Favorite> {
     bool isPortuguese = await Traslator().isPortuguese();
     setState(() {
       _isPortugues = isPortuguese;
-      _favoriteList = dbHelper.getFavorites();
       _text = (isPortuguese == false)
-          ? "Nenhum favorito na lista"
-          : "No have Favorite";
+          ? "Nenhum conteúdo compartilhado na lista"
+          : "No have content shared";
 
-      _myHandler = (isPortuguese == false) ? "Favoritos" : "Favorites";
+      _myHandler = (isPortuguese == false) ? "Compartilhados" : "Shared";
+
+      _shareList = ContentHandler().getShareList(
+          authenticationService.getFirebaseAuth().currentUser.email);
     });
   }
 }

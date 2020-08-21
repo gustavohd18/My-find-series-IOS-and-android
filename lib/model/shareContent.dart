@@ -35,4 +35,19 @@ class ShareContent {
         email: doc["email"],
         message: doc["message"],
       );
+
+  factory ShareContent.fromJSON(Map<String, dynamic> doc) {
+    return ShareContent(
+      documentID: doc["documentID"].toString(),
+      id: doc["id"].toString(),
+      title: doc["title"].toString(),
+      overview: doc["overview"].toString(),
+      voteAverage: doc["voteAverage"].toString(),
+      posterPath: doc["posterPath"].toString(),
+      isMovie: doc["isMovie"].toString(),
+      url: doc["url"].toString(),
+      email: doc["email"].toString(),
+      message: doc["message"].toString(),
+    );
+  }
 }

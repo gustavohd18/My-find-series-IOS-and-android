@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/model/VideoContentList.dart';
@@ -210,14 +209,16 @@ class ContentHandler {
     return list;
   }
 
-  Stream<List<ShareContent>> getEmailList(String email) {
+  Stream<List<ShareContent>> getShareList(String email) {
     return _firestore
         .collection(_collectionShares)
         .where('email', isEqualTo: email)
         .snapshots()
         .map((QuerySnapshot snapshot) {
-      List<ShareContent> _shareDocs =
-          snapshot.docs.map((doc) => ShareContent.fromDoc(doc)).toList();
+      List<ShareContent> _shareDocs = snapshot.docs
+          .map((doc) => ShareContent.fromJSON(doc.data()))
+          .toList();
+
       return _shareDocs;
     });
   }
