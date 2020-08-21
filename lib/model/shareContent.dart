@@ -7,7 +7,6 @@ class ShareContent {
   String posterPath;
   String isMovie;
   String email;
-  String uid;
 
   ShareContent(
       {this.documentID,
@@ -17,17 +16,16 @@ class ShareContent {
       this.voteAverage,
       this.posterPath,
       this.isMovie,
-      this.email,
-      this.uid});
+      this.email});
 
   factory ShareContent.fromDoc(dynamic doc) => ShareContent(
-      documentID: doc.documentID,
-      id: doc["id"],
-      title: doc["title"],
-      overview: doc["overview"],
-      voteAverage: doc["voteAverage"],
-      posterPath: doc["posterPath"],
-      isMovie: doc["isMovie"],
-      email: doc["email"],
-      uid: doc["uid"]);
+        documentID: doc.documentID,
+        id: doc["id"],
+        title: doc["title"],
+        overview: doc["overview"],
+        voteAverage: doc["voteAverage"],
+        posterPath: doc["posterPath"],
+        isMovie: doc["isMovie"],
+        email: doc["email"],
+      );
 }
