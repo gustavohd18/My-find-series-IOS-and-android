@@ -21,6 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Key features:
 -  Search movies and series.
+-  Share movies and series with other users.
 -  See top 10 series and movies from IMDB.
 -  Added movies and series to favorite.
 -  See details about series or movie like name, description and trailer.
@@ -29,7 +30,7 @@ samples, guidance on mobile development, and a full API reference.
 If you have any questions send me message or you like join feel free to made Pull requests !
 
 ## Next update changes:
-- [ ] Share movies and serie with other users
+- [X] Share movies and serie with other users
 - [ ] Add User's area which will have some informations
 - [X] New UI/UX to show movies and series
 - [X] Traslate to portuguese too.
