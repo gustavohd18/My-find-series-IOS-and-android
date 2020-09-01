@@ -9,15 +9,9 @@ import 'package:myFindMovies/service/authentication/authentication_provider.dart
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/traslator.dart';
 
-//Future<void> main() async {
-// WidgetsFlutterBinding.ensureInitialized();
-//  await Firebase.initializeApp();
-//  bool isPortuguese = await Traslator().isPortuguese();
-////  print(isPortuguese);
-// runApp(MyApp(isPortuguese));
-//}
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(ModularApp(
     module: AppModule(),
   ));

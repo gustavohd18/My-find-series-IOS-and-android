@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:myFindMovies/stores/splash/splash_controller.dart';
 
 class Splash extends StatefulWidget {
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<Splash> {
+class _SplashPageState extends ModularState<Splash, SplashController> {
   Timer _timer;
   startTimeout() {
     _timer = Timer(Duration(seconds: 5), changeScreen);
@@ -16,7 +18,9 @@ class _SplashPageState extends State<Splash> {
   }
 
   changeScreen() async {
-    Modular.to.pushReplacementNamed('/home');
+    (this.controller.addUser != null)
+        ? Modular.to.pushReplacementNamed('/home')
+        : Modular.to.pushReplacementNamed('/login');
   }
 
   @override
