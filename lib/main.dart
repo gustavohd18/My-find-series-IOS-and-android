@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:myFindMovies/pages/login/login.dart';
@@ -7,12 +9,18 @@ import 'package:myFindMovies/service/authentication/authentication_provider.dart
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/traslator.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  bool isPortuguese = await Traslator().isPortuguese();
-  print(isPortuguese);
-  runApp(MyApp(isPortuguese));
+//Future<void> main() async {
+// WidgetsFlutterBinding.ensureInitialized();
+//  await Firebase.initializeApp();
+//  bool isPortuguese = await Traslator().isPortuguese();
+////  print(isPortuguese);
+// runApp(MyApp(isPortuguese));
+//}
+
+void main() {
+  runApp(ModularApp(
+    module: AppModule(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
