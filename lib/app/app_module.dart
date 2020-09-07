@@ -8,6 +8,7 @@ import 'package:myFindMovies/service/authentication/authentication_service.dart'
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
+import 'package:myFindMovies/stores/login/login_controller.dart';
 
 class AppModule extends MainModule {
   @override
@@ -15,6 +16,7 @@ class AppModule extends MainModule {
         Bind((i) => ContentHandler()),
         Bind((i) => AuthenticationService()),
         Bind((i) => SplashController()),
+        Bind((i) => LoginController()),
       ];
 
   @override
@@ -23,6 +25,8 @@ class AppModule extends MainModule {
         Router("/login", child: (_, args) => Login(true)),
         Router("/home", child: (_, args) => Main()),
       ];
+
+  static Inject get to => Inject<AppModule>.of();
 
   @override
   Widget get bootstrap => AppWidget();

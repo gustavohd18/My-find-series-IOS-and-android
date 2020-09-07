@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/authentication/login_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:myFindMovies/stores/login/login_controller.dart';
 
 class Login extends StatefulWidget {
   final bool isPortuguese;
@@ -10,7 +14,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ModularState<Login, LoginController> {
   LoginBloc _loginBloc;
 
   bool isPortugues;
@@ -134,27 +138,22 @@ class _LoginState extends State<Login> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        StreamBuilder(
-          initialData: false,
-          stream: _loginBloc.enableLoginCreateButton,
-          builder: (BuildContext context, AsyncSnapshot snapshot) =>
+
               RaisedButton(
             elevation: 16.0,
             child: Text('Login'),
             color: Colors.blue.shade200,
             disabledColor: Colors.transparent,
-            onPressed: snapshot.data
-                ? () => {
-                      _loginBloc.loginOrCreateChanged.add('Login'),
-                      _loginBloc.loginOrCreateError.listen((event) {
-                        if (event) {
+            onPressed:  () {
+
+                      this.controller.logIn();
+
+                        if (!this.controller.isLogin) {
                           showAlertDialogError(context);
                         }
-                      })
+                 
                     }
-                : null,
           ),
-        ),
         FlatButton(
           child: Text(_createAccount),
           onPressed: () {

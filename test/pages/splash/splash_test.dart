@@ -6,8 +6,6 @@ import 'package:mockito/mockito.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 
-class MockAuthentication extends Mock implements AuthenticationService {}
-
 void main() async {
   Future _createScreen(WidgetTester test) async {
     await test.pumpWidget(
