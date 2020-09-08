@@ -23,6 +23,14 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool isLogin;
 
+  void setEmail(String emailSend) {
+    email = emailSend;
+  }
+
+    void setPassword(String passwordSend) {
+    password = passwordSend;
+  }
+
   Future<String> logIn() async {
     String _result = '';
     if (_validEmail() && _validPassword()) {

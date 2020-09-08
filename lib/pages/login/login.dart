@@ -80,30 +80,21 @@ class _LoginState extends ModularState<Login, LoginController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              StreamBuilder(
-                stream: _loginBloc.email,
-                builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                    TextField(
+                TextField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       labelText: 'Email',
-                      icon: Icon(Icons.mail_outline),
-                      errorText: snapshot.error),
-                  onChanged: _loginBloc.emailChanged.add,
+                      icon: Icon(Icons.mail_outline)),
+                  onChanged: (text) {this.controller.setEmail(text);},
                 ),
-              ),
-              StreamBuilder(
-                stream: _loginBloc.password,
-                builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                    TextField(
+
+                TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                       labelText: _password,
-                      icon: Icon(Icons.security),
-                      errorText: snapshot.error),
-                  onChanged: _loginBloc.passwordChanged.add,
+                      icon: Icon(Icons.security)),
+                  onChanged: (text) {this.controller.setPassword(text);},
                 ),
-              ),
               SizedBox(height: 48.0),
               _buildLoginAndCreateButtons(),
               _buttonResetPassword(),
@@ -139,17 +130,19 @@ class _LoginState extends ModularState<Login, LoginController> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
 
-              RaisedButton(
+          RaisedButton(
             elevation: 16.0,
             child: Text('Login'),
             color: Colors.blue.shade200,
             disabledColor: Colors.transparent,
-            onPressed:  () {
+            onPressed:  () async {
 
-                      this.controller.logIn();
+                      await this.controller.logIn();
 
                         if (!this.controller.isLogin) {
                           showAlertDialogError(context);
+                        } else {
+                          Modular.to.pushReplacementNamed('/home');
                         }
                  
                     }
