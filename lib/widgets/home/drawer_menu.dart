@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 
 class DrawerMenu extends StatelessWidget {
@@ -226,8 +227,8 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
             onTap: () {
-              Navigator.pop(context);
               _authenticationService.signOut();
+              Modular.to.pushReplacementNamed('/login');
             },
           ),
         ],
