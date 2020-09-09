@@ -21,14 +21,37 @@ abstract class _LoginControllerBase with Store {
   String passwordPlaceholder;
 
   @observable
+  String type = "Login"; //default value
+
+  @observable
   bool isLogin;
+
+  @observable
+  bool enableButton = false;
 
   void setEmail(String emailSend) {
     email = emailSend;
+    isEnableButton();
   }
 
   void setPassword(String passwordSend) {
     password = passwordSend;
+    isEnableButton();
+  }
+
+  void setType(String typeSend) {
+    type = typeSend;
+  }
+
+  @action
+  bool isEnableButton() {
+    if (_validEmail() && _validPassword()) {
+      enableButton = true;
+      return true;
+    } else {
+      enableButton = false;
+      return false;
+    }
   }
 
   Future<String> logIn() async {
@@ -61,6 +84,7 @@ abstract class _LoginControllerBase with Store {
           .then((user) {
         print('Created user: $user');
         _result = 'Created user: $user';
+        isLogin = true;
         _authentication
             .signInWithEmailAndPassword(email: email, password: password)
             .then((user) {
@@ -85,7 +109,7 @@ abstract class _LoginControllerBase with Store {
     if (email == null) {
       return false;
     } else if (email.contains('@') && email.contains('.')) {
-      emailPlaceholder = "Email valid";
+      emailPlaceholder = "";
       return true;
     } else if (email.length > 0) {
       emailPlaceholder = 'Enter a valid email';
@@ -99,7 +123,7 @@ abstract class _LoginControllerBase with Store {
     if (password == null) {
       return false;
     } else if (password.length >= 6) {
-      passwordPlaceholder = "password valid";
+      passwordPlaceholder = "";
       return true;
     } else if (password.length > 0) {
       passwordPlaceholder = 'Password needs to be at least 6 characters';

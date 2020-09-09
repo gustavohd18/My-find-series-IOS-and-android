@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
-import 'package:myFindMovies/service/authentication/login_bloc.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
@@ -15,8 +13,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends ModularState<Login, LoginController> {
-  LoginBloc _loginBloc;
-
   bool isPortugues;
 
   String _password = '',
@@ -35,7 +31,6 @@ class _LoginState extends ModularState<Login, LoginController> {
   @override
   void initState() {
     super.initState();
-    _loginBloc = LoginBloc(authenticationService);
   }
 
   @override
@@ -80,22 +75,28 @@ class _LoginState extends ModularState<Login, LoginController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    labelText: 'Email', icon: Icon(Icons.mail_outline)),
-                onChanged: (text) {
-                  this.controller.setEmail(text);
-                },
-              ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    labelText: _password, icon: Icon(Icons.security)),
-                onChanged: (text) {
-                  this.controller.setPassword(text);
-                },
-              ),
+              Observer(
+                  builder: (_) => TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            labelText: 'Email',
+                            icon: Icon(Icons.mail_outline),
+                            errorText: this.controller.emailPlaceholder),
+                        onChanged: (text) {
+                          this.controller.setEmail(text);
+                        },
+                      )),
+              Observer(
+                  builder: (_) => TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            labelText: _password,
+                            icon: Icon(Icons.security),
+                            errorText: this.controller.passwordPlaceholder),
+                        onChanged: (text) {
+                          this.controller.setPassword(text);
+                        },
+                      )),
               SizedBox(height: 48.0),
               _buildLoginAndCreateButtons(),
               _buttonResetPassword(),
@@ -108,46 +109,44 @@ class _LoginState extends ModularState<Login, LoginController> {
 
   @override
   void dispose() {
-    _loginBloc.dispose();
     super.dispose();
   }
 
   Widget _buildLoginAndCreateButtons() {
-    return StreamBuilder(
-      initialData: 'Login',
-      stream: _loginBloc.loginOrCreateButton,
-      builder: ((BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == 'Login') {
-          return _buttonsLogin();
-        } else if (snapshot.data == 'Create Account') {
-          return _buttonsCreateAccount();
-        }
-      }),
-    );
+    return Observer(builder: (_) {
+      if (this.controller.type == 'Login') {
+        return _buttonsLogin();
+      } else if (this.controller.type == 'Create Account') {
+        return _buttonsCreateAccount();
+      }
+    });
   }
 
   Column _buttonsLogin() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        RaisedButton(
-            elevation: 16.0,
-            child: Text('Login'),
-            color: Colors.blue.shade200,
-            disabledColor: Colors.transparent,
-            onPressed: () async {
-              await this.controller.logIn();
+        Observer(
+            builder: (_) => RaisedButton(
+                elevation: 16.0,
+                child: Text('Login'),
+                color: Colors.blue.shade200,
+                disabledColor: Colors.transparent,
+                onPressed: this.controller.enableButton
+                    ? () async {
+                        await this.controller.logIn();
 
-              if (!this.controller.isLogin) {
-                showAlertDialogError(context);
-              } else {
-                Modular.to.pushReplacementNamed('/home');
-              }
-            }),
+                        if (!this.controller.isLogin) {
+                          showAlertDialogError(context);
+                        } else {
+                          Modular.to.pushReplacementNamed('/home');
+                        }
+                      }
+                    : null)),
         FlatButton(
           child: Text(_createAccount),
           onPressed: () {
-            _loginBloc.loginOrCreateButtonChanged.add('Create Account');
+            this.controller.setType('Create Account');
           },
         ),
       ],
@@ -158,24 +157,27 @@ class _LoginState extends ModularState<Login, LoginController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        RaisedButton(
-            elevation: 16.0,
-            child: Text(_createAccount),
-            color: Colors.blue.shade200,
-            disabledColor: Colors.transparent,
-            onPressed: () async {
-              await this.controller.createAccount();
+        Observer(
+            builder: (_) => RaisedButton(
+                elevation: 16.0,
+                child: Text(_createAccount),
+                color: Colors.blue.shade200,
+                disabledColor: Colors.transparent,
+                onPressed: this.controller.enableButton
+                    ? () async {
+                        await this.controller.createAccount();
 
-              if (!this.controller.isLogin) {
-                showAlertDialogError(context);
-              } else {
-                Modular.to.pushReplacementNamed('/home');
-              }
-            }),
+                        if (!this.controller.isLogin) {
+                          showAlertDialogError(context);
+                        } else {
+                          Modular.to.pushReplacementNamed('/home');
+                        }
+                      }
+                    : null)),
         FlatButton(
           child: Text('Login'),
           onPressed: () {
-            _loginBloc.loginOrCreateButtonChanged.add('Login');
+            this.controller.setType('Login');
           },
         ),
       ],

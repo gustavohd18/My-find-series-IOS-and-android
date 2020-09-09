@@ -71,6 +71,21 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$typeAtom = Atom(name: '_LoginControllerBase.type');
+
+  @override
+  String get type {
+    _$typeAtom.reportRead();
+    return super.type;
+  }
+
+  @override
+  set type(String value) {
+    _$typeAtom.reportWrite(value, super.type, () {
+      super.type = value;
+    });
+  }
+
   final _$isLoginAtom = Atom(name: '_LoginControllerBase.isLogin');
 
   @override
@@ -86,6 +101,35 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$enableButtonAtom = Atom(name: '_LoginControllerBase.enableButton');
+
+  @override
+  bool get enableButton {
+    _$enableButtonAtom.reportRead();
+    return super.enableButton;
+  }
+
+  @override
+  set enableButton(bool value) {
+    _$enableButtonAtom.reportWrite(value, super.enableButton, () {
+      super.enableButton = value;
+    });
+  }
+
+  final _$_LoginControllerBaseActionController =
+      ActionController(name: '_LoginControllerBase');
+
+  @override
+  bool isEnableButton() {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.isEnableButton');
+    try {
+      return super.isEnableButton();
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
@@ -93,7 +137,9 @@ email: ${email},
 emailPlaceholder: ${emailPlaceholder},
 password: ${password},
 passwordPlaceholder: ${passwordPlaceholder},
-isLogin: ${isLogin}
+type: ${type},
+isLogin: ${isLogin},
+enableButton: ${enableButton}
     ''';
   }
 }
