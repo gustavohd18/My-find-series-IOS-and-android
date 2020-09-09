@@ -80,21 +80,22 @@ class _LoginState extends ModularState<Login, LoginController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      labelText: 'Email',
-                      icon: Icon(Icons.mail_outline)),
-                  onChanged: (text) {this.controller.setEmail(text);},
-                ),
-
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      labelText: _password,
-                      icon: Icon(Icons.security)),
-                  onChanged: (text) {this.controller.setPassword(text);},
-                ),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    labelText: 'Email', icon: Icon(Icons.mail_outline)),
+                onChanged: (text) {
+                  this.controller.setEmail(text);
+                },
+              ),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                    labelText: _password, icon: Icon(Icons.security)),
+                onChanged: (text) {
+                  this.controller.setPassword(text);
+                },
+              ),
               SizedBox(height: 48.0),
               _buildLoginAndCreateButtons(),
               _buttonResetPassword(),
@@ -129,24 +130,20 @@ class _LoginState extends ModularState<Login, LoginController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-
-          RaisedButton(
+        RaisedButton(
             elevation: 16.0,
             child: Text('Login'),
             color: Colors.blue.shade200,
             disabledColor: Colors.transparent,
-            onPressed:  () async {
+            onPressed: () async {
+              await this.controller.logIn();
 
-                      await this.controller.logIn();
-
-                        if (!this.controller.isLogin) {
-                          showAlertDialogError(context);
-                        } else {
-                          Modular.to.pushReplacementNamed('/home');
-                        }
-                 
-                    }
-          ),
+              if (!this.controller.isLogin) {
+                showAlertDialogError(context);
+              } else {
+                Modular.to.pushReplacementNamed('/home');
+              }
+            }),
         FlatButton(
           child: Text(_createAccount),
           onPressed: () {
@@ -161,27 +158,20 @@ class _LoginState extends ModularState<Login, LoginController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        StreamBuilder(
-          initialData: false,
-          stream: _loginBloc.enableLoginCreateButton,
-          builder: (BuildContext context, AsyncSnapshot snapshot) =>
-              RaisedButton(
+        RaisedButton(
             elevation: 16.0,
             child: Text(_createAccount),
             color: Colors.blue.shade200,
             disabledColor: Colors.transparent,
-            onPressed: snapshot.data
-                ? () => {
-                      _loginBloc.loginOrCreateChanged.add('Create Account'),
-                      _loginBloc.loginOrCreateError.listen((event) {
-                        if (event) {
-                          showAlertDialogError(context);
-                        }
-                      })
-                    }
-                : null,
-          ),
-        ),
+            onPressed: () async {
+              await this.controller.createAccount();
+
+              if (!this.controller.isLogin) {
+                showAlertDialogError(context);
+              } else {
+                Modular.to.pushReplacementNamed('/home');
+              }
+            }),
         FlatButton(
           child: Text('Login'),
           onPressed: () {

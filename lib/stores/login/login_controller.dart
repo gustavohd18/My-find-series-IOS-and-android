@@ -27,7 +27,7 @@ abstract class _LoginControllerBase with Store {
     email = emailSend;
   }
 
-    void setPassword(String passwordSend) {
+  void setPassword(String passwordSend) {
     password = passwordSend;
   }
 
@@ -43,36 +43,68 @@ abstract class _LoginControllerBase with Store {
         print('Login error: $error');
         _result = 'Email and Password are not valid';
         print(_result);
-          isLogin = false;
+        isLogin = false;
       });
 
       return _result;
     } else {
-       isLogin = false;
+      isLogin = false;
       return 'Email and Password are not valid';
     }
   }
 
+  Future<String> createAccount() async {
+    String _result = '';
+    if (_validEmail() && _validPassword()) {
+      await _authentication
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) {
+        print('Created user: $user');
+        _result = 'Created user: $user';
+        _authentication
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((user) {
+          isLogin = true;
+        }).catchError((error) async {
+          print('Login error: $error');
+          isLogin = false;
+          _result = error;
+        });
+      }).catchError((error) async {
+        isLogin = false;
+        print('Creating user error: $error');
+      });
+      return _result;
+    } else {
+      isLogin = false;
+      return 'Error creating user';
+    }
+  }
+
   bool _validEmail() {
-    if(email == null) {
-        return false;
+    if (email == null) {
+      return false;
     } else if (email.contains('@') && email.contains('.')) {
-     emailPlaceholder = "Email valid";
-     return true;
+      emailPlaceholder = "Email valid";
+      return true;
     } else if (email.length > 0) {
       emailPlaceholder = 'Enter a valid email';
+      return false;
+    } else {
       return false;
     }
   }
 
   bool _validPassword() {
-    if(password == null) {
-        return false;
+    if (password == null) {
+      return false;
     } else if (password.length >= 6) {
       passwordPlaceholder = "password valid";
       return true;
     } else if (password.length > 0) {
       passwordPlaceholder = 'Password needs to be at least 6 characters';
+      return false;
+    } else {
       return false;
     }
   }
