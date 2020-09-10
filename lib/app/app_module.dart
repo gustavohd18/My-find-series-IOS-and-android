@@ -27,7 +27,7 @@ class AppModule extends MainModule {
         Router("/home", child: (_, args) => Main()),
       ];
 
-  static Inject get to => Inject<AppModule>.of();
+  static Inject get to => Inject.of();
 
   @override
   Widget get bootstrap => AppWidget();
