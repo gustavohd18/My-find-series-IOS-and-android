@@ -76,6 +76,10 @@ abstract class _LoginControllerBase with Store {
     }
   }
 
+  Future<void> resetPassword(String email) async {
+    await _authentication.resetPassword(email);
+  }
+
   Future<String> createAccount() async {
     String _result = '';
     if (_validEmail() && _validPassword()) {
