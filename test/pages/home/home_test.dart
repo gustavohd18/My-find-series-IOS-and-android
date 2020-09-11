@@ -1,8 +1,24 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:mockito/mockito.dart';
+import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/pages/home/home.dart';
+import 'package:myFindMovies/service/content_handle.dart';
+import 'package:myFindMovies/service/content_handle_abstract.dart';
+import 'package:myFindMovies/stores/home/home_controller.dart';
+
+class MockContent extends Mock implements ContentHandler {}
 
 void main() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    initModule(AppModule(), changeBinds: [
+      Bind<ContentHandleAbs>((i) => MockContent()),
+      Bind((i) => HomeController()),
+    ]);
+  });
   Future _createWidgets(WidgetTester test) async {
     await test.pumpWidget(
       MaterialApp(
