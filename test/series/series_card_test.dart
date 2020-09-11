@@ -1,7 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/widgets/content/dialog_content.dart';
+import 'package:mockito/mockito.dart';
+import 'package:myFindMovies/app/app_module.dart';
+import 'package:myFindMovies/service/authentication/authentication_service.dart';
+import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
+import 'package:myFindMovies/stores/login/login_controller.dart';
+import 'package:myFindMovies/stores/splash/mock_auth.dart';
+import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/widgets/serie/series_card.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -10,8 +17,22 @@ Widget makeTestableWidget() => MaterialApp(
     home: Image.network(
         'https://image.tmdb.org/t/p/w185/2u1cyQgBpWWypISdbUDCu2hasGV.jpg'));
 
+class MockAuthentification extends Mock implements AuthenticationService {}
+
+class MockSplashController extends Mock implements SplashController {}
+
+class MockLoginController extends Mock implements LoginController {}
+
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    initModule(AppModule(), changeBinds: [
+      Bind<Authentication>((i) => AuthMock()),
+      Bind((i) => MockSplashController()),
+      Bind((i) => MockLoginController())
+    ]);
+  });
   Future _createWidgetsCards(WidgetTester tester) async {
     final String id = '123',
         title = 'abc',

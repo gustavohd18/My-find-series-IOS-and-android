@@ -1,10 +1,15 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myFindMovies/app/app_module.dart';
+import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/stores/splash/mock_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockClient extends Mock implements http.Client {}
@@ -16,7 +21,13 @@ const String baseSearch = "http://www.omdbapi.com/?apikey=";
 const String key = "c1abb65895a3fdceff4cfaa0d2dbdfc2";
 const String TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
 
+class MockAuthentification extends Mock implements Authentication {}
+
 main() {
+  initModule(AppModule(), changeBinds: [
+    Bind<Authentication>((i) => MockAuthentification()),
+    Bind((i) => ContentHandler()),
+  ]);
   group('get top 10 series', () {
     test('returns a list with top 10 series with just 1 movie', () async {
       SharedPreferences.setMockInitialValues({}); //set values here
@@ -27,7 +38,7 @@ main() {
 
       final client = MockClient();
 
-      final content = ContentHandler();
+      final ContentHandler content = Modular.get();
 
       content.https = client;
 
@@ -75,7 +86,7 @@ main() {
 
       final client = MockClient();
 
-      final content = ContentHandler();
+      final ContentHandler content = Modular.get();
 
       content.https = client;
 

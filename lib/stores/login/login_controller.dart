@@ -1,12 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:myFindMovies/service/authentication/authentication_service.dart';
+import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final _authentication = Modular.get<AuthenticationService>();
+  final Authentication _authentication = Modular.get();
 
   @observable
   String email;
