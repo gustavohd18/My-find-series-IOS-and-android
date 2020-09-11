@@ -6,9 +6,10 @@ import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/model/VideoContentList.dart';
 import 'package:http/http.dart' as http;
 import 'package:myFindMovies/model/shareContent.dart';
+import 'package:myFindMovies/service/content_handle_abstract.dart';
 import 'package:myFindMovies/service/traslator.dart';
 
-class ContentHandler {
+class ContentHandler implements ContentHandleAbs {
   static const String baseURL = "api.themoviedb.org";
   static const String baseSearch = "http://www.omdbapi.com/?apikey=";
   static const String key = "c1abb65895a3fdceff4cfaa0d2dbdfc2";
@@ -97,7 +98,7 @@ class ContentHandler {
     int _totPages = (data['total_pages'] as int);
 
     if (_totPages > 1) {
-      List<MovieList> _listResult = await _searchMoviesPage(keyword, 2);
+      List<MovieList> _listResult = await searchMoviesPage(keyword, 2);
       _movies = _listResult;
     }
 
@@ -132,7 +133,7 @@ class ContentHandler {
     int _totPages = (data['total_pages'] as int);
 
     if (_totPages > 1) {
-      List<SerieList> _listResult = await _searchSeriesPage(keyword, 2);
+      List<SerieList> _listResult = await searchSeriesPage(keyword, 2);
       _series = _listResult;
     }
 
@@ -169,7 +170,7 @@ class ContentHandler {
     return list;
   }
 
-  Future<List<MovieList>> _searchMoviesPage(keyword, page) async {
+  Future<List<MovieList>> searchMoviesPage(keyword, page) async {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
     if (!isPortuguese) {
@@ -189,7 +190,7 @@ class ContentHandler {
     return list;
   }
 
-  Future<List<SerieList>> _searchSeriesPage(keyword, page) async {
+  Future<List<SerieList>> searchSeriesPage(keyword, page) async {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
     if (!isPortuguese) {
