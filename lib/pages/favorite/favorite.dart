@@ -22,7 +22,7 @@ class _FavoriteState extends State<Favorite> {
   bool _isPortugues = true;
   String _text = " ";
 
-  String _myHandler;
+  String _myHandler = "";
 
   @override
   void initState() {

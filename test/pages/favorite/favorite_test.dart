@@ -33,6 +33,12 @@ void main() {
 
     expect(columnFinder, findsOneWidget);
 
+    final Finder safeAreaFinder = find.byType(SafeArea);
+
+    expect(safeAreaFinder, findsNWidgets(2));
+
+    final SafeArea safe = tester.widget(safeAreaFinder.at(0));
+
     final Column column = tester.widget(columnFinder);
 
     final Finder expandedFinder = find.byType(Expanded);
@@ -48,7 +54,7 @@ void main() {
     final FavoritesList favoriteList = tester.widget(favoriteFinder);
 
     expect(expanded.child, favoriteList);
-    expect(scaffold.body, column);
+    expect(scaffold.body, safe);
     expect(column.crossAxisAlignment, CrossAxisAlignment.start);
     expect(column.mainAxisSize, MainAxisSize.max);
     expect(column.children, [expanded]);

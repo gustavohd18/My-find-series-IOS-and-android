@@ -24,29 +24,20 @@ void main() {
 
     final Finder scaffoldFinder = find.byType(Scaffold);
 
-    expect(scaffoldFinder, findsNWidgets(2));
+    expect(scaffoldFinder, findsOneWidget);
 
-    final Scaffold scaffold = tester.widget(scaffoldFinder.at(0));
-
-    final Scaffold scaffold1 = tester.widget(scaffoldFinder.at(1));
-
-    final Finder tabFinder = find.byType(TabBarView);
-
-    expect(tabFinder, findsOneWidget);
-
-    final TabBarView tab = tester.widget(tabFinder);
+    final Scaffold scaffold = tester.widget(scaffoldFinder);
 
     final Finder columnFinder = find.byType(Column);
 
-    expect(columnFinder, findsNWidgets(7));
+    expect(columnFinder, findsOneWidget);
 
-    final Finder tab1Finder = find.byType(DefaultTabController);
+    final Finder safeAreaFinder = find.byType(SafeArea);
 
-    expect(tab1Finder, findsOneWidget);
+    expect(safeAreaFinder, findsNWidgets(3));
 
-    final DefaultTabController tab1 = tester.widget(tab1Finder);
+    final SafeArea safe = tester.widget(safeAreaFinder.at(1));
 
-    expect(scaffold.body, tab1);
-    expect(tab1.child, scaffold1);
+    expect(scaffold.body, safe);
   });
 }
