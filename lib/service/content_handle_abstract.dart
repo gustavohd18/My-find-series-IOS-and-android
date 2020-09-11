@@ -12,6 +12,6 @@ abstract class ContentHandleAbs {
   void deleteShareContent(ShareContent shareContent);
   Future<bool> addShareContent(ShareContent shareContent);
   Stream<List<ShareContent>> getShareList(String email);
-  Future<List<SerieList>> searchSeriesPage(String keyword, String page);
-  Future<List<MovieList>> searchMoviesPage(String keyword, String page);
+  Future<List<SerieList>> searchSeriesPage(String keyword, int page);
+  Future<List<MovieList>> searchMoviesPage(String keyword, int page);
 }
