@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:mockito/mockito.dart';
@@ -56,5 +57,55 @@ void main() async {
     expect(appBar.bottom, preferredSize);
 
     expect(scaffold.appBar, appBar);
+
+    final Finder safeAreaFinder = find.byType(SafeArea);
+
+    expect(safeAreaFinder, findsNWidgets(2));
+
+    final SafeArea safeArea = tester.widget(safeAreaFinder.at(0));
+
+    final Finder singleChildScrollViewFinder =
+        find.byType(SingleChildScrollView);
+
+    expect(singleChildScrollViewFinder, findsOneWidget);
+
+    final SingleChildScrollView singleChildScrollView =
+        tester.widget(singleChildScrollViewFinder);
+
+    final Finder sizedBoxFinder = find.byType(SizedBox);
+
+    expect(sizedBoxFinder, findsNWidgets(6));
+
+    final SizedBox sizedBox = tester.widget(sizedBoxFinder.at(4));
+
+    final Finder columnFinder = find.byType(Column);
+
+    expect(columnFinder, findsNWidgets(4));
+
+    final Column column = tester.widget(columnFinder.at(0));
+
+    final Column column2 = tester.widget(columnFinder.at(2));
+
+    final Finder obsFinder = find.byType(Observer);
+
+    expect(obsFinder, findsNWidgets(4));
+
+    final Observer text0 = tester.widget(obsFinder.at(0));
+
+    final Observer text1 = tester.widget(obsFinder.at(1));
+
+    final Observer text2 = tester.widget(obsFinder.at(2));
+
+    expect(column.children, [text0, text1, sizedBox, text2, column2]);
+
+    expect(column.crossAxisAlignment, CrossAxisAlignment.stretch);
+
+    expect(singleChildScrollView.child, column);
+
+    expect(singleChildScrollView.padding, EdgeInsets.all(16.0));
+
+    expect(safeArea.child, singleChildScrollView);
+
+    expect(scaffold.body, safeArea);
   });
 }
