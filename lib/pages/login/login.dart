@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
@@ -24,8 +23,6 @@ class _LoginState extends ModularState<Login, LoginController> {
       _errorSendReset = '',
       _cancelButton = '',
       _sendButtonOk = '';
-
-  AuthenticationService authenticationService = AuthenticationService();
 
   final myController = TextEditingController();
   @override
@@ -194,9 +191,9 @@ class _LoginState extends ModularState<Login, LoginController> {
 
     Widget confirmButton = FlatButton(
       child: Text(_sendButton),
-      onPressed: () {
+      onPressed: () async {
         if (myController.text != '') {
-          authenticationService.resetPassword(myController.text);
+          await this.controller.resetPassword(myController.text);
           showDialog(
               context: context,
               barrierDismissible: false,

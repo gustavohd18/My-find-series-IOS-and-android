@@ -43,6 +43,7 @@ dependencies:
   flutter_modular: ^1.0.0
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2+1
+  firebase_auth_mocks: ^0.3.1
   
 
 dev_dependencies:

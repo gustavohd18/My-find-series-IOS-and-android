@@ -1,12 +1,25 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/mockito.dart';
+import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
-import 'package:myFindMovies/service/authentication/authentication_service.dart';
+import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
+import 'package:myFindMovies/stores/splash/splash_controller.dart';
+
+class MockAuthentification extends Mock implements Authentication {}
+
+class MockSplashController extends Mock implements SplashController {}
 
 void main() async {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    initModule(AppModule(), changeBinds: [
+      Bind<Authentication>((i) => MockAuthentification()),
+      Bind((i) => MockSplashController()),
+    ]);
+  });
   Future _createScreen(WidgetTester test) async {
     await test.pumpWidget(
       MaterialApp(
