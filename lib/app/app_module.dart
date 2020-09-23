@@ -8,16 +8,19 @@ import 'package:myFindMovies/service/authentication/authentication_service.dart'
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:flutter/material.dart';
+import 'package:myFindMovies/service/content_handle_abstract.dart';
+import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => ContentHandler()),
+        Bind<ContentHandleAbs>((i) => ContentHandler()),
         Bind<Authentication>((i) => AuthenticationService()),
         Bind((i) => SplashController()),
         Bind((i) => LoginController()),
+        Bind((i) => HomeController()),
       ];
 
   @override
