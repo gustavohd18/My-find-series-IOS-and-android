@@ -51,10 +51,25 @@ class _SplashPageState extends ModularState<Splash, SplashController> {
                   top: 15.0,
                 ),
                 child: Text(
-                  "My find Series and Movies",
+                  "My find Series Movies",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                  top: 15.0,
+                ),
+                child: Text(
+                  "Built with",
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 1.0),
+              Image(
+                  image: AssetImage('assets/images/Tmdb-logo.png'),
+                  width: 60,
+                  height: 60),
             ],
           ),
         ),

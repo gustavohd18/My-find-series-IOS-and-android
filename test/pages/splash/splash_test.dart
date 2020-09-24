@@ -49,7 +49,7 @@ void main() async {
 
     final Finder containerFinder = find.byType(Container);
 
-    expect(containerFinder, findsNWidgets(2));
+    expect(containerFinder, findsNWidgets(3));
 
     final Container containerOne = tester.widget(containerFinder.at(0));
 
@@ -67,15 +67,21 @@ void main() async {
 
     final Column column = tester.widget(columnFinder);
 
-    expect(find.text("My find Series and Movies"), findsOneWidget);
+    expect(find.text("My find Series Movies"), findsOneWidget);
+
+    expect(find.text("Built with"), findsOneWidget);
 
     final Finder textFinder = find.byType(Text);
 
-    expect(textFinder, findsOneWidget);
+    expect(textFinder, findsNWidgets(2));
 
-    final Text text = tester.widget(textFinder);
+    final Text text = tester.widget(textFinder.at(0));
 
     expect(text.style, TextStyle(fontSize: 20, color: Colors.white));
+
+    final Text text2 = tester.widget(textFinder.at(1));
+
+    expect(text2.style, TextStyle(fontSize: 12, color: Colors.white));
 
     expect(scaffold.body, containerOne);
     expect(scaffold.backgroundColor, Colors.blue);
@@ -85,7 +91,6 @@ void main() async {
 
     expect(center.child, column);
 
-    expect(column.children, [containerTwo]);
     expect(column.mainAxisAlignment, MainAxisAlignment.center);
     expect(column.crossAxisAlignment, CrossAxisAlignment.stretch);
 
