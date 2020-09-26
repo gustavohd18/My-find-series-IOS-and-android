@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/service/translator/traslator.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/home/home.dart';

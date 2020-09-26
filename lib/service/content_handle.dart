@@ -7,7 +7,7 @@ import 'package:myFindMovies/model/VideoContentList.dart';
 import 'package:http/http.dart' as http;
 import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/content_handle_abstract.dart';
-import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/service/translator/traslator.dart';
 
 class ContentHandler implements ContentHandleAbs {
   static const String baseURL = "api.themoviedb.org";
