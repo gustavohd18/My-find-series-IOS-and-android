@@ -63,7 +63,9 @@ class _SplashPageState extends ModularState<Splash, SplashController> {
                 ),
                 child: Observer(
                   builder: (_) => Text(
-                    this.controller.builtDescription,
+                    (this.controller.builtDescription != null)
+                        ? this.controller.builtDescription
+                        : "Built with",
                     style: TextStyle(fontSize: 12, color: Colors.white),
                   ),
                 ),
