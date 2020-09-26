@@ -1,6 +1,6 @@
 import 'package:myFindMovies/service/translator/languages.dart';
 
-abstract class Translator {
+abstract class ITranslator {
   void setLanguage(Languages language);
-  Languages getLanguage();
+  Future<Languages> getLanguage();
 }

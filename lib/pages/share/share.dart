@@ -4,7 +4,7 @@ import 'package:myFindMovies/pages/favorite/favorite.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/service/translator/traslator.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
