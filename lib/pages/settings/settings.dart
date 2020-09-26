@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
+import 'package:myFindMovies/service/translator/languages.dart';
+import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:myFindMovies/service/translator/traslator.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
@@ -29,6 +31,15 @@ class _SettingsState extends State<Settings> {
   void _radioOnChanged(int index) async {
     _selectedLanguage = _languageList[index];
     await Traslator().setLanguage(_selectedLanguage);
+    if (_selectedLanguage == 'Portuguese') {
+      print("Portugues");
+      Translator().setLanguage(Languages.portuguese);
+    } else if (_selectedLanguage == 'English') {
+      print("ingles");
+      Translator().setLanguage(Languages.english);
+    } else {
+      Translator().setLanguage(Languages.spanish);
+    }
 
     setState(() {
       getLanguage();
