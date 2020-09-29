@@ -12,6 +12,7 @@ import 'package:myFindMovies/service/content_handle_abstract.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:myFindMovies/service/translator/translator_abstract.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
+import 'package:myFindMovies/stores/settings/settings_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
@@ -24,6 +25,7 @@ class AppModule extends MainModule {
         Bind((i) => SplashController()),
         Bind((i) => LoginController()),
         Bind((i) => HomeController()),
+        Bind((i) => SettingsController()),
       ];
 
   @override

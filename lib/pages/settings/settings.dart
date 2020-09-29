@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/translator/languages.dart';
-import 'package:myFindMovies/service/translator/translator.dart';
-import 'package:myFindMovies/service/translator/traslator.dart';
+import 'package:myFindMovies/stores/settings/settings_controller.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/home/home.dart';
@@ -18,31 +18,16 @@ class Settings extends StatefulWidget {
   _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends ModularState<Settings, SettingsController> {
   List<String> _languageList = List();
   String _selectedLanguage;
   int _radioGroupValue;
-  String _portuguese, _english;
-
-  bool isPortugues;
-
-  String _myHandler;
 
   void _radioOnChanged(int index) async {
     _selectedLanguage = _languageList[index];
-    await Traslator().setLanguage(_selectedLanguage);
-    if (_selectedLanguage == 'Portuguese') {
-      print("Portugues");
-      Translator().setLanguage(Languages.portuguese);
-    } else if (_selectedLanguage == 'English') {
-      print("ingles");
-      Translator().setLanguage(Languages.english);
-    } else {
-      Translator().setLanguage(Languages.spanish);
-    }
+    this.controller.setTranslator(index);
 
     setState(() {
-      getLanguage();
       _radioGroupValue = index;
       _selectedLanguage = _languageList[index];
     });
@@ -51,17 +36,18 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     super.initState();
-    _languageList..add('Portuguese')..add('English');
-    getLanguage();
+    _languageList..add('Portuguese')..add('English')..add('Spanish');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), isPortugues),
+          Settings(_reloadTab), Share(), true),
       appBar: AppBar(
-        title: Text(_myHandler),
+        title: Observer(
+          builder: (_) => Text(this.controller.title),
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -70,9 +56,19 @@ class _SettingsState extends State<Settings> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(children: <Widget>[
+          Observer(
+            builder: (_) => Text(
+              this.controller.subTitle,
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontStyle: FontStyle.normal),
+            ),
+          ),
+          Row(
             children: <Widget>[
               Radio(
                 value: 0,
@@ -81,35 +77,33 @@ class _SettingsState extends State<Settings> {
                   _radioOnChanged(index),
                 },
               ),
-              Text(_english),
+              Observer(
+                builder: (_) => Text(this.controller.english),
+              ),
               Radio(
                 value: 1,
                 groupValue: _radioGroupValue,
                 onChanged: (index) => _radioOnChanged(index),
               ),
-              Text(_portuguese),
+              Observer(
+                builder: (_) => Text(this.controller.portuguese),
+              ),
+              Radio(
+                value: 2,
+                groupValue: _radioGroupValue,
+                onChanged: (index) => _radioOnChanged(index),
+              ),
+              Observer(
+                builder: (_) => Text(
+                  this.controller.spanish,
+                ),
+              ),
             ],
           ),
-        ),
-      ),
+        ]),
+      )),
     );
   }
 
-  void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      isPortugues = isPortuguese;
-      _english = (isPortuguese == false) ? "Inglês" : "English";
-      _portuguese = (isPortuguese == false) ? "Português" : "Portuguese";
-      _myHandler = (isPortuguese == false) ? "Configurações" : "Settings";
-
-      widget.func();
-    });
-  }
+  void _reloadTab() {}
 }
