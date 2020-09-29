@@ -29,7 +29,7 @@ class _MainState extends ModularState<Main, HomeController> {
   void initState() {
     super.initState();
     // this should not be done in build method.
-    getLanguage();
+    this.controller.reload();
     _myHandler = _homeName;
   }
 
@@ -38,10 +38,12 @@ class _MainState extends ModularState<Main, HomeController> {
     return SafeArea(
         child: Scaffold(
       drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), isPortugues),
+          Settings(_reloadTab), Share(), true),
       body: _buildScreen(),
       appBar: AppBar(
-        title: Text(_myHandler),
+        title: Observer(
+          builder: (_) => Text(this.controller.title),
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -53,9 +55,7 @@ class _MainState extends ModularState<Main, HomeController> {
   }
 
   void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
+    setState(() {});
   }
 
   Widget _buildScreen() {
@@ -66,37 +66,24 @@ class _MainState extends ModularState<Main, HomeController> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: Subtitle(_topMovies),
+          child: Observer(
+            builder: (_) => Subtitle(this.controller.topMovies),
+          ),
         ),
         Expanded(
             flex: 1,
             child: Observer(
                 builder: (_) =>
-                    ContentMoviesList(this.controller.movieList, isPortugues))),
-        Subtitle(_topSeries),
+                    ContentMoviesList(this.controller.movieList, true))),
+        Observer(
+          builder: (_) => Subtitle(this.controller.topSeries),
+        ),
         Expanded(
             flex: 1,
             child: Observer(
                 builder: (_) =>
-                    ContentSeriesList(this.controller.serieList, isPortugues))),
+                    ContentSeriesList(this.controller.serieList, true))),
       ],
     ));
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      isPortugues = isPortuguese;
-
-      if (!isPortuguese) {
-        _homeName = "Inicio";
-        _topSeries = "Top 10 Series no mundo";
-        _topMovies = "Top 10 Filmes no mundo";
-      } else {
-        _homeName = "Home";
-        _topSeries = "Top 10 Series in the World";
-        _topMovies = "Top 10 Movies in the World";
-      }
-    });
   }
 }

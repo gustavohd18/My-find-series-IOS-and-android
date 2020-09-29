@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/model/SerieList.dart';
 import 'package:myFindMovies/model/VideoContentList.dart';
 import 'package:http/http.dart' as http;
 import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/content_handle_abstract.dart';
+import 'package:myFindMovies/service/translator/languages.dart';
+import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:myFindMovies/service/translator/traslator.dart';
 
 class ContentHandler implements ContentHandleAbs {
@@ -25,11 +28,15 @@ class ContentHandler implements ContentHandleAbs {
   Future<List<MovieList>> getMovieList() async {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
+    final _translator = Modular.get<Translator>();
+    var result = await _translator.getLanguage();
 
-    if (!isPortuguese) {
+    if (result == Languages.english) {
+      _language = 'en-US';
+    } else if (result == Languages.portuguese) {
       _language = 'pt-BR';
     } else {
-      _language = 'en-US';
+      _language = 'es';
     }
 
     final response = await https.get(
@@ -52,10 +59,15 @@ class ContentHandler implements ContentHandleAbs {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
 
-    if (!isPortuguese) {
+    final _translator = Modular.get<Translator>();
+    var result = await _translator.getLanguage();
+
+    if (result == Languages.english) {
+      _language = 'en-US';
+    } else if (result == Languages.portuguese) {
       _language = 'pt-BR';
     } else {
-      _language = 'en-US';
+      _language = 'es';
     }
 
     final response = await https
@@ -79,11 +91,17 @@ class ContentHandler implements ContentHandleAbs {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
 
-    if (!isPortuguese) {
+    final _translator = Modular.get<Translator>();
+    var result = await _translator.getLanguage();
+
+    if (result == Languages.english) {
+      _language = 'en-US';
+    } else if (result == Languages.portuguese) {
       _language = 'pt-BR';
     } else {
-      _language = 'en-US';
+      _language = 'es';
     }
+
     final response = await https.get(
         "$TMDB_API_BASE_URL/search/movie?query=$keyword&api_key=$key&language=$_language");
 
@@ -113,10 +131,15 @@ class ContentHandler implements ContentHandleAbs {
   Future<List<SerieList>> searchSeries(keyword) async {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
-    if (!isPortuguese) {
+    final _translator = Modular.get<Translator>();
+    var result = await _translator.getLanguage();
+
+    if (result == Languages.english) {
+      _language = 'en-US';
+    } else if (result == Languages.portuguese) {
       _language = 'pt-BR';
     } else {
-      _language = 'en-US';
+      _language = 'es';
     }
 
     final response = await https.get(
@@ -193,11 +216,17 @@ class ContentHandler implements ContentHandleAbs {
   Future<List<SerieList>> searchSeriesPage(keyword, page) async {
     String _language;
     bool isPortuguese = await traslator.isPortuguese();
-    if (!isPortuguese) {
+    final _translator = Modular.get<Translator>();
+    var result = await _translator.getLanguage();
+
+    if (result == Languages.english) {
+      _language = 'en-US';
+    } else if (result == Languages.portuguese) {
       _language = 'pt-BR';
     } else {
-      _language = 'en-US';
+      _language = 'es';
     }
+
     final response = await https.get(
         "$TMDB_API_BASE_URL/search/tv?api_key=$key&query=$keyword&page=$page&language=$_language");
 
