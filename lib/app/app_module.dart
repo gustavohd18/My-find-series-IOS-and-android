@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/app/app_widget.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/pages/login/login.dart';
+import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
@@ -33,6 +34,7 @@ class AppModule extends MainModule {
         Router("/", child: (_, args) => Splash()),
         Router("/login", child: (_, args) => Login(true)),
         Router("/home", child: (_, args) => Main()),
+        Router("/settings", child: (_, args) => Settings()),
       ];
 
   static Inject get to => Inject.of();

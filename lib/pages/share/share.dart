@@ -37,8 +37,8 @@ class _ShareState extends State<Share> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildScreen(),
-      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), _isPortugues),
+      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(), Settings(),
+          Share(), _isPortugues),
       appBar: AppBar(
         title: Text(_myHandler),
         leading: Builder(

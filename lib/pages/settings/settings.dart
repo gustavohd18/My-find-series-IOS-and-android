@@ -10,26 +10,19 @@ import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/pages/favorite/favorite.dart';
 
 class Settings extends StatefulWidget {
-  final Function() func;
-
-  Settings(this.func);
-
   @override
   _SettingsState createState() => _SettingsState();
 }
 
 class _SettingsState extends ModularState<Settings, SettingsController> {
   List<String> _languageList = List();
-  String _selectedLanguage;
   int _radioGroupValue;
 
   void _radioOnChanged(int index) async {
-    _selectedLanguage = _languageList[index];
     this.controller.setTranslator(index);
 
     setState(() {
       _radioGroupValue = index;
-      _selectedLanguage = _languageList[index];
     });
   }
 
@@ -42,8 +35,8 @@ class _SettingsState extends ModularState<Settings, SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), true),
+      drawer: DrawerMenu(
+          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
       appBar: AppBar(
         title: Observer(
           builder: (_) => Text(this.controller.title),
@@ -68,42 +61,42 @@ class _SettingsState extends ModularState<Settings, SettingsController> {
                   fontStyle: FontStyle.normal),
             ),
           ),
-          Row(
-            children: <Widget>[
-              Radio(
-                value: 0,
-                groupValue: _radioGroupValue,
-                onChanged: (index) => {
-                  _radioOnChanged(index),
-                },
-              ),
-              Observer(
-                builder: (_) => Text(this.controller.english),
-              ),
-              Radio(
-                value: 1,
-                groupValue: _radioGroupValue,
-                onChanged: (index) => _radioOnChanged(index),
-              ),
-              Observer(
-                builder: (_) => Text(this.controller.portuguese),
-              ),
-              Radio(
-                value: 2,
-                groupValue: _radioGroupValue,
-                onChanged: (index) => _radioOnChanged(index),
-              ),
-              Observer(
-                builder: (_) => Text(
-                  this.controller.spanish,
+          Center(
+            child: Row(
+              children: <Widget>[
+                Radio(
+                  value: 0,
+                  groupValue: _radioGroupValue,
+                  onChanged: (index) => {
+                    _radioOnChanged(index),
+                  },
                 ),
-              ),
-            ],
+                Observer(
+                  builder: (_) => Text(this.controller.english),
+                ),
+                Radio(
+                  value: 1,
+                  groupValue: _radioGroupValue,
+                  onChanged: (index) => _radioOnChanged(index),
+                ),
+                Observer(
+                  builder: (_) => Text(this.controller.portuguese),
+                ),
+                Radio(
+                  value: 2,
+                  groupValue: _radioGroupValue,
+                  onChanged: (index) => _radioOnChanged(index),
+                ),
+                Observer(
+                  builder: (_) => Text(
+                    this.controller.spanish,
+                  ),
+                ),
+              ],
+            ),
           ),
         ]),
       )),
     );
   }
-
-  void _reloadTab() {}
 }

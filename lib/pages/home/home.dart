@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/translator/traslator.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
@@ -19,26 +18,19 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends ModularState<Main, HomeController> {
-  bool isPortugues;
-
-  String _topMovies = 'top', _topSeries = 'top';
-  String _myHandler;
-  String _homeName = 'Home';
-
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
     this.controller.reload();
-    _myHandler = _homeName;
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), true),
+      drawer: DrawerMenu(
+          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
       body: _buildScreen(),
       appBar: AppBar(
         title: Observer(

@@ -40,8 +40,8 @@ class MovieState extends State<Movie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-            Settings(_reloadTab), Share(), isPortugues),
+        drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(), Settings(),
+            Share(), isPortugues),
         appBar: AppBar(
           title: Text(_moviesTitle),
           leading: Builder(
