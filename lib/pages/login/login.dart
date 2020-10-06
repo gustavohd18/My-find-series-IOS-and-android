@@ -4,9 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
 class Login extends StatefulWidget {
-  final bool isPortuguese;
-
-  const Login(this.isPortuguese);
   @override
   _LoginState createState() => _LoginState();
 }

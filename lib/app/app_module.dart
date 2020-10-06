@@ -1,4 +1,3 @@
-import 'package:flutter/semantics.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/app/app_widget.dart';
 import 'package:myFindMovies/pages/home/home.dart';
@@ -32,7 +31,7 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers => [
         Router("/", child: (_, args) => Splash()),
-        Router("/login", child: (_, args) => Login(true)),
+        Router("/login", child: (_, args) => Login()),
         Router("/home", child: (_, args) => Main()),
         Router("/settings", child: (_, args) => Settings()),
       ];

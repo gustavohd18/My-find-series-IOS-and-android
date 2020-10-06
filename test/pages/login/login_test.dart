@@ -26,7 +26,7 @@ void main() async {
 
   testWidgets("Test element present to UI Login screen",
       (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(Login(true)));
+    await tester.pumpWidget(buildTestableWidget(Login()));
 
     final Finder scaffoldFinder = find.byType(Scaffold);
 
