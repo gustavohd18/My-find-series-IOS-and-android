@@ -1,8 +1,9 @@
+import 'package:myFindMovies/service/database/favorites_database_abstract.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 
-class FavoriteDatabase {
+class FavoriteDatabase implements IFavorites {
   static final _databaseName = "find.db";
   static final _databaseVersion = 1;
 

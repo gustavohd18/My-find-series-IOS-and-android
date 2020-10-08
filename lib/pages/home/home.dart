@@ -46,10 +46,6 @@ class _MainState extends ModularState<Main, HomeController> {
     ));
   }
 
-  void _reloadTab() {
-    setState(() {});
-  }
-
   Widget _buildScreen() {
     return SafeArea(
         child: Column(
