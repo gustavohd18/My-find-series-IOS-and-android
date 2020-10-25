@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myFindMovies/model/shareContent.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/favorite/favorite.dart';
 import 'package:myFindMovies/pages/home/home.dart';
-import 'package:myFindMovies/service/authentication/authentication_service.dart';
-import 'package:myFindMovies/service/content_handle.dart';
-import 'package:myFindMovies/service/translator/traslator.dart';
-import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
+import 'package:myFindMovies/stores/share/share_controller.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/widgets/share/share_list.dart';
@@ -17,30 +15,21 @@ class Share extends StatefulWidget {
   _ShareState createState() => _ShareState();
 }
 
-class _ShareState extends State<Share> {
-  final dbHelper = FavoriteDatabase.instance;
-  final AuthenticationService authenticationService = AuthenticationService();
-
-  Stream<List<ShareContent>> _shareList;
-  bool _isPortugues = true;
-  String _text = " ";
-
-  String _myHandler = "";
-
+class _ShareState extends ModularState<Share, ShareController> {
   @override
   void initState() {
     super.initState();
-    getLanguage();
+    this.controller.reload();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildScreen(),
-      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(), Settings(),
-          Share(), _isPortugues),
+      drawer: DrawerMenu(
+          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
       appBar: AppBar(
-        title: Text(_myHandler),
+        title: Observer(builder: (_) => Text(this.controller.title)),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -57,31 +46,16 @@ class _ShareState extends State<Share> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Expanded(
-          child: ShareList(_shareList, _isPortugues, _text),
-        ),
+        Observer(
+          builder: (_) => Expanded(
+            child: ShareList(
+              this.controller.getShareList(),
+              true,
+              this.controller.empty,
+            ),
+          ),
+        )
       ],
     ));
-  }
-
-  void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      _isPortugues = isPortuguese;
-      _text = (isPortuguese == false)
-          ? "Nenhum conteúdo compartilhado na lista"
-          : "No have content shared";
-
-      _myHandler = (isPortuguese == false) ? "Compartilhados" : "Shared";
-
-      _shareList = ContentHandler().getShareList(
-          authenticationService.getFirebaseAuth().currentUser.email);
-    });
   }
 }

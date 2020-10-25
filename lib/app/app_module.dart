@@ -5,6 +5,7 @@ import 'package:myFindMovies/pages/login/login.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
+import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
@@ -20,6 +21,7 @@ import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/stores/movies/movies_controller.dart';
 import 'package:myFindMovies/stores/series/series_controller.dart';
 import 'package:myFindMovies/stores/settings/settings_controller.dart';
+import 'package:myFindMovies/stores/share/share_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
@@ -36,7 +38,8 @@ class AppModule extends MainModule {
         Bind((i) => SettingsController()),
         Bind((i) => FavoritesController()),
         Bind((i) => MoviesController()),
-        Bind((i) => SeriesController())
+        Bind((i) => SeriesController()),
+        Bind((i) => ShareController())
       ];
 
   @override
@@ -47,6 +50,7 @@ class AppModule extends MainModule {
         Router("/settings", child: (_, args) => Settings()),
         Router("/movie", child: (_, args) => Movie()),
         Router("/series", child: (_, args) => Series()),
+        Router("/share", child: (_, args) => Share()),
       ];
 
   static Inject get to => Inject.of();
