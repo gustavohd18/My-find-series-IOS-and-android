@@ -3,6 +3,7 @@ import 'package:myFindMovies/app/app_widget.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/pages/login/login.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
@@ -17,6 +18,7 @@ import 'package:myFindMovies/service/translator/translator_abstract.dart';
 import 'package:myFindMovies/stores/favorites/favorites_controller.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/stores/movies/movies_controller.dart';
+import 'package:myFindMovies/stores/series/series_controller.dart';
 import 'package:myFindMovies/stores/settings/settings_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
@@ -33,7 +35,8 @@ class AppModule extends MainModule {
         Bind((i) => HomeController()),
         Bind((i) => SettingsController()),
         Bind((i) => FavoritesController()),
-        Bind((i) => MoviesController())
+        Bind((i) => MoviesController()),
+        Bind((i) => SeriesController())
       ];
 
   @override
@@ -43,6 +46,7 @@ class AppModule extends MainModule {
         Router("/home", child: (_, args) => Main()),
         Router("/settings", child: (_, args) => Settings()),
         Router("/movie", child: (_, args) => Movie()),
+        Router("/series", child: (_, args) => Series()),
       ];
 
   static Inject get to => Inject.of();
