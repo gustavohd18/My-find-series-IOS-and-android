@@ -20,10 +20,12 @@ import 'package:myFindMovies/stores/favorites/favorites_controller.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/stores/movies/movies_controller.dart';
 import 'package:myFindMovies/stores/series/series_controller.dart';
+import 'package:myFindMovies/stores/drawer/drawer_menu_controller.dart';
 import 'package:myFindMovies/stores/settings/settings_controller.dart';
 import 'package:myFindMovies/stores/share/share_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
+import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 
 class AppModule extends MainModule {
   @override
@@ -39,7 +41,8 @@ class AppModule extends MainModule {
         Bind((i) => FavoritesController()),
         Bind((i) => MoviesController()),
         Bind((i) => SeriesController()),
-        Bind((i) => ShareController())
+        Bind((i) => ShareController()),
+        Bind((i) => DrawerMenuController()),
       ];
 
   @override
@@ -51,6 +54,7 @@ class AppModule extends MainModule {
         Router("/movie", child: (_, args) => Movie()),
         Router("/series", child: (_, args) => Series()),
         Router("/share", child: (_, args) => Share()),
+        Router("/drawer", child: (_, args) => DrawerMenu()),
       ];
 
   static Inject get to => Inject.of();

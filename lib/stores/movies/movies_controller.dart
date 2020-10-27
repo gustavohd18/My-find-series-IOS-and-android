@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/model/MovieList.dart';
 import 'package:myFindMovies/service/content_handle_abstract.dart';
-import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/translator/languages.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
 part 'movies_controller.g.dart';
