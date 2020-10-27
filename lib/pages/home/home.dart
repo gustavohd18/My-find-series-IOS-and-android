@@ -29,8 +29,7 @@ class _MainState extends ModularState<Main, HomeController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      drawer: DrawerMenu(
-          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
+      drawer: DrawerMenu(),
       body: _buildScreen(),
       appBar: AppBar(
         title: Observer(

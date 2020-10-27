@@ -35,8 +35,7 @@ class _SettingsState extends ModularState<Settings, SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerMenu(
-          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
+      drawer: DrawerMenu(),
       appBar: AppBar(
         title: Observer(
           builder: (_) => Text(this.controller.title),

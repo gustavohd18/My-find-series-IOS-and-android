@@ -26,8 +26,7 @@ class _FavoriteState extends ModularState<Favorite, FavoritesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildScreen(),
-      drawer: DrawerMenu(
-          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
+      drawer: DrawerMenu(),
       appBar: AppBar(
         title: Observer(
           builder: (_) => Text(this.controller.title),

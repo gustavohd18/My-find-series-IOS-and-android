@@ -26,8 +26,7 @@ class _ShareState extends ModularState<Share, ShareController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildScreen(),
-      drawer: DrawerMenu(
-          Main(), Favorite(), Series(), Movie(), Settings(), Share(), true),
+      drawer: DrawerMenu(),
       appBar: AppBar(
         title: Observer(builder: (_) => Text(this.controller.title)),
         leading: Builder(

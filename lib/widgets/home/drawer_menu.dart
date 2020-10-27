@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:myFindMovies/pages/favorite/favorite.dart';
+import 'package:myFindMovies/pages/home/home.dart';
+import 'package:myFindMovies/pages/movies/movie.dart';
+import 'package:myFindMovies/pages/serie/serie.dart';
+import 'package:myFindMovies/pages/settings/settings.dart';
+import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 
 class DrawerMenu extends StatelessWidget {
-  final Widget home, favorite, series, movies, settings, share;
-  final bool isPortugues;
-
-  DrawerMenu(this.home, this.favorite, this.series, this.movies, this.settings,
-      this.share, this.isPortugues);
   @override
   Widget build(BuildContext context) {
     String _homeName,
@@ -19,7 +20,7 @@ class DrawerMenu extends StatelessWidget {
     final AuthenticationService _authenticationService =
         AuthenticationService();
 
-    if (!isPortugues) {
+    if (true) {
       _homeName = "Inicio";
       _favoriteName = "Favoritos";
       _moviesName = "Filmes";
@@ -75,7 +76,7 @@ class DrawerMenu extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) => home));
+                  MaterialPageRoute(builder: (BuildContext context) => Main()));
             },
           ),
           ListTile(
@@ -102,7 +103,7 @@ class DrawerMenu extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => favorite));
+                      builder: (BuildContext context) => Favorite()));
             },
           ),
           ListTile(
@@ -126,8 +127,10 @@ class DrawerMenu extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) => series));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Series()));
             },
           ),
           ListTile(
@@ -151,8 +154,10 @@ class DrawerMenu extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) => movies));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Movie()));
             },
           ),
           ListTile(
@@ -176,8 +181,10 @@ class DrawerMenu extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) => share));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Share()));
             },
           ),
           ListTile(
@@ -204,7 +211,7 @@ class DrawerMenu extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => settings));
+                      builder: (BuildContext context) => Settings()));
             },
           ),
           ListTile(
