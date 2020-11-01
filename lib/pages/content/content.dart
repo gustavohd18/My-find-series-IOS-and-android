@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
+import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
-class Content extends StatelessWidget {
-  final String id, title, information, voteAverage, posterPath, messages;
+class Content extends StatefulWidget {
+    final String id, title, information, voteAverage, posterPath, messages;
   final bool isMovie, isFavorite, isPortuguese;
   final BuildContext contextFinal;
   final Function() f;
@@ -37,6 +40,16 @@ class Content extends StatelessWidget {
   final myController2 = TextEditingController();
 
   @override
+  _ContentState createState() => _ContentState();
+}
+class _ContentState extends ModularState<Content, ContentController> {
+  @override
+  void initState() {
+    super.initState();
+    this.controller.reload();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: dialogContent(context),
@@ -44,57 +57,17 @@ class Content extends StatelessWidget {
   }
 
   Widget dialogContent(BuildContext context) {
-    final media = (voteAverage != null) ? double.parse(voteAverage).round() : 3;
+    final media = (widget.voteAverage != null) ? double.parse(widget.voteAverage).round() : 3;
     String _url;
-    String delete;
-    String add;
-    String cancel;
-    String added;
-    String removed;
-    String _sendContent;
-    String _message;
-    String _error;
-    String _ok;
-    String _close;
-    String _send;
-    String _messageField;
 
-    if (isPortuguese) {
-      delete = 'delete Favorite';
-      add = 'add favorite';
-      cancel = 'Share';
-      added = 'Added with sucess';
-      removed = 'Removed with sucess';
-      _sendContent = "Share";
-      _message = "Message";
-      _error = "error with share, email blank";
-      _ok = "shared with success";
-      _close = "Close";
-      _send = "Send";
-      _messageField = "Comment";
-    } else {
-      delete = 'deletar dos Favoritos';
-      add = 'Adicionar aos favoritos';
-      cancel = 'Compartilhar';
-      added = 'Adicionado com sucesso';
-      removed = 'Removidos com sucesso';
-      _sendContent = "Compartilhar";
-      _message = "Mensagem";
-      _error = "falha com o compartilhamento, email em branco";
-      _ok = "Compartilhado com sucesso";
-      _close = "Fechar";
-      _send = "Enviar";
-      _messageField = "Comentário";
-    }
-
-    if (isMovie) {
-      ContentHandler().videoMovies(id).then((data) {
+    if (widget.isMovie) {
+      ContentHandler().videoMovies(widget.id).then((data) {
         _url = data[0].key;
       }, onError: (e) {
         print(e);
       });
     } else {
-      ContentHandler().videoSeries(id).then((data) {
+      ContentHandler().videoSeries(widget.id).then((data) {
         _url = data[0].key;
       }, onError: (e) {
         print(e);
@@ -103,12 +76,12 @@ class Content extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
-        ImageWidget(posterPath),
+        ImageWidget(widget.posterPath),
         SizedBox(height: 16.0),
         Padding(
           padding: EdgeInsets.only(left: 12.0, right: 12.0),
           child: Text(
-            title,
+            widget.title,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24.0,
@@ -134,15 +107,17 @@ class Content extends StatelessWidget {
                     },
                   ),
                 ),
+                  Observer(
+                builder: (_) =>
                 Expanded(
                   child: FlatButton(
-                    child: (isFavorite == true) ? Text(delete) : Text(add),
+                    child: (widget.isFavorite == true) ? Text(this.controller.delete) : Text(this.controller.add),
                     onPressed: () {
-                      if (isFavorite) {
-                        dbHelper.delete(id);
+                      if (widget.isFavorite) {
+                        widget.dbHelper.delete(widget.id);
                         //maybe will no need more this function because open new screen
-                        if (f != null) {
-                          f();
+                        if (widget.f != null) {
+                          widget.f();
                         }
 
                         showDialog(
@@ -155,7 +130,7 @@ class Content extends StatelessWidget {
                               return AlertDialog(
                                 title: Icon(Icons.check),
                                 content: Text(
-                                  removed,
+                                  this.controller.removed,
                                   textAlign: TextAlign.center,
                                 ),
                               );
@@ -163,20 +138,20 @@ class Content extends StatelessWidget {
                       } else {
                         String _isMovies;
 
-                        if (isMovie) {
+                        if (widget.isMovie) {
                           _isMovies = 's';
                         } else {
                           _isMovies = 'n';
                         }
                         final _favorite = FavoriteList.origin(
-                            id,
-                            title,
-                            information,
-                            voteAverage,
-                            posterPath,
+                            widget.id,
+                            widget.title,
+                            widget.information,
+                            widget.voteAverage,
+                            widget.posterPath,
                             _url,
                             _isMovies);
-                        dbHelper.insertFavorite(_favorite);
+                        widget.dbHelper.insertFavorite(_favorite);
                         showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -187,53 +162,55 @@ class Content extends StatelessWidget {
                               return AlertDialog(
                                 title: Icon(Icons.check),
                                 content: Text(
-                                  added,
+                                  this.controller.added,
                                   textAlign: TextAlign.center,
                                 ),
                               );
                             });
                       }
                     },
-                  ),
+                  ),),
                 ),
+                 Observer(
+                builder: (_) =>
                 Expanded(
                   child: FlatButton(
                     onPressed: () {
                       String _isMovies;
 
-                      if (isMovie) {
+                      if (widget.isMovie) {
                         _isMovies = 's';
                       } else {
                         _isMovies = 'n';
                       }
 
-                      String overview = information;
+                      String overview = widget.information;
 
                       final shareContent = ShareContent(
-                          id: id,
-                          title: title,
+                          id: widget.id,
+                          title: widget.title,
                           overview: overview,
-                          voteAverage: voteAverage,
-                          posterPath: posterPath,
+                          voteAverage: widget.voteAverage,
+                          posterPath: widget.posterPath,
                           url: _url,
                           isMovie: _isMovies,
                           email: "",
                           message: "");
 
                       Widget cancelButton = FlatButton(
-                        child: Text(_close),
+                        child: Text(this.controller.close),
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
                       );
 
                       Widget confirmButton = FlatButton(
-                        child: Text(_send),
+                        child: Text(this.controller.send),
                         onPressed: () {
-                          if (myController.text != '') {
-                            shareContent.email = myController.text;
+                          if (widget.myController.text != '') {
+                            shareContent.email = widget.myController.text;
                             shareContent.message =
-                                "${authenticationService.getFirebaseAuth().currentUser.email}: ${myController2.text}";
+                                "${this.controller.getAuthEmail()}: ${widget.myController2.text}";
                             ContentHandler().addShareContent(shareContent);
                             showDialog(
                                 context: context,
@@ -246,7 +223,7 @@ class Content extends StatelessWidget {
                                   return AlertDialog(
                                     title: Icon(Icons.check),
                                     content: Text(
-                                      _ok,
+                                      this.controller.ok,
                                       textAlign: TextAlign.center,
                                     ),
                                   );
@@ -263,7 +240,7 @@ class Content extends StatelessWidget {
                                   return AlertDialog(
                                     title: Icon(Icons.error),
                                     content: Text(
-                                      _error,
+                                      this.controller.error,
                                       textAlign: TextAlign.center,
                                     ),
                                   );
@@ -278,24 +255,24 @@ class Content extends StatelessWidget {
                           builder: (context) {
                             return AlertDialog(
                               title: Text(
-                                "${_sendContent}: ${title}",
+                                "${this.controller.sendContent}: ${widget.title}",
                                 textAlign: TextAlign.center,
                               ),
-                              content: _dialogReset(_message),
+                              content: _dialogReset(this.controller.message),
                               actions: [confirmButton, cancelButton],
                             );
                           });
                     },
-                    child: Text(cancel),
+                    child: Text(this.controller.cancel),
                   ),
-                ),
+                ),),
               ],
             )),
         SizedBox(height: 16.0),
         Padding(
           padding: EdgeInsets.only(left: 12.0, right: 12.0),
           child: Text(
-            information,
+            widget.information,
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 16.0,
@@ -303,19 +280,21 @@ class Content extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16.0),
-        (messages != null)
+        (widget.messages != null)
             ? Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
+                    Observer(
+                builder: (_) =>
                   Text(
-                    _messageField,
+                    this.controller.messageField,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: 18.0,
                     ),
-                  ),
+                  ),),
                   Text(
-                    messages,
+                    widget.messages,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 14.0,
@@ -352,7 +331,7 @@ class Content extends StatelessWidget {
               labelText: 'Email',
               icon: Icon(Icons.mail_outline),
             ),
-            controller: myController,
+            controller: widget.myController,
           ),
           TextField(
             keyboardType: TextInputType.emailAddress,
@@ -360,7 +339,7 @@ class Content extends StatelessWidget {
               labelText: _message,
               icon: Icon(Icons.message),
             ),
-            controller: myController2,
+            controller: widget.myController2,
           ),
         ],
       ),

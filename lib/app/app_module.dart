@@ -16,6 +16,7 @@ import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/database/favorites_database_abstract.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:myFindMovies/service/translator/translator_abstract.dart';
+import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/stores/favorites/favorites_controller.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/stores/movies/movies_controller.dart';
@@ -43,6 +44,7 @@ class AppModule extends MainModule {
         Bind((i) => SeriesController()),
         Bind((i) => ShareController()),
         Bind((i) => DrawerMenuController()),
+        Bind((i) => ContentController()),
       ];
 
   @override
