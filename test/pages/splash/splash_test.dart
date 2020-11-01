@@ -6,9 +6,13 @@ import 'package:mockito/mockito.dart';
 import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
+import 'package:myFindMovies/service/translator/languages.dart';
+import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 
 class MockAuthentification extends Mock implements Authentication {}
+
+class MockTranslator extends Mock implements Translator {}
 
 class MockSplashController extends Mock implements SplashController {}
 
@@ -17,6 +21,7 @@ void main() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     initModule(AppModule(), changeBinds: [
       Bind<Authentication>((i) => MockAuthentification()),
+      Bind<Translator>((i) => MockTranslator()),
       Bind((i) => MockSplashController()),
     ]);
   });
@@ -40,6 +45,12 @@ void main() async {
   testWidgets("Test element present to UI Splash screen",
       (WidgetTester tester) async {
     await _createScreen(tester);
+
+    MockTranslator mock = MockTranslator();
+    mock.setLanguage(Languages.english);
+
+    MockSplashController mock2 = MockSplashController();
+    mock2.builtDescription = "Built with";
 
     final Finder scaffoldFinder = find.byType(Scaffold);
 

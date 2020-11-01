@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/stores/series/series_controller.dart';
 import 'package:myFindMovies/widgets/serie/series_list.dart';
-import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/home/home.dart';
@@ -14,19 +15,14 @@ class Series extends StatefulWidget {
   SerieState createState() => SerieState();
 }
 
-class SerieState extends State<Series> {
+class SerieState extends ModularState<Series, SeriesController> {
   final searchTextController = TextEditingController();
   String searchText = "";
-  bool isPortugues;
-  String _searchSeries;
-  String _search;
-  String _searchPerSeries;
 
   @override
   void initState() {
     super.initState();
-    // this should not be done in build method.
-    getLanguage();
+    this.controller.reload();
   }
 
   @override
@@ -38,10 +34,11 @@ class SerieState extends State<Series> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-            Settings(_reloadTab), Share(), isPortugues),
+        drawer: DrawerMenu(),
         appBar: AppBar(
-          title: Text("Series"),
+          title: Observer(
+            builder: (_) => Text(this.controller.title),
+          ),
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(Icons.menu),
@@ -54,64 +51,47 @@ class SerieState extends State<Series> {
           children: <Widget>[
             Container(
               child: Row(children: <Widget>[
-                Flexible(
-                  child: TextField(
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (value) {
-                      setState(() {
-                        searchText = searchTextController.text;
-                      });
-                    },
-                    controller: searchTextController,
-                    decoration: InputDecoration(
-                      focusColor: Colors.black,
-                      labelText: _searchSeries,
-                      hintText: _search,
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        tooltip: _searchPerSeries,
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          setState(() {
-                            searchText = searchTextController.text;
-                          });
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                        borderSide: BorderSide(color: Colors.black),
+                Observer(
+                  builder: (_) => Flexible(
+                    child: TextField(
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (value) {
+                        setState(() {
+                          searchText = searchTextController.text;
+                        });
+                      },
+                      controller: searchTextController,
+                      decoration: InputDecoration(
+                        focusColor: Colors.black,
+                        labelText: this.controller.search,
+                        hintText: this.controller.search,
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.search),
+                          tooltip: this.controller.search,
+                          onPressed: () {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                            setState(() {
+                              searchText = searchTextController.text;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                )
               ]),
               padding: EdgeInsets.all(10),
             ),
             if (searchText.length > 0)
               Expanded(
                   child: SeriesList(
-                      ContentHandler().searchSeries(searchText), isPortugues))
+                      this.controller.searchSeries(searchText), true))
           ],
         )));
-  }
-
-  void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      isPortugues = isPortuguese;
-      _searchSeries =
-          (isPortuguese == false) ? "Pesquisa por Series" : "Search for Series";
-
-      _search = (isPortuguese == false) ? "Pesquisar" : "Search";
-
-      _searchPerSeries =
-          (isPortuguese == false) ? "Pesquisar Series" : 'Search Series';
-    });
   }
 }

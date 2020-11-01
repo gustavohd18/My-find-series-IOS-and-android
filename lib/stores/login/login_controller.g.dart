@@ -116,6 +116,147 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$passwordWordAtom = Atom(name: '_LoginControllerBase.passwordWord');
+
+  @override
+  String get passwordWord {
+    _$passwordWordAtom.reportRead();
+    return super.passwordWord;
+  }
+
+  @override
+  set passwordWord(String value) {
+    _$passwordWordAtom.reportWrite(value, super.passwordWord, () {
+      super.passwordWord = value;
+    });
+  }
+
+  final _$cancelButtonAtom = Atom(name: '_LoginControllerBase.cancelButton');
+
+  @override
+  String get cancelButton {
+    _$cancelButtonAtom.reportRead();
+    return super.cancelButton;
+  }
+
+  @override
+  set cancelButton(String value) {
+    _$cancelButtonAtom.reportWrite(value, super.cancelButton, () {
+      super.cancelButton = value;
+    });
+  }
+
+  final _$errorLoginMessageAtom =
+      Atom(name: '_LoginControllerBase.errorLoginMessage');
+
+  @override
+  String get errorLoginMessage {
+    _$errorLoginMessageAtom.reportRead();
+    return super.errorLoginMessage;
+  }
+
+  @override
+  set errorLoginMessage(String value) {
+    _$errorLoginMessageAtom.reportWrite(value, super.errorLoginMessage, () {
+      super.errorLoginMessage = value;
+    });
+  }
+
+  final _$resetPasswordMessageAtom =
+      Atom(name: '_LoginControllerBase.resetPasswordMessage');
+
+  @override
+  String get resetPasswordMessage {
+    _$resetPasswordMessageAtom.reportRead();
+    return super.resetPasswordMessage;
+  }
+
+  @override
+  set resetPasswordMessage(String value) {
+    _$resetPasswordMessageAtom.reportWrite(value, super.resetPasswordMessage,
+        () {
+      super.resetPasswordMessage = value;
+    });
+  }
+
+  final _$resetPasswordTitleAtom =
+      Atom(name: '_LoginControllerBase.resetPasswordTitle');
+
+  @override
+  String get resetPasswordTitle {
+    _$resetPasswordTitleAtom.reportRead();
+    return super.resetPasswordTitle;
+  }
+
+  @override
+  set resetPasswordTitle(String value) {
+    _$resetPasswordTitleAtom.reportWrite(value, super.resetPasswordTitle, () {
+      super.resetPasswordTitle = value;
+    });
+  }
+
+  final _$createAccountTextAtom =
+      Atom(name: '_LoginControllerBase.createAccountText');
+
+  @override
+  String get createAccountText {
+    _$createAccountTextAtom.reportRead();
+    return super.createAccountText;
+  }
+
+  @override
+  set createAccountText(String value) {
+    _$createAccountTextAtom.reportWrite(value, super.createAccountText, () {
+      super.createAccountText = value;
+    });
+  }
+
+  final _$sendButtonAtom = Atom(name: '_LoginControllerBase.sendButton');
+
+  @override
+  String get sendButton {
+    _$sendButtonAtom.reportRead();
+    return super.sendButton;
+  }
+
+  @override
+  set sendButton(String value) {
+    _$sendButtonAtom.reportWrite(value, super.sendButton, () {
+      super.sendButton = value;
+    });
+  }
+
+  final _$sendButtonOkAtom = Atom(name: '_LoginControllerBase.sendButtonOk');
+
+  @override
+  String get sendButtonOk {
+    _$sendButtonOkAtom.reportRead();
+    return super.sendButtonOk;
+  }
+
+  @override
+  set sendButtonOk(String value) {
+    _$sendButtonOkAtom.reportWrite(value, super.sendButtonOk, () {
+      super.sendButtonOk = value;
+    });
+  }
+
+  final _$errorSendResetAtom =
+      Atom(name: '_LoginControllerBase.errorSendReset');
+
+  @override
+  String get errorSendReset {
+    _$errorSendResetAtom.reportRead();
+    return super.errorSendReset;
+  }
+
+  @override
+  set errorSendReset(String value) {
+    _$errorSendResetAtom.reportWrite(value, super.errorSendReset, () {
+      super.errorSendReset = value;
+    });
+  }
+
   final _$_LoginControllerBaseActionController =
       ActionController(name: '_LoginControllerBase');
 
@@ -139,7 +280,16 @@ password: ${password},
 passwordPlaceholder: ${passwordPlaceholder},
 type: ${type},
 isLogin: ${isLogin},
-enableButton: ${enableButton}
+enableButton: ${enableButton},
+passwordWord: ${passwordWord},
+cancelButton: ${cancelButton},
+errorLoginMessage: ${errorLoginMessage},
+resetPasswordMessage: ${resetPasswordMessage},
+resetPasswordTitle: ${resetPasswordTitle},
+createAccountText: ${createAccountText},
+sendButton: ${sendButton},
+sendButtonOk: ${sendButtonOk},
+errorSendReset: ${errorSendReset}
     ''';
   }
 }

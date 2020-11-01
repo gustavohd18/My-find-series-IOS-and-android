@@ -4,9 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 
 class Login extends StatefulWidget {
-  final bool isPortuguese;
-
-  const Login(this.isPortuguese);
   @override
   _LoginState createState() => _LoginState();
 }
@@ -14,48 +11,16 @@ class Login extends StatefulWidget {
 class _LoginState extends ModularState<Login, LoginController> {
   bool isPortugues;
 
-  String _password = '',
-      _errorLoginMessage = '',
-      _resetPasswordMessage = '',
-      _resetPasswordTitle = '',
-      _createAccount = '',
-      _sendButton = '',
-      _errorSendReset = '',
-      _cancelButton = '',
-      _sendButtonOk = '';
-
   final myController = TextEditingController();
   @override
   void initState() {
     super.initState();
+    // this should not be done in build method.
+    this.controller.reload();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isPortuguese) {
-      _password = "Senha";
-      _errorLoginMessage = "Erro com o login: Senha ou Email invalido";
-      _resetPasswordMessage =
-          "Para redefinir a senha, por favor digite seu email e siga as instruções enviadas para o Email";
-      _resetPasswordTitle = "Redefinir a senha";
-      _createAccount = "Criar uma conta";
-      _sendButton = "Enviar";
-      _cancelButton = "Cancelar";
-      _sendButtonOk = "Email enviado";
-      _errorSendReset = "Email not send try again";
-    } else {
-      _password = "Password";
-      _cancelButton = "Cancel";
-      _errorLoginMessage = "Error with login: Password or email invalid";
-      _resetPasswordMessage =
-          "To reset password, please type your email and follow instruction sent to email";
-      _resetPasswordTitle = "Reset password";
-      _createAccount = "Create Account";
-      _sendButton = "Send";
-      _sendButtonOk = "Email sent";
-      _errorSendReset = "Email não enviado, tente novamente";
-    }
-
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
@@ -87,7 +52,7 @@ class _LoginState extends ModularState<Login, LoginController> {
                   builder: (_) => TextField(
                         obscureText: true,
                         decoration: InputDecoration(
-                            labelText: _password,
+                            labelText: this.controller.passwordWord,
                             icon: Icon(Icons.security),
                             errorText: this.controller.passwordPlaceholder),
                         onChanged: (text) {
@@ -141,7 +106,9 @@ class _LoginState extends ModularState<Login, LoginController> {
                       }
                     : null)),
         FlatButton(
-          child: Text(_createAccount),
+          child: Observer(
+            builder: (_) => Text(this.controller.createAccountText),
+          ),
           onPressed: () {
             this.controller.setType('Create Account');
           },
@@ -157,7 +124,9 @@ class _LoginState extends ModularState<Login, LoginController> {
         Observer(
             builder: (_) => RaisedButton(
                 elevation: 16.0,
-                child: Text(_createAccount),
+                child: Observer(
+                  builder: (_) => Text(this.controller.createAccountText),
+                ),
                 color: Colors.blue.shade200,
                 disabledColor: Colors.transparent,
                 onPressed: this.controller.enableButton
@@ -183,14 +152,18 @@ class _LoginState extends ModularState<Login, LoginController> {
 
   Column _buttonResetPassword() {
     Widget cancelButton = FlatButton(
-      child: Text(_cancelButton),
+      child: Observer(
+        builder: (_) => Text(this.controller.cancelButton),
+      ),
       onPressed: () {
         Navigator.of(context).pop(true);
       },
     );
 
     Widget confirmButton = FlatButton(
-      child: Text(_sendButton),
+      child: Observer(
+        builder: (_) => Text(this.controller.sendButton),
+      ),
       onPressed: () async {
         if (myController.text != '') {
           await this.controller.resetPassword(myController.text);
@@ -203,9 +176,8 @@ class _LoginState extends ModularState<Login, LoginController> {
                 });
                 return AlertDialog(
                   title: Icon(Icons.check),
-                  content: Text(
-                    _sendButtonOk,
-                    textAlign: TextAlign.center,
+                  content: Observer(
+                    builder: (_) => Text(this.controller.sendButtonOk),
                   ),
                 );
               });
@@ -218,12 +190,13 @@ class _LoginState extends ModularState<Login, LoginController> {
                   Navigator.of(context).pop(true);
                 });
                 return AlertDialog(
-                  title: Icon(Icons.error),
-                  content: Text(
-                    _errorSendReset,
-                    textAlign: TextAlign.center,
-                  ),
-                );
+                    title: Icon(Icons.error),
+                    content: Observer(
+                      builder: (_) => Text(
+                        this.controller.errorSendReset,
+                        textAlign: TextAlign.center,
+                      ),
+                    ));
               });
         }
       },
@@ -233,7 +206,9 @@ class _LoginState extends ModularState<Login, LoginController> {
       children: <Widget>[
         RaisedButton(
           elevation: 16.0,
-          child: Text(_resetPasswordTitle),
+          child: Observer(
+            builder: (_) => Text(this.controller.resetPasswordTitle),
+          ),
           color: Colors.blue.shade200,
           onPressed: () {
             showDialog(
@@ -241,9 +216,11 @@ class _LoginState extends ModularState<Login, LoginController> {
                 barrierDismissible: false,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(
-                      _resetPasswordTitle,
-                      textAlign: TextAlign.center,
+                    title: Observer(
+                      builder: (_) => Text(
+                        this.controller.resetPasswordTitle,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     content: _dialogReset(),
                     actions: [confirmButton, cancelButton],
@@ -261,10 +238,11 @@ class _LoginState extends ModularState<Login, LoginController> {
       height: 150,
       child: Column(
         children: [
-          Text(
-            _resetPasswordMessage,
-            textAlign: TextAlign.center,
-          ),
+          Observer(
+              builder: (_) => Text(
+                    this.controller.resetPasswordMessage,
+                    textAlign: TextAlign.center,
+                  )),
           TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
@@ -287,7 +265,8 @@ class _LoginState extends ModularState<Login, LoginController> {
     );
 
     AlertDialog alert = AlertDialog(
-      content: Text(_errorLoginMessage),
+      content:
+          Observer(builder: (_) => Text(this.controller.errorLoginMessage)),
       actions: [
         cancelButton,
       ],

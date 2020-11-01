@@ -7,7 +7,10 @@ import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/pages/login/login.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
+import 'package:myFindMovies/service/translator/translator_abstract.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
+
+import '../splash/splash_test.dart';
 
 class MockAuthentification extends Mock implements Authentication {}
 
@@ -16,13 +19,14 @@ void main() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     initModule(AppModule(), changeBinds: [
       Bind<Authentication>((i) => MockAuthentification()),
+      Bind<ITranslator>((i) => MockTranslator()),
       Bind((i) => LoginController()),
     ]);
   });
 
   testWidgets("Test element present to UI Login screen",
       (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(Login(true)));
+    await tester.pumpWidget(buildTestableWidget(Login()));
 
     final Finder scaffoldFinder = find.byType(Scaffold);
 
@@ -88,7 +92,7 @@ void main() async {
 
     final Finder obsFinder = find.byType(Observer);
 
-    expect(obsFinder, findsNWidgets(4));
+    expect(obsFinder, findsNWidgets(6));
 
     final Observer text0 = tester.widget(obsFinder.at(0));
 

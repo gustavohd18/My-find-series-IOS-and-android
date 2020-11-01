@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 
@@ -60,9 +61,13 @@ class _SplashPageState extends ModularState<Splash, SplashController> {
                 margin: EdgeInsets.only(
                   top: 15.0,
                 ),
-                child: Text(
-                  "Built with",
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                child: Observer(
+                  builder: (_) => Text(
+                    (this.controller.builtDescription != null)
+                        ? this.controller.builtDescription
+                        : "Built with",
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
                 ),
               ),
               SizedBox(height: 1.0),

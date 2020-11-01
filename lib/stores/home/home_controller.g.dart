@@ -39,11 +39,59 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$topSeriesAtom = Atom(name: '_HomeControllerBase.topSeries');
+
+  @override
+  String get topSeries {
+    _$topSeriesAtom.reportRead();
+    return super.topSeries;
+  }
+
+  @override
+  set topSeries(String value) {
+    _$topSeriesAtom.reportWrite(value, super.topSeries, () {
+      super.topSeries = value;
+    });
+  }
+
+  final _$topMoviesAtom = Atom(name: '_HomeControllerBase.topMovies');
+
+  @override
+  String get topMovies {
+    _$topMoviesAtom.reportRead();
+    return super.topMovies;
+  }
+
+  @override
+  set topMovies(String value) {
+    _$topMoviesAtom.reportWrite(value, super.topMovies, () {
+      super.topMovies = value;
+    });
+  }
+
+  final _$titleAtom = Atom(name: '_HomeControllerBase.title');
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 movieList: ${movieList},
-serieList: ${serieList}
+serieList: ${serieList},
+topSeries: ${topSeries},
+topMovies: ${topMovies},
+title: ${title}
     ''';
   }
 }

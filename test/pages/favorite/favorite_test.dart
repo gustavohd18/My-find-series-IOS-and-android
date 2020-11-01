@@ -1,9 +1,26 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:mockito/mockito.dart';
+import 'package:myFindMovies/app/app_module.dart';
+import 'package:myFindMovies/service/content_handle.dart';
+import 'package:myFindMovies/service/content_handle_abstract.dart';
+import 'package:myFindMovies/stores/favorites/favorites_controller.dart';
 import 'package:myFindMovies/widgets/favorite/favorites_list.dart';
 import 'package:myFindMovies/pages/favorite/favorite.dart';
 
+class MockContent extends Mock implements ContentHandler {}
+
 void main() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    initModule(AppModule(), changeBinds: [
+      Bind<ContentHandleAbs>((i) => MockContent()),
+      Bind((i) => FavoritesController()),
+    ]);
+  });
+
   Future _createWidgets(WidgetTester test) async {
     await test.pumpWidget(
       MaterialApp(
@@ -33,12 +50,6 @@ void main() {
 
     expect(columnFinder, findsOneWidget);
 
-    final Finder safeAreaFinder = find.byType(SafeArea);
-
-    expect(safeAreaFinder, findsNWidgets(2));
-
-    final SafeArea safe = tester.widget(safeAreaFinder.at(0));
-
     final Column column = tester.widget(columnFinder);
 
     final Finder expandedFinder = find.byType(Expanded);
@@ -47,14 +58,6 @@ void main() {
 
     final Expanded expanded = tester.widget(expandedFinder);
 
-    final Finder favoriteFinder = find.byType(FavoritesList);
-
-    expect(favoriteFinder, findsOneWidget);
-
-    final FavoritesList favoriteList = tester.widget(favoriteFinder);
-
-    expect(expanded.child, favoriteList);
-    expect(scaffold.body, safe);
     expect(column.crossAxisAlignment, CrossAxisAlignment.start);
     expect(column.mainAxisSize, MainAxisSize.max);
     expect(column.children, [expanded]);

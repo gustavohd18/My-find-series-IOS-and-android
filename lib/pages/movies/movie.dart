@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/traslator.dart';
+import 'package:myFindMovies/stores/movies/movies_controller.dart';
 import 'package:myFindMovies/widgets/movies/movies_list.dart';
-import 'package:myFindMovies/service/content_handle.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
@@ -14,21 +15,15 @@ class Movie extends StatefulWidget {
   MovieState createState() => MovieState();
 }
 
-class MovieState extends State<Movie> {
+class MovieState extends ModularState<Movie, MoviesController> {
   final searchTextController = TextEditingController();
   String searchText = "";
-
-  bool isPortugues;
-  String _searchMovies;
-  String _search;
-  String _searchPerMovies;
-  String _moviesTitle;
 
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
-    getLanguage();
+    this.controller.reload();
   }
 
   @override
@@ -40,10 +35,11 @@ class MovieState extends State<Movie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-            Settings(_reloadTab), Share(), isPortugues),
+        drawer: DrawerMenu(),
         appBar: AppBar(
-          title: Text(_moviesTitle),
+          title: Observer(
+            builder: (_) => Text(this.controller.title),
+          ),
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(Icons.menu),
@@ -56,32 +52,35 @@ class MovieState extends State<Movie> {
           children: <Widget>[
             Container(
               child: Row(children: <Widget>[
-                Flexible(
-                  child: TextField(
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (value) {
-                      setState(() {
-                        searchText = searchTextController.text;
-                      });
-                    },
-                    controller: searchTextController,
-                    decoration: InputDecoration(
-                      focusColor: Colors.white,
-                      labelText: _searchMovies,
-                      hintText: _search,
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        tooltip: _searchPerMovies,
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          setState(() {
-                            searchText = searchTextController.text;
-                          });
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                        borderSide: BorderSide(color: Colors.white),
+                Observer(
+                  builder: (_) => Flexible(
+                    child: TextField(
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (value) {
+                        setState(() {
+                          searchText = searchTextController.text;
+                        });
+                      },
+                      controller: searchTextController,
+                      decoration: InputDecoration(
+                        focusColor: Colors.white,
+                        labelText: this.controller.search,
+                        hintText: this.controller.search,
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.search),
+                          tooltip: this.controller.search,
+                          onPressed: () {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                            setState(() {
+                              searchText = searchTextController.text;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
@@ -92,31 +91,12 @@ class MovieState extends State<Movie> {
             if (searchText.length > 0)
               Expanded(
                   child: MoviesList(
-                      ContentHandler().searchMovies(searchText), isPortugues))
+                      this.controller.searchMovies(searchText), true))
           ],
         )));
   }
 
   void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      isPortugues = isPortuguese;
-      _searchMovies = (isPortuguese == false)
-          ? "Pesquisa para Filmes"
-          : "Search for movies";
-
-      _search = (isPortuguese == false) ? "Pesquisar " : "Search";
-
-      _searchPerMovies =
-          (isPortuguese == false) ? "Pesquisar Filme" : 'Search Movies';
-
-      _moviesTitle = (isPortuguese == false) ? "Filme" : 'Movies';
-    });
+    setState(() {});
   }
 }

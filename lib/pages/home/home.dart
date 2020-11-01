@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/share/share.dart';
-import 'package:myFindMovies/service/traslator.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
@@ -19,29 +18,23 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends ModularState<Main, HomeController> {
-  bool isPortugues;
-
-  String _topMovies = 'top', _topSeries = 'top';
-  String _myHandler;
-  String _homeName = 'Home';
-
   @override
   void initState() {
     super.initState();
     // this should not be done in build method.
-    getLanguage();
-    _myHandler = _homeName;
+    this.controller.reload();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      drawer: DrawerMenu(Main(), Favorite(), Series(), Movie(),
-          Settings(_reloadTab), Share(), isPortugues),
+      drawer: DrawerMenu(),
       body: _buildScreen(),
       appBar: AppBar(
-        title: Text(_myHandler),
+        title: Observer(
+          builder: (_) => Text(this.controller.title),
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -52,12 +45,6 @@ class _MainState extends ModularState<Main, HomeController> {
     ));
   }
 
-  void _reloadTab() {
-    setState(() {
-      getLanguage();
-    });
-  }
-
   Widget _buildScreen() {
     return SafeArea(
         child: Column(
@@ -66,37 +53,24 @@ class _MainState extends ModularState<Main, HomeController> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: Subtitle(_topMovies),
+          child: Observer(
+            builder: (_) => Subtitle(this.controller.topMovies),
+          ),
         ),
         Expanded(
             flex: 1,
             child: Observer(
                 builder: (_) =>
-                    ContentMoviesList(this.controller.movieList, isPortugues))),
-        Subtitle(_topSeries),
+                    ContentMoviesList(this.controller.movieList, true))),
+        Observer(
+          builder: (_) => Subtitle(this.controller.topSeries),
+        ),
         Expanded(
             flex: 1,
             child: Observer(
                 builder: (_) =>
-                    ContentSeriesList(this.controller.serieList, isPortugues))),
+                    ContentSeriesList(this.controller.serieList, true))),
       ],
     ));
-  }
-
-  Future<Null> getLanguage() async {
-    bool isPortuguese = await Traslator().isPortuguese();
-    setState(() {
-      isPortugues = isPortuguese;
-
-      if (!isPortuguese) {
-        _homeName = "Inicio";
-        _topSeries = "Top 10 Series no mundo";
-        _topMovies = "Top 10 Filmes no mundo";
-      } else {
-        _homeName = "Home";
-        _topSeries = "Top 10 Series in the World";
-        _topMovies = "Top 10 Movies in the World";
-      }
-    });
   }
 }

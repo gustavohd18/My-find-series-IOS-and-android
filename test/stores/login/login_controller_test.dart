@@ -2,13 +2,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myFindMovies/app/app_module.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
+import 'package:myFindMovies/service/translator/translator_abstract.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 import 'package:myFindMovies/stores/splash/mock_auth.dart';
 import 'package:flutter_modular/flutter_modular_test.dart';
 
+import '../../pages/splash/splash_test.dart';
+
 void main() {
   initModule(AppModule(), changeBinds: [
     Bind<Authentication>((i) => AuthMock()),
+    Bind<ITranslator>((i) => MockTranslator()),
   ]);
 
   test('Be default login was type', () async {

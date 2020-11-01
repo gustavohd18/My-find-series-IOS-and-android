@@ -24,10 +24,27 @@ mixin _$SplashController on _SplashControllerBase, Store {
     });
   }
 
+  final _$builtDescriptionAtom =
+      Atom(name: '_SplashControllerBase.builtDescription');
+
+  @override
+  String get builtDescription {
+    _$builtDescriptionAtom.reportRead();
+    return super.builtDescription;
+  }
+
+  @override
+  set builtDescription(String value) {
+    _$builtDescriptionAtom.reportWrite(value, super.builtDescription, () {
+      super.builtDescription = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-addUser: ${addUser}
+addUser: ${addUser},
+builtDescription: ${builtDescription}
     ''';
   }
 }
