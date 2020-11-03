@@ -10,6 +10,7 @@ import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
+import 'package:youtube_api/youtube_api.dart';
 
 class Content extends StatefulWidget {
   final String id, title, information, voteAverage, posterPath, messages;
@@ -41,6 +42,10 @@ class Content extends StatefulWidget {
 
   var isFavorite2 = true;
 
+  final YoutubeAPI ytApi =
+      YoutubeAPI("AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8");
+  List<YT_API> ytResult = [];
+
   @override
   _ContentState createState() => _ContentState();
 }
@@ -51,6 +56,12 @@ class _ContentState extends ModularState<Content, ContentController> {
     super.initState();
     this.controller.reload();
     setFavorite();
+    callAPI();
+  }
+
+  callAPI() async {
+    String query = widget.title + "analise";
+    widget.ytResult = await widget.ytApi.search(query);
   }
 
   @override
@@ -109,7 +120,18 @@ class _ContentState extends ModularState<Content, ContentController> {
                   child: FlatButton(
                     child: (_url != null) ? Wrap() : Text('Trailer'),
                     onPressed: () {
+                      print(_url);
                       playYoutubeVideo(_url);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child:  FlatButton(
+                    child: (widget.ytResult != null) ? Text('Review'): Wrap(),
+                    onPressed: () {
+                      if(widget.ytResult != null){
+                        playYoutubeVideo(widget.ytResult[0].id);
+                      }
                     },
                   ),
                 ),
