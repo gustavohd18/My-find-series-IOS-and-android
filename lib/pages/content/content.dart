@@ -12,7 +12,7 @@ import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
 
 class Content extends StatefulWidget {
-    final String id, title, information, voteAverage, posterPath, messages;
+  final String id, title, information, voteAverage, posterPath, messages;
   final bool isMovie, isFavorite, isPortuguese;
   final BuildContext contextFinal;
   final Function() f;
@@ -39,14 +39,18 @@ class Content extends StatefulWidget {
 
   final myController2 = TextEditingController();
 
+  var isFavorite2 = true;
+
   @override
   _ContentState createState() => _ContentState();
 }
+
 class _ContentState extends ModularState<Content, ContentController> {
   @override
   void initState() {
     super.initState();
     this.controller.reload();
+    setFavorite();
   }
 
   @override
@@ -57,7 +61,9 @@ class _ContentState extends ModularState<Content, ContentController> {
   }
 
   Widget dialogContent(BuildContext context) {
-    final media = (widget.voteAverage != null) ? double.parse(widget.voteAverage).round() : 3;
+    final media = (widget.voteAverage != null)
+        ? double.parse(widget.voteAverage).round()
+        : 3;
     String _url;
 
     if (widget.isMovie) {
@@ -107,35 +113,78 @@ class _ContentState extends ModularState<Content, ContentController> {
                     },
                   ),
                 ),
-                  Observer(
-                builder: (_) =>
-                Expanded(
-                  child: FlatButton(
-                    child: (widget.isFavorite == true) ? Text(this.controller.delete) : Text(this.controller.add),
-                    onPressed: () {
-                      if (widget.isFavorite) {
-                        widget.dbHelper.delete(widget.id);
-                        //maybe will no need more this function because open new screen
-                        if (widget.f != null) {
-                          widget.f();
-                        }
+                Observer(
+                  builder: (_) => Expanded(
+                    child: FlatButton(
+                      child: (this.controller.isFavoriteContent == true)
+                          ? Text(this.controller.delete)
+                          : Text(this.controller.add),
+                      onPressed: () {
+                        if (this.controller.isFavoriteContent) {
+                          widget.dbHelper.delete(widget.id);
+                          this.controller.setIsFavorite(false);
+                          //maybe will no need more this function because open new screen
+                          if (widget.f != null) {
+                            widget.f();
+                          }
 
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) {
-                              Future.delayed(Duration(milliseconds: 300), () {
-                                Navigator.of(context).pop(true);
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                Future.delayed(Duration(milliseconds: 300), () {
+                                  Navigator.of(context).pop(true);
+                                });
+                                return AlertDialog(
+                                  title: Icon(Icons.check),
+                                  content: Text(
+                                    this.controller.removed,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
                               });
-                              return AlertDialog(
-                                title: Icon(Icons.check),
-                                content: Text(
-                                  this.controller.removed,
-                                  textAlign: TextAlign.center,
-                                ),
-                              );
-                            });
-                      } else {
+                        } else {
+                          this.controller.setIsFavorite(true);
+                          String _isMovies;
+
+                          if (widget.isMovie) {
+                            _isMovies = 's';
+                          } else {
+                            _isMovies = 'n';
+                          }
+                          final _favorite = FavoriteList.origin(
+                              widget.id,
+                              widget.title,
+                              widget.information,
+                              widget.voteAverage,
+                              widget.posterPath,
+                              _url,
+                              _isMovies);
+                          widget.dbHelper.insertFavorite(_favorite);
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                Future.delayed(Duration(milliseconds: 500), () {
+                                  Navigator.of(context).pop(true);
+                                });
+                                return AlertDialog(
+                                  title: Icon(Icons.check),
+                                  content: Text(
+                                    this.controller.added,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Observer(
+                  builder: (_) => Expanded(
+                    child: FlatButton(
+                      onPressed: () {
                         String _isMovies;
 
                         if (widget.isMovie) {
@@ -143,129 +192,90 @@ class _ContentState extends ModularState<Content, ContentController> {
                         } else {
                           _isMovies = 'n';
                         }
-                        final _favorite = FavoriteList.origin(
-                            widget.id,
-                            widget.title,
-                            widget.information,
-                            widget.voteAverage,
-                            widget.posterPath,
-                            _url,
-                            _isMovies);
-                        widget.dbHelper.insertFavorite(_favorite);
+
+                        String overview = widget.information;
+
+                        final shareContent = ShareContent(
+                            id: widget.id,
+                            title: widget.title,
+                            overview: overview,
+                            voteAverage: widget.voteAverage,
+                            posterPath: widget.posterPath,
+                            url: _url,
+                            isMovie: _isMovies,
+                            email: "",
+                            message: "");
+
+                        Widget cancelButton = FlatButton(
+                          child: Text(this.controller.close),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                        );
+
+                        Widget confirmButton = FlatButton(
+                          child: Text(this.controller.send),
+                          onPressed: () {
+                            if (widget.myController.text != '') {
+                              shareContent.email = widget.myController.text;
+                              shareContent.message =
+                                  "${this.controller.getAuthEmail()}: ${widget.myController2.text}";
+                              ContentHandler().addShareContent(shareContent);
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    Future.delayed(Duration(milliseconds: 300),
+                                        () {
+                                      Navigator.of(context).pop(true);
+                                    });
+                                    return AlertDialog(
+                                      title: Icon(Icons.check),
+                                      content: Text(
+                                        this.controller.ok,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    Future.delayed(Duration(milliseconds: 300),
+                                        () {
+                                      Navigator.of(context).pop(true);
+                                    });
+                                    return AlertDialog(
+                                      title: Icon(Icons.error),
+                                      content: Text(
+                                        this.controller.error,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  });
+                            }
+                          },
+                        );
+
                         showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (context) {
-                              Future.delayed(Duration(milliseconds: 500), () {
-                                Navigator.of(context).pop(true);
-                              });
                               return AlertDialog(
-                                title: Icon(Icons.check),
-                                content: Text(
-                                  this.controller.added,
+                                title: Text(
+                                  "${this.controller.sendContent}: ${widget.title}",
                                   textAlign: TextAlign.center,
                                 ),
+                                content: _dialogReset(this.controller.message),
+                                actions: [confirmButton, cancelButton],
                               );
                             });
-                      }
-                    },
-                  ),),
-                ),
-                 Observer(
-                builder: (_) =>
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      String _isMovies;
-
-                      if (widget.isMovie) {
-                        _isMovies = 's';
-                      } else {
-                        _isMovies = 'n';
-                      }
-
-                      String overview = widget.information;
-
-                      final shareContent = ShareContent(
-                          id: widget.id,
-                          title: widget.title,
-                          overview: overview,
-                          voteAverage: widget.voteAverage,
-                          posterPath: widget.posterPath,
-                          url: _url,
-                          isMovie: _isMovies,
-                          email: "",
-                          message: "");
-
-                      Widget cancelButton = FlatButton(
-                        child: Text(this.controller.close),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
-                      );
-
-                      Widget confirmButton = FlatButton(
-                        child: Text(this.controller.send),
-                        onPressed: () {
-                          if (widget.myController.text != '') {
-                            shareContent.email = widget.myController.text;
-                            shareContent.message =
-                                "${this.controller.getAuthEmail()}: ${widget.myController2.text}";
-                            ContentHandler().addShareContent(shareContent);
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  Future.delayed(Duration(milliseconds: 300),
-                                      () {
-                                    Navigator.of(context).pop(true);
-                                  });
-                                  return AlertDialog(
-                                    title: Icon(Icons.check),
-                                    content: Text(
-                                      this.controller.ok,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                });
-                          } else {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  Future.delayed(Duration(milliseconds: 300),
-                                      () {
-                                    Navigator.of(context).pop(true);
-                                  });
-                                  return AlertDialog(
-                                    title: Icon(Icons.error),
-                                    content: Text(
-                                      this.controller.error,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                });
-                          }
-                        },
-                      );
-
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text(
-                                "${this.controller.sendContent}: ${widget.title}",
-                                textAlign: TextAlign.center,
-                              ),
-                              content: _dialogReset(this.controller.message),
-                              actions: [confirmButton, cancelButton],
-                            );
-                          });
-                    },
-                    child: Text(this.controller.cancel),
+                      },
+                      child: Text(this.controller.cancel),
+                    ),
                   ),
-                ),),
+                ),
               ],
             )),
         SizedBox(height: 16.0),
@@ -284,15 +294,15 @@ class _ContentState extends ModularState<Content, ContentController> {
             ? Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
-                    Observer(
-                builder: (_) =>
-                  Text(
-                    this.controller.messageField,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 18.0,
+                  Observer(
+                    builder: (_) => Text(
+                      this.controller.messageField,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
                     ),
-                  ),),
+                  ),
                   Text(
                     widget.messages,
                     textAlign: TextAlign.left,
@@ -344,6 +354,11 @@ class _ContentState extends ModularState<Content, ContentController> {
         ],
       ),
     );
+  }
+
+  void setFavorite() async {
+    widget.isFavorite2 = await this.controller.isFavorite(widget.id);
+    this.controller.setIsFavorite(widget.isFavorite2);
   }
 }
 
