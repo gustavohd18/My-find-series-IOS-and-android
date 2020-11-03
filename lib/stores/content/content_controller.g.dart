@@ -189,6 +189,22 @@ mixin _$ContentController on _ContentControllerBase, Store {
     });
   }
 
+  final _$isFavoriteContentAtom =
+      Atom(name: '_ContentControllerBase.isFavoriteContent');
+
+  @override
+  bool get isFavoriteContent {
+    _$isFavoriteContentAtom.reportRead();
+    return super.isFavoriteContent;
+  }
+
+  @override
+  set isFavoriteContent(bool value) {
+    _$isFavoriteContentAtom.reportWrite(value, super.isFavoriteContent, () {
+      super.isFavoriteContent = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
@@ -203,7 +219,8 @@ error: ${error},
 ok: ${ok},
 close: ${close},
 send: ${send},
-messageField: ${messageField}
+messageField: ${messageField},
+isFavoriteContent: ${isFavoriteContent}
     ''';
   }
 }

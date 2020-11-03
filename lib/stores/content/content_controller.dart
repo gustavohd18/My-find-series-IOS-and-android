@@ -2,16 +2,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle_abstract.dart';
+import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/translator/languages.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
 part 'content_controller.g.dart';
 
-class ContentController = _ContentControllerBase
-    with _$ContentController;
+class ContentController = _ContentControllerBase with _$ContentController;
 
 abstract class _ContentControllerBase with Store {
   final ContentHandleAbs contentHandle = Modular.get();
   final AuthenticationService _authentication = Modular.get();
+  final FavoriteDatabase dbHelper = Modular.get();
   final _translator = Modular.get<Translator>();
 
   _ContentControllerBase() {
@@ -54,8 +55,16 @@ abstract class _ContentControllerBase with Store {
   @observable
   String messageField = "Comment";
 
-   String getAuthEmail() {
+  @observable
+  bool isFavoriteContent = true;
+
+  String getAuthEmail() {
     return _authentication.getFirebaseAuth().currentUser.email;
+  }
+
+  Future<bool> isFavorite(String id) async {
+    var list = await dbHelper.getFavorites();
+    return list.any((e) => e.id == id);
   }
 
   void _getTranslator() async {
@@ -101,6 +110,10 @@ abstract class _ContentControllerBase with Store {
       send = "Enviar";
       messageField = "Comentario";
     }
+  }
+
+  void setIsFavorite(bool favorite) {
+    isFavoriteContent = favorite;
   }
 
   void reload() async {
