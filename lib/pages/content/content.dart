@@ -60,8 +60,10 @@ class _ContentState extends ModularState<Content, ContentController> {
   }
 
   callAPI() async {
-    String query = widget.title + "analise";
+    String query = widget.title;
     widget.ytResult = await widget.ytApi.search(query);
+    widget.ytResult = await widget.ytApi.nextPage();
+    setState(() {});
   }
 
   @override
@@ -312,8 +314,18 @@ class _ContentState extends ModularState<Content, ContentController> {
           ),
         ),
         SizedBox(height: 16.0),
-        (widget.messages != null)
-            ? Padding(
+        (widget.ytResult != null)
+                ? Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: Row(children: [
+                                 Image.network(
+              widget.ytResult[0].thumbnail['default']['url']
+            )
+                ]),
+              )
+            : Wrap(),
+        SizedBox(height: 16.0),
+        (widget.messages != null) ? Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
                   Observer(
@@ -377,6 +389,20 @@ class _ContentState extends ModularState<Content, ContentController> {
       ),
     );
   }
+
+  Card listItem(index) {
+    return Card(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 7.0),
+        padding: EdgeInsets.all(12.0),
+        child: 
+            Image.network(
+              widget.ytResult[index].thumbnail['default']['url'],
+            )
+        )
+      );
+  }
+
 
   void setFavorite() async {
     widget.isFavorite2 = await this.controller.isFavorite(widget.id);
