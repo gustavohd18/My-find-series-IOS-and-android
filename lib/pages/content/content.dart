@@ -45,6 +45,7 @@ class Content extends StatefulWidget {
   final YoutubeAPI ytApi =
       YoutubeAPI("AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8");
   List<YT_API> ytResult = [];
+  List<YT_API> ytResult2 = [];
 
   @override
   _ContentState createState() => _ContentState();
@@ -60,9 +61,9 @@ class _ContentState extends ModularState<Content, ContentController> {
   }
 
   callAPI() async {
-    String query = widget.title;
+    String query = widget.title + "review";
     widget.ytResult = await widget.ytApi.search(query);
-    widget.ytResult = await widget.ytApi.nextPage();
+    widget.ytResult2 = await widget.ytApi.search(widget.title);
     setState(() {});
   }
 
@@ -128,10 +129,10 @@ class _ContentState extends ModularState<Content, ContentController> {
                   ),
                 ),
                 Expanded(
-                  child:  FlatButton(
-                    child: (widget.ytResult != null) ? Text('Review'): Wrap(),
+                  child: FlatButton(
+                    child: (widget.ytResult != null) ? Text('Review') : Wrap(),
                     onPressed: () {
-                      if(widget.ytResult != null){
+                      if (widget.ytResult != null) {
                         playYoutubeVideo(widget.ytResult[0].id);
                       }
                     },
@@ -313,19 +314,103 @@ class _ContentState extends ModularState<Content, ContentController> {
             ),
           ),
         ),
+         SizedBox(height: 16.0),
+        (widget.ytResult2 != null)
+            ? 
+            Expanded(
+          child: SizedBox(
+            height: 200.0,
+            child:Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget> [
+                  FlatButton(
+                      child: Image.network(
+                          widget.ytResult2[0].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult2 != null) {
+                          playYoutubeVideo(widget.ytResult2[0].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult2[1].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult2 != null) {
+                          playYoutubeVideo(widget.ytResult2[1].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult2[2].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult2 != null) {
+                          playYoutubeVideo(widget.ytResult2[2].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult2[3].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult2 != null) {
+                          playYoutubeVideo(widget.ytResult2[3].id);
+                        }
+                      }),
+                ]),
+            )))
+            : Wrap(),
+        Text("Review"),
         SizedBox(height: 16.0),
         (widget.ytResult != null)
-                ? Padding(
+            ? 
+            Expanded(
+          child: SizedBox(
+            height: 200.0,
+            child:Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child: Row(children: [
-                                 Image.network(
-              widget.ytResult[0].thumbnail['default']['url']
-            )
+                child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget> [
+                  FlatButton(
+                      child: Image.network(
+                          widget.ytResult[0].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult != null) {
+                          playYoutubeVideo(widget.ytResult[0].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult[1].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult != null) {
+                          playYoutubeVideo(widget.ytResult[1].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult[2].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult != null) {
+                          playYoutubeVideo(widget.ytResult[2].id);
+                        }
+                      }),
+                    FlatButton(
+                      child: Image.network(
+                          widget.ytResult[3].thumbnail['default']['url']),
+                      onPressed: () {
+                        if (widget.ytResult != null) {
+                          playYoutubeVideo(widget.ytResult[3].id);
+                        }
+                      }),
                 ]),
-              )
+            )))
             : Wrap(),
         SizedBox(height: 16.0),
-        (widget.messages != null) ? Padding(
+        (widget.messages != null)
+            ?
+            Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
                   Observer(
@@ -389,20 +474,6 @@ class _ContentState extends ModularState<Content, ContentController> {
       ),
     );
   }
-
-  Card listItem(index) {
-    return Card(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 7.0),
-        padding: EdgeInsets.all(12.0),
-        child: 
-            Image.network(
-              widget.ytResult[index].thumbnail['default']['url'],
-            )
-        )
-      );
-  }
-
 
   void setFavorite() async {
     widget.isFavorite2 = await this.controller.isFavorite(widget.id);
