@@ -4,12 +4,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
+import 'package:myFindMovies/widgets/video_list.dart';
 
 class Content extends StatefulWidget {
   final String id, title, information, voteAverage, posterPath, messages;
@@ -52,6 +52,7 @@ class _ContentState extends ModularState<Content, ContentController> {
     this.controller.reload();
     setFavorite();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +106,6 @@ class _ContentState extends ModularState<Content, ContentController> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    child: (_url != null) ? Wrap() : Text('Trailer'),
-                    onPressed: () {
-                      playYoutubeVideo(_url);
-                    },
-                  ),
-                ),
                 Observer(
                   builder: (_) => Expanded(
                     child: FlatButton(
@@ -289,9 +282,42 @@ class _ContentState extends ModularState<Content, ContentController> {
             ),
           ),
         ),
+            SizedBox(height: 5.0),
+                   Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: Text("Trailers:",
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16)),),
+        SizedBox(height: 16.0),
+            Expanded(
+          child: SizedBox(
+            height: 120.0,
+            child:Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child:VideoList(this.controller.getTrailers(widget.title)),
+            ))),
+            SizedBox(height: 5.0),
+                   Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child:Observer(
+          builder: (_) => Text(this.controller.review + ":",
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16)),),
+                   ),
+        SizedBox(height: 16.0),
+            Expanded(
+          child: SizedBox(
+            height: 120.0,
+            child:Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: VideoList(this.controller.getReviews(widget.title)),
+            ))),
         SizedBox(height: 16.0),
         (widget.messages != null)
-            ? Padding(
+            ?
+            Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
                   Observer(
@@ -314,18 +340,6 @@ class _ContentState extends ModularState<Content, ContentController> {
               )
             : Wrap()
       ],
-    );
-  }
-
-  void playYoutubeVideo(key) {
-    Container(
-      width: 50,
-      height: 50,
-      child: FlutterYoutube.playYoutubeVideoById(
-        apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
-        videoId: key,
-        autoPlay: false,
-      ),
     );
   }
 

@@ -189,6 +189,21 @@ mixin _$ContentController on _ContentControllerBase, Store {
     });
   }
 
+  final _$reviewAtom = Atom(name: '_ContentControllerBase.review');
+
+  @override
+  String get review {
+    _$reviewAtom.reportRead();
+    return super.review;
+  }
+
+  @override
+  set review(String value) {
+    _$reviewAtom.reportWrite(value, super.review, () {
+      super.review = value;
+    });
+  }
+
   final _$isFavoriteContentAtom =
       Atom(name: '_ContentControllerBase.isFavoriteContent');
 
@@ -220,6 +235,7 @@ ok: ${ok},
 close: ${close},
 send: ${send},
 messageField: ${messageField},
+review: ${review},
 isFavoriteContent: ${isFavoriteContent}
     ''';
   }

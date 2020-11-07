@@ -5,6 +5,7 @@ import 'package:myFindMovies/service/content_handle_abstract.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/translator/languages.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
+import 'package:youtube_api/youtube_api.dart';
 part 'content_controller.g.dart';
 
 class ContentController = _ContentControllerBase with _$ContentController;
@@ -14,6 +15,10 @@ abstract class _ContentControllerBase with Store {
   final AuthenticationService _authentication = Modular.get();
   final FavoriteDatabase dbHelper = Modular.get();
   final _translator = Modular.get<Translator>();
+
+    final YoutubeAPI ytApi =
+      YoutubeAPI("AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8");
+
 
   _ContentControllerBase() {
     _getTranslator();
@@ -56,6 +61,9 @@ abstract class _ContentControllerBase with Store {
   String messageField = "Comment";
 
   @observable
+  String review = "reviews";
+
+  @observable
   bool isFavoriteContent = true;
 
   String getAuthEmail() {
@@ -83,6 +91,7 @@ abstract class _ContentControllerBase with Store {
       close = "Close";
       send = "Send";
       messageField = "Comment";
+      review = "reviews";
     } else if (result == Languages.portuguese) {
       delete = 'deletar dos Favoritos';
       add = 'Adicionar aos favoritos';
@@ -96,6 +105,7 @@ abstract class _ContentControllerBase with Store {
       close = "Fechar";
       send = "Enviar";
       messageField = "Comentário";
+      review = "Análises";
     } else {
       delete = 'eliminar de Favoritos';
       add = 'Añadir a los favoritos';
@@ -109,6 +119,7 @@ abstract class _ContentControllerBase with Store {
       close = "Cerca";
       send = "Enviar";
       messageField = "Comentario";
+      review = "Reseñas";
     }
   }
 
@@ -116,7 +127,16 @@ abstract class _ContentControllerBase with Store {
     isFavoriteContent = favorite;
   }
 
+    Future<List<YT_API>> getTrailers(String title) {
+    return ytApi.search(title);
+  }
+    Future<List<YT_API>> getReviews(String title) {
+        String query = title + "review";
+    return ytApi.search(query);
+  }
+
   void reload() async {
+
     _getTranslator();
   }
 }
