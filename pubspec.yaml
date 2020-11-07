@@ -43,7 +43,9 @@ dependencies:
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2+1
   firebase_auth_mocks: ^0.3.1
-  youtube_api: ^0.8.0
+  youtube_api:
+    git:
+      url: https://github.com/SahilKr24/youtube_api
 
 dev_dependencies:
   flutter_test:
