@@ -4,13 +4,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/model/shareContent.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
-import 'package:youtube_api/youtube_api.dart';
+import 'package:myFindMovies/widgets/video_list.dart';
 
 class Content extends StatefulWidget {
   final String id, title, information, voteAverage, posterPath, messages;
@@ -42,11 +41,6 @@ class Content extends StatefulWidget {
 
   var isFavorite2 = true;
 
-  final YoutubeAPI ytApi =
-      YoutubeAPI("AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8");
-  List<YT_API> ytResult = [];
-  List<YT_API> ytResult2 = [];
-
   @override
   _ContentState createState() => _ContentState();
 }
@@ -57,15 +51,8 @@ class _ContentState extends ModularState<Content, ContentController> {
     super.initState();
     this.controller.reload();
     setFavorite();
-    callAPI();
   }
 
-  callAPI() async {
-    String query = widget.title + "review";
-    widget.ytResult = await widget.ytApi.search(query);
-    widget.ytResult2 = await widget.ytApi.search(widget.title);
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,25 +106,6 @@ class _ContentState extends ModularState<Content, ContentController> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    child: (_url != null) ? Wrap() : Text('Trailer'),
-                    onPressed: () {
-                      print(_url);
-                      playYoutubeVideo(_url);
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    child: (widget.ytResult != null) ? Text('Review') : Wrap(),
-                    onPressed: () {
-                      if (widget.ytResult != null) {
-                        playYoutubeVideo(widget.ytResult[0].id);
-                      }
-                    },
-                  ),
-                ),
                 Observer(
                   builder: (_) => Expanded(
                     child: FlatButton(
@@ -314,99 +282,38 @@ class _ContentState extends ModularState<Content, ContentController> {
             ),
           ),
         ),
-         SizedBox(height: 16.0),
-        (widget.ytResult2 != null)
-            ? 
-            Expanded(
-          child: SizedBox(
-            height: 200.0,
-            child:Padding(
+            SizedBox(height: 5.0),
+                   Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: <Widget> [
-                  FlatButton(
-                      child: Image.network(
-                          widget.ytResult2[0].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult2 != null) {
-                          playYoutubeVideo(widget.ytResult2[0].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult2[1].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult2 != null) {
-                          playYoutubeVideo(widget.ytResult2[1].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult2[2].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult2 != null) {
-                          playYoutubeVideo(widget.ytResult2[2].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult2[3].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult2 != null) {
-                          playYoutubeVideo(widget.ytResult2[3].id);
-                        }
-                      }),
-                ]),
-            )))
-            : Wrap(),
-        Text("Review"),
+                child: Text("Trailers:",
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16)),),
         SizedBox(height: 16.0),
-        (widget.ytResult != null)
-            ? 
             Expanded(
           child: SizedBox(
-            height: 200.0,
+            height: 120.0,
             child:Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: <Widget> [
-                  FlatButton(
-                      child: Image.network(
-                          widget.ytResult[0].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult != null) {
-                          playYoutubeVideo(widget.ytResult[0].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult[1].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult != null) {
-                          playYoutubeVideo(widget.ytResult[1].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult[2].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult != null) {
-                          playYoutubeVideo(widget.ytResult[2].id);
-                        }
-                      }),
-                    FlatButton(
-                      child: Image.network(
-                          widget.ytResult[3].thumbnail['default']['url']),
-                      onPressed: () {
-                        if (widget.ytResult != null) {
-                          playYoutubeVideo(widget.ytResult[3].id);
-                        }
-                      }),
-                ]),
-            )))
-            : Wrap(),
+                child:VideoList(this.controller.getTrailers(widget.title)),
+            ))),
+            SizedBox(height: 5.0),
+                   Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child:Observer(
+          builder: (_) => Text(this.controller.review + ":",
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16)),),
+                   ),
+        SizedBox(height: 16.0),
+            Expanded(
+          child: SizedBox(
+            height: 120.0,
+            child:Padding(
+                padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                child: VideoList(this.controller.getReviews(widget.title)),
+            ))),
         SizedBox(height: 16.0),
         (widget.messages != null)
             ?
@@ -433,18 +340,6 @@ class _ContentState extends ModularState<Content, ContentController> {
               )
             : Wrap()
       ],
-    );
-  }
-
-  void playYoutubeVideo(key) {
-    Container(
-      width: 50,
-      height: 50,
-      child: FlutterYoutube.playYoutubeVideoById(
-        apiKey: "AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8",
-        videoId: key,
-        autoPlay: false,
-      ),
     );
   }
 
