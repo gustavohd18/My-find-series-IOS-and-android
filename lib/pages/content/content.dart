@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/model/shareContent.dart';
-import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:myFindMovies/service/database/favoriteDatabase.dart';
-import 'package:myFindMovies/model/FavoriteList.dart';
 import 'package:myFindMovies/stores/content/content_controller.dart';
 import 'package:myFindMovies/widgets/content/image.dart';
 import 'package:myFindMovies/widgets/utils/stars.dart';
@@ -15,9 +12,6 @@ class Content extends StatefulWidget {
   final String id, title, information, voteAverage, posterPath, messages;
   final bool isMovie, isFavorite, isPortuguese;
   final BuildContext contextFinal;
-  final Function() f;
-
-  final AuthenticationService authenticationService = AuthenticationService();
 
   Content(
       {@required this.id,
@@ -29,11 +23,7 @@ class Content extends StatefulWidget {
       @required this.isFavorite,
       @required this.isPortuguese,
       this.contextFinal,
-      this.messages,
-      this.f});
-
-  // reference to our single class that manages the database
-  final dbHelper = FavoriteDatabase.instance;
+      this.messages});
 
   final myController = TextEditingController();
 
@@ -52,7 +42,6 @@ class _ContentState extends ModularState<Content, ContentController> {
     this.controller.reload();
     setFavorite();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -114,13 +103,9 @@ class _ContentState extends ModularState<Content, ContentController> {
                           : Text(this.controller.add),
                       onPressed: () {
                         if (this.controller.isFavoriteContent) {
-                          widget.dbHelper.delete(widget.id);
+                          this.controller.deleteItem(widget.id);
                           this.controller.setIsFavorite(false);
-                          //maybe will no need more this function because open new screen
-                          if (widget.f != null) {
-                            widget.f();
-                          }
-
+         
                           showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -145,7 +130,7 @@ class _ContentState extends ModularState<Content, ContentController> {
                           } else {
                             _isMovies = 'n';
                           }
-                          final _favorite = FavoriteList.origin(
+                          this.controller.insertItem(
                               widget.id,
                               widget.title,
                               widget.information,
@@ -153,7 +138,6 @@ class _ContentState extends ModularState<Content, ContentController> {
                               widget.posterPath,
                               _url,
                               _isMovies);
-                          widget.dbHelper.insertFavorite(_favorite);
                           showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -282,42 +266,43 @@ class _ContentState extends ModularState<Content, ContentController> {
             ),
           ),
         ),
-            SizedBox(height: 5.0),
-                   Padding(
-                padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child: Text("Trailers:",
+        SizedBox(height: 5.0),
+        Padding(
+          padding: EdgeInsets.only(left: 12.0, right: 12.0),
+          child: Text("Trailers:",
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16)),
+        ),
+        SizedBox(height: 16.0),
+        Expanded(
+            child: SizedBox(
+                height: 120.0,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: VideoList(this.controller.getTrailers(widget.title)),
+                ))),
+        SizedBox(height: 5.0),
+        Padding(
+          padding: EdgeInsets.only(left: 12.0, right: 12.0),
+          child: Observer(
+            builder: (_) => Text(this.controller.review + ":",
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16)),),
+                style: TextStyle(fontSize: 16)),
+          ),
+        ),
         SizedBox(height: 16.0),
-            Expanded(
-          child: SizedBox(
-            height: 120.0,
-            child:Padding(
-                padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child:VideoList(this.controller.getTrailers(widget.title)),
-            ))),
-            SizedBox(height: 5.0),
-                   Padding(
-                padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child:Observer(
-          builder: (_) => Text(this.controller.review + ":",
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16)),),
-                   ),
-        SizedBox(height: 16.0),
-            Expanded(
-          child: SizedBox(
-            height: 120.0,
-            child:Padding(
-                padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                child: VideoList(this.controller.getReviews(widget.title)),
-            ))),
+        Expanded(
+            child: SizedBox(
+                height: 120.0,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: VideoList(this.controller.getReviews(widget.title)),
+                ))),
         SizedBox(height: 16.0),
         (widget.messages != null)
-            ?
-            Padding(
+            ? Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: Column(children: [
                   Observer(

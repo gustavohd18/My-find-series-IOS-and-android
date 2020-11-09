@@ -6,6 +6,7 @@ import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/translator/languages.dart';
 import 'package:myFindMovies/service/translator/translator.dart';
 import 'package:youtube_api/youtube_api.dart';
+import 'package:myFindMovies/model/FavoriteList.dart';
 part 'content_controller.g.dart';
 
 class ContentController = _ContentControllerBase with _$ContentController;
@@ -16,9 +17,8 @@ abstract class _ContentControllerBase with Store {
   final FavoriteDatabase dbHelper = Modular.get();
   final _translator = Modular.get<Translator>();
 
-    final YoutubeAPI ytApi =
+  final YoutubeAPI ytApi =
       YoutubeAPI("AIzaSyDbgmL1dVIJ57XMiJMDOWg9Iyv1UqcxJi8");
-
 
   _ContentControllerBase() {
     _getTranslator();
@@ -127,16 +127,38 @@ abstract class _ContentControllerBase with Store {
     isFavoriteContent = favorite;
   }
 
-    Future<List<YT_API>> getTrailers(String title) {
+  Future<List<YT_API>> getTrailers(String title) {
     return ytApi.search(title);
   }
-    Future<List<YT_API>> getReviews(String title) {
-        String query = title + "review";
+
+  Future<List<YT_API>> getReviews(String title) {
+    String query = title + "review";
     return ytApi.search(query);
   }
 
-  void reload() async {
+  void deleteItem(String id) {
+    dbHelper.delete(id);
+  }
 
+  void insertItem( String id,
+                  String title,
+                  String information,
+                  String voteAverage,
+                  String posterPath,
+                  String url,
+                  String isMovies) {
+
+                              final _favorite = FavoriteList.origin(
+                              id,
+                              title,
+                             information,
+                              voteAverage,
+                              posterPath,
+                              url,
+                              isMovies);
+    dbHelper.insertFavorite(_favorite);
+  }
+  void reload() async {
     _getTranslator();
   }
 }

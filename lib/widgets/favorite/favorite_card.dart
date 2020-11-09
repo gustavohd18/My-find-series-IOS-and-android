@@ -35,7 +35,6 @@ class FavoriteCard extends StatelessWidget {
               posterPath: posterPath,
               isMovie: isMovie,
               isFavorite: true,
-              f: f,
               isPortuguese: isPortuguese,
             ),
           ),
