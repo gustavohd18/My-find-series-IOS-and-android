@@ -1,5 +1,6 @@
+
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/app/app_widget.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/pages/login/login.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
@@ -10,7 +11,6 @@ import 'package:myFindMovies/pages/splash/splash.dart';
 import 'package:myFindMovies/service/authentication/authentication_service.dart';
 import 'package:myFindMovies/service/authentication/authentification_abstract.dart';
 import 'package:myFindMovies/service/content_handle.dart';
-import 'package:flutter/material.dart';
 import 'package:myFindMovies/service/content_handle_abstract.dart';
 import 'package:myFindMovies/service/database/favoriteDatabase.dart';
 import 'package:myFindMovies/service/database/favorites_database_abstract.dart';
@@ -27,6 +27,8 @@ import 'package:myFindMovies/stores/share/share_controller.dart';
 import 'package:myFindMovies/stores/splash/splash_controller.dart';
 import 'package:myFindMovies/stores/login/login_controller.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
+
+import 'app_widget.dart';
 
 class AppModule extends MainModule {
   @override
@@ -48,15 +50,15 @@ class AppModule extends MainModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router("/", child: (_, args) => Splash()),
-        Router("/login", child: (_, args) => Login()),
-        Router("/home", child: (_, args) => Main()),
-        Router("/settings", child: (_, args) => Settings()),
-        Router("/movie", child: (_, args) => Movie()),
-        Router("/series", child: (_, args) => Series()),
-        Router("/share", child: (_, args) => Share()),
-        Router("/drawer", child: (_, args) => DrawerMenu()),
+  List<ModularRouter> get routers => [
+        ModularRouter("/", child: (_, args) => Splash()),
+        ModularRouter("/login", child: (_, args) => Login()),
+        ModularRouter("/home", child: (_, args) => Main()),
+        ModularRouter("/settings", child: (_, args) => Settings()),
+        ModularRouter("/movie", child: (_, args) => Movie()),
+        ModularRouter("/series", child: (_, args) => Series()),
+        ModularRouter("/share", child: (_, args) => Share()),
+        ModularRouter("/drawer", child: (_, args) => DrawerMenu()),
       ];
 
   static Inject get to => Inject.of();
