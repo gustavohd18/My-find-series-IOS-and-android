@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:myFindMovies/pages/home/home.dart';
 import 'package:myFindMovies/pages/login/login.dart';
+import 'package:myFindMovies/pages/login/login_screen.dart';
 import 'package:myFindMovies/pages/movies/movie.dart';
 import 'package:myFindMovies/pages/serie/serie.dart';
 import 'package:myFindMovies/pages/settings/settings.dart';
@@ -52,7 +53,7 @@ class AppModule extends MainModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter("/", child: (_, args) => Splash()),
-        ModularRouter("/login", child: (_, args) => Login()),
+        ModularRouter("/login", child: (_, args) => LoginScreen()),
         ModularRouter("/home", child: (_, args) => Main()),
         ModularRouter("/settings", child: (_, args) => Settings()),
         ModularRouter("/movie", child: (_, args) => Movie()),

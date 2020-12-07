@@ -52,6 +52,13 @@ class _LoginState extends ModularState<Login, LoginController> {
                   builder: (_) => TextField(
                         obscureText: true,
                         decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue.shade200, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue.shade200, width: 1.0),
+                        ),
+                      
                             labelText: this.controller.passwordWord,
                             icon: Icon(Icons.security),
                             errorText: this.controller.passwordPlaceholder),
