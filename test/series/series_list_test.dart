@@ -13,7 +13,7 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SeriesList(_future, false),
+        home: SeriesList(_future, false, "No have Content to word"),
       ),
     );
 

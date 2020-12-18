@@ -54,12 +54,28 @@ mixin _$MoviesController on _MoviesControllerBase, Store {
     });
   }
 
+  final _$errorMessageAtom = Atom(name: '_MoviesControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 favoriteList: ${favoriteList},
 title: ${title},
-search: ${search}
+search: ${search},
+errorMessage: ${errorMessage}
     ''';
   }
 }

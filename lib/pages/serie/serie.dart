@@ -90,7 +90,7 @@ class SerieState extends ModularState<Series, SeriesController> {
             if (searchText.length > 0)
               Expanded(
                   child: SeriesList(
-                      this.controller.searchSeries(searchText), true))
+                      this.controller.searchSeries(searchText), true, this.controller.errorMessage))
           ],
         )));
   }

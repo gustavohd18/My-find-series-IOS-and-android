@@ -26,6 +26,10 @@ abstract class _MoviesControllerBase with Store {
   @observable
   String search = 'Search for movies';
 
+    @observable
+  String errorMessage = 'No have Content to word';
+
+
   Future<List<MovieList>> searchMovies(String text) {
     return contentHandle.searchMovies(text);
   }
@@ -36,12 +40,15 @@ abstract class _MoviesControllerBase with Store {
     if (result == Languages.english) {
       title = "Movies";
       search = "Search for movie";
+      errorMessage = 'No have Content to word';
     } else if (result == Languages.portuguese) {
       title = "Filmes";
       search = "Pesquisar por filmes";
+      errorMessage = 'Não foi encontrado nenhum item com esta palavra';
     } else {
       title = "Peliculas";
       search = "Búsqueda de películas.";
+      errorMessage = 'No se encontraron elementos con esa palabra';
     }
   }
 

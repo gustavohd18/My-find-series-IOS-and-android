@@ -22,6 +22,9 @@ abstract class _SeriesControllerBase with Store {
   @observable
   String search = 'Search for series';
 
+  @observable
+  String errorMessage = 'No have Content to word';
+
   Future<List<SerieList>> searchSeries(String text) {
     return contentHandle.searchSeries(text);
   }
@@ -32,12 +35,15 @@ abstract class _SeriesControllerBase with Store {
     if (result == Languages.english) {
       title = "Series";
       search = "Search for Series";
+      errorMessage = 'No have Content to word';
     } else if (result == Languages.portuguese) {
       title = "Séries";
       search = "Pesquisar por Series";
+      errorMessage = 'Não foi encontrado nenhum item com esta palavra';
     } else {
       title = "Serie";
       search = "Búsqueda de Serie";
+      errorMessage = 'No se encontraron elementos con esa palabra';
     }
   }
 

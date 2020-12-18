@@ -5,8 +5,9 @@ import 'package:myFindMovies/widgets/serie/series_card.dart';
 class SeriesList extends StatelessWidget {
   final Future<List<SerieList>> _future;
   final bool isPortuguese;
+  final String text;
 
-  SeriesList(this._future, this.isPortuguese);
+  SeriesList(this._future, this.isPortuguese, this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,9 @@ class SeriesList extends StatelessWidget {
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Wrap();
+          return Center(
+                child: CircularProgressIndicator(),
+              );
         }
 
         return snapshot.hasData && snapshot.data.length > 0
@@ -29,7 +32,7 @@ class SeriesList extends StatelessWidget {
                 })
             : Center(
                 child: Text(
-                  "No have Content to word",
+                  text,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,

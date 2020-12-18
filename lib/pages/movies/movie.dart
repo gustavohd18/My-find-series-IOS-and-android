@@ -91,7 +91,7 @@ class MovieState extends ModularState<Movie, MoviesController> {
             if (searchText.length > 0)
               Expanded(
                   child: MoviesList(
-                      this.controller.searchMovies(searchText), true))
+                      this.controller.searchMovies(searchText), true, this.controller.errorMessage))
           ],
         )));
   }

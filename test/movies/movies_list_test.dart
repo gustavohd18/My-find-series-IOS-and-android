@@ -13,7 +13,7 @@ void main() {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MoviesList(_future, false),
+        home: MoviesList(_future, false, "No"),
       ),
     );
 
@@ -30,7 +30,7 @@ void main() {
 
     final Text text = tester.widget(textFinder);
 
-    expect(find.text("No have Content to word"), findsOneWidget);
+    expect(find.text("No"), findsOneWidget);
 
     expect(text.textAlign, TextAlign.center);
     expect(
