@@ -13,7 +13,9 @@ class VideoList extends StatelessWidget {
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Wrap();
+          return Center(
+                child: CircularProgressIndicator(),
+              );
         }
 
         return snapshot.hasData && snapshot.data.length > 0
@@ -31,7 +33,9 @@ class VideoList extends StatelessWidget {
                         }
                       });
                 })
-            : Wrap();
+            : Center(
+                child: CircularProgressIndicator(),
+              );
       },
     );
   }
