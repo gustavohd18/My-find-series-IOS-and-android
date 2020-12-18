@@ -365,6 +365,13 @@ class _ContentState extends ModularState<Content, ContentController> {
             ),
             controller: widget.myController2,
           ),
+          new NumberPicker.integer(
+                initialValue: _currentValue,
+                minValue: 0,
+                maxValue: 100,
+                onChanged: (newValue) =>
+                    setState(() => _currentValue = newValue)),
+            new Text("Current number: $_currentValue"),
         ],
       ),
     );

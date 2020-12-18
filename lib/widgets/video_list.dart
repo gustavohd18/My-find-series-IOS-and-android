@@ -12,10 +12,6 @@ class VideoList extends StatelessWidget {
     return FutureBuilder<List<YT_API>>(
       future: _future,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Wrap();
-        }
-
         return snapshot.hasData && snapshot.data.length > 0
             ? ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -31,7 +27,9 @@ class VideoList extends StatelessWidget {
                         }
                       });
                 })
-            : Wrap();
+            : Center(
+                child: CircularProgressIndicator(),
+              );
       },
     );
   }

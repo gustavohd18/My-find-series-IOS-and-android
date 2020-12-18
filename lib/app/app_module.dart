@@ -53,7 +53,7 @@ class AppModule extends MainModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter("/", child: (_, args) => Splash()),
-        ModularRouter("/login", child: (_, args) => LoginScreen()),
+        ModularRouter("/login", child: (_, args) => Login()),
         ModularRouter("/home", child: (_, args) => Main()),
         ModularRouter("/settings", child: (_, args) => Settings()),
         ModularRouter("/movie", child: (_, args) => Movie()),
