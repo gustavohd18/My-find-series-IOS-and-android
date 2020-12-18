@@ -46,7 +46,7 @@ class _FavoriteState extends ModularState<Favorite, FavoritesController> {
           child: Observer(
             builder: (_) => FavoritesList(
               this.controller.favoriteList,
-              _reloadFavorite,
+              this.controller.reload ,
               true,
               this.controller.text,
             ),
