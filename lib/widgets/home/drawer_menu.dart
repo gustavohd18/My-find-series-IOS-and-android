@@ -150,33 +150,34 @@ class _DrawerMenuState extends ModularState<DrawerMenu, DrawerMenuController> {
                         builder: (BuildContext context) => Movie()));
               },
             ),
-            ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.share,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(left: 10, top: 2),
-                      child: Text(
-                        this.controller.shared,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 18),
-                      )),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => Share()));
-              },
-            ),
+            // for now we don't show share because is not ready
+           // ListTile(
+           //   title: Row(
+           //     mainAxisAlignment: MainAxisAlignment.start,
+           //     children: [
+           //       Icon(
+            //        Icons.share,
+            //        color: Colors.white,
+             //       size: 24,
+            //     ),
+            //      Padding(
+            //          padding: EdgeInsets.only(left: 10, top: 2),
+            //          child: Text(
+            //            this.controller.shared,
+            //            textAlign: TextAlign.center,
+            //            overflow: TextOverflow.ellipsis,
+            //            style: TextStyle(fontSize: 18),
+            //          )),
+           //     ],
+          //    ),
+           //   onTap: () {
+           //     Navigator.pop(context);
+           //     Navigator.push(
+           //         context,
+           //         MaterialPageRoute(
+           //             builder: (BuildContext context) => Share()));
+           //   },
+           // ),
             ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

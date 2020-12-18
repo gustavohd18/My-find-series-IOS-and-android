@@ -174,7 +174,7 @@ class _ContentState extends ModularState<Content, ContentController> {
                     ),
                   ),
                 ),
-                Observer(
+                /*Observer(
                   builder: (_) => Expanded(
                     child: FlatButton(
                       onPressed: () {
@@ -268,7 +268,7 @@ class _ContentState extends ModularState<Content, ContentController> {
                       child: Text(this.controller.cancel),
                     ),
                   ),
-                ),
+                ),*/
               ],
             )),
         SizedBox(height: 16.0),
