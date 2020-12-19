@@ -289,13 +289,13 @@ class _ContentState extends ModularState<Content, ContentController> {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 16)),),
         SizedBox(height: 12.0),
-            Expanded(
-          child: SizedBox(
+     
+          SizedBox(
             height: 120.0,
             child:Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child:VideoList(this.controller.getTrailers(widget.title)),
-            ))),
+            )),
             SizedBox(height: 5.0),
                    Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
@@ -306,13 +306,12 @@ class _ContentState extends ModularState<Content, ContentController> {
                 style: TextStyle(fontSize: 16)),),
                    ),
         SizedBox(height: 16.0),
-            Expanded(
-          child: SizedBox(
+          SizedBox(
             height: 120.0,
             child:Padding(
                 padding: EdgeInsets.only(left: 12.0, right: 12.0),
                 child: VideoList(this.controller.getReviews(widget.title)),
-            ))),
+            )),
         SizedBox(height: 16.0),
         (widget.messages != null)
             ?
