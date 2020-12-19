@@ -288,7 +288,7 @@ class _ContentState extends ModularState<Content, ContentController> {
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 16)),),
-        SizedBox(height: 16.0),
+        SizedBox(height: 12.0),
             Expanded(
           child: SizedBox(
             height: 120.0,

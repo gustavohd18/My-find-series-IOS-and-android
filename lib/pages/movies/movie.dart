@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/stores/movies/movies_controller.dart';
 import 'package:myFindMovies/widgets/movies/movies_list.dart';
-import 'package:myFindMovies/pages/settings/settings.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
-import 'package:myFindMovies/pages/serie/serie.dart';
-import 'package:myFindMovies/pages/home/home.dart';
-import 'package:myFindMovies/pages/favorite/favorite.dart';
 
 class Movie extends StatefulWidget {
   @override
@@ -94,9 +89,5 @@ class MovieState extends ModularState<Movie, MoviesController> {
                       this.controller.searchMovies(searchText), true, this.controller.errorMessage))
           ],
         )));
-  }
-
-  void _reloadTab() {
-    setState(() {});
   }
 }

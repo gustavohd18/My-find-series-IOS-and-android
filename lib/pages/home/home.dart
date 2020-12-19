@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/pages/serie/serie.dart';
-import 'package:myFindMovies/pages/share/share.dart';
 import 'package:myFindMovies/stores/home/home_controller.dart';
 import 'package:myFindMovies/widgets/home/content_movies_list.dart';
 import 'package:myFindMovies/widgets/home/content_series_list.dart';
 import 'package:myFindMovies/widgets/home/drawer_menu.dart';
 import 'package:myFindMovies/widgets/home/subtitle.dart';
-import 'package:myFindMovies/pages/favorite/favorite.dart';
-import 'package:myFindMovies/pages/movies/movie.dart';
-import 'package:myFindMovies/pages/settings/settings.dart';
 
 class Main extends StatefulWidget {
   @override

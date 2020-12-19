@@ -55,9 +55,4 @@ class _FavoriteState extends ModularState<Favorite, FavoritesController> {
       ],
     ));
   }
-
-  //this will be remove
-  void _reloadFavorite() {
-    setState(() {});
-  }
 }
