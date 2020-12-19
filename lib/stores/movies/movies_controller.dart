@@ -26,7 +26,7 @@ abstract class _MoviesControllerBase with Store {
   @observable
   String search = 'Search for movies';
 
-    @observable
+  @observable
   String errorMessage = 'No have Content to word';
 
 
