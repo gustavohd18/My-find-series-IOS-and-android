@@ -22,9 +22,6 @@ class MovieList {
   String videoUrl;
 
   factory MovieList.fromJSON(Map<String, dynamic> json) {
-    var dateParser = DateTime.parse(json['release_date']);
-    var dateFormatter = DateFormat('yMMM');
-    String finalDate = (dateFormatter.format(dateParser)).toString();
     return MovieList(
       id: json['id'].toString(),
       title: json['title'].toString(),
@@ -32,7 +29,6 @@ class MovieList {
       voteAverage: json['vote_average'].toString(),
       posterPath: json['poster_path'].toString(),
       backdropPath: json['backdrop_path'].toString() ?? null,
-      releaseDate: finalDate.replaceAll(',', ''),
     );
   }
 }
