@@ -5,15 +5,14 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      debugShowCheckedModeBanner: true,
+      initialRoute: "/splash",
       navigatorKey: Modular.navigatorKey,
       onGenerateRoute: Modular.generateRoute,
-      title: 'My find series and movies',
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
