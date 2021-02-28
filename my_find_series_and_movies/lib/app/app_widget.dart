@@ -10,9 +10,9 @@ class AppWidget extends StatelessWidget {
       navigatorKey: Modular.navigatorKey,
       onGenerateRoute: Modular.generateRoute,
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
