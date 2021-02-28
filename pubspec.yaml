@@ -27,4 +27,4 @@ flutter:
   fonts:
     - family: Pacifico
       fonts:
-        - asset: fonts/Pacifico-regular.ttf
+        - asset: assets/fonts/Pacifico-regular.ttf
