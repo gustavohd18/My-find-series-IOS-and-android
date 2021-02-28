@@ -22,3 +22,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/Tmdb-logo.png
+  fonts:
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-regular.ttf

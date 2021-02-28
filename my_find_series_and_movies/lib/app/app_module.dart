@@ -15,8 +15,8 @@ class AppModule extends MainModule {
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter(home, child: (_, args) => MyHomePage()),
-        ModularRouter(splash, child: (_,args) => Splash())
+        ModularRouter(home, child: (_, args) => MyHomePage(title: "teste")),
+        ModularRouter(splash, child: (_, args) => Splash())
       ];
 
   static Inject get to => Inject.of();
