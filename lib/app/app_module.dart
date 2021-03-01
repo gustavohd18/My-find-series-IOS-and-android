@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_find_series_and_movies/pages/home/home_page.dart';
 import 'package:my_find_series_and_movies/pages/splash/splash_page.dart';
 import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
 
@@ -15,7 +16,7 @@ class AppModule extends MainModule {
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter(home, child: (_, args) => MyHomePage(title: "teste")),
+        ModularRouter(home, child: (_, args) => Home()),
         ModularRouter(splash, child: (_, args) => Splash())
       ];
 
