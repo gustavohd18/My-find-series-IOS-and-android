@@ -71,7 +71,7 @@ class _SplashPageState extends State<Splash>
                   style: TextStyle(
                     fontSize: 10,
                     color: Colors.white,
-                  //  fontFamily: 'Pacifico',
+                    fontFamily: 'Pacifico',
                   ),
                 ),
               ),
