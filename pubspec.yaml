@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_modular: ^2.0.1
   mobx: ^1.2.1+4
+  google_fonts: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -22,10 +23,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  fonts:
-    - family: Pacifico
-      fonts:
-        - asset: assets/fonts/Pacifico-Regular.ttf
   assets:
     - assets/images/Tmdb-logo.png
 

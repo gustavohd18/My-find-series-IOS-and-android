@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -68,10 +69,9 @@ class _SplashPageState extends State<Splash>
                 },
                 child: Text(
                   "My find Series and Movies",
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.white,
-                    fontFamily: 'Pacifico',
+                    style: GoogleFonts.pacifico(
+                      fontSize: 10,
+                      color: Colors.white
                   ),
                 ),
               ),
