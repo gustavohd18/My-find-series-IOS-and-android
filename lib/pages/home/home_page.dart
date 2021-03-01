@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_find_series_and_movies/widgets/cardInformation/card_infomation.dart';
 import 'package:my_find_series_and_movies/widgets/contentInfomation/content_information.dart';
 class Home extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class Home extends StatelessWidget {
         ),
       ),
     ),
-    body: ContentInformation(urlImage: "https://cdn.dribbble.com/users/2345673/screenshots/7879826/downloads/movie4.png", title: "Avenger end game", rate: "10", type: "Movie",),
+    body: CardInformation(urlImage: "https://lumiere-a.akamaihd.net/v1/images/bigred_ka_vert_brpo_cddc98da.jpeg", title: "Wandavision", rate: "10"),
     );
   } 
 }
