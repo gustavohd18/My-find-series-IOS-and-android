@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
         ),
       ),
     ),
-    body: CardInformation(urlImage: "https://lumiere-a.akamaihd.net/v1/images/bigred_ka_vert_brpo_cddc98da.jpeg", title: "Wandavision", rate: "10"),
+    body: CardInformation(urlImage: "https://lumiere-a.akamaihd.net/v1/images/bigred_ka_vert_brpo_cddc98da.jpeg", color: Colors.blue[300], rate: "10"),
     );
   } 
 }
