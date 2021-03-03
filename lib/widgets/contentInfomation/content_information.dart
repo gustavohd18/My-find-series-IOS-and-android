@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_find_series_and_movies/util/types/content_type.dart';
 
 class ContentInformation extends StatelessWidget {
   ContentInformation(
       {@required this.urlImage, this.title, this.rate, this.type});
 
-  final String urlImage, title, rate, type;
+  final String urlImage, title, rate;
+  final ContentType type;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ContentInformation extends StatelessWidget {
                       color: Colors.transparent),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
-                    child: Image.network(
+                    child:  Image.network(
                       urlImage,
                       fit: BoxFit.fill,
                       width: 60,
@@ -50,7 +52,7 @@ class ContentInformation extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.only(top: 10),
                       child:
-                          Text(type, style: TextStyle(color: Colors.white54)))
+                          Text( (type == ContentType.movie) ? "Movie": "Series", style: TextStyle(color: Colors.white54)))
                 ],
               ),
             ],
@@ -68,7 +70,7 @@ class ContentInformation extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: (type.toLowerCase() == "movie")
+          color: (type == ContentType.movie)
               ? Colors.blue[300]
               : Colors.purple[300]),
     );

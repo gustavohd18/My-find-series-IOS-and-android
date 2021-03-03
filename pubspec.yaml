@@ -20,6 +20,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  network_image_mock: ^1.0.2
 
 flutter:
   uses-material-design: true
