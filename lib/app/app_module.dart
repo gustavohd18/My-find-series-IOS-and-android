@@ -4,7 +4,6 @@ import 'package:my_find_series_and_movies/pages/home/home_page.dart';
 import 'package:my_find_series_and_movies/pages/splash/splash_page.dart';
 import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
 
-import '../main.dart';
 import 'app_widget.dart';
 
 class AppModule extends MainModule {

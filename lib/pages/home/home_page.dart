@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_find_series_and_movies/widgets/cardInformation/card_infomation.dart';
-import 'package:my_find_series_and_movies/widgets/contentInfomation/content_information.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
