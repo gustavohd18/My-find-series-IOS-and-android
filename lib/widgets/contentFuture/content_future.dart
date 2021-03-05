@@ -9,8 +9,8 @@ class ContentFuture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<MovieList>>(
-      future: _future,
+    return FutureBuilder<List>(
+      future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -24,12 +24,11 @@ class ContentFuture extends StatelessWidget {
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, int position) {
                   final item = snapshot.data[position];
-                  return MoviesCard(item.id, item.title, item.overview,
-                      item.voteAverage, item.posterPath, true, isPortuguese);
+                  return Text("teste");
                 })
             : Center(
                 child: Text(
-                  text,
+                  "nothing to show",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
