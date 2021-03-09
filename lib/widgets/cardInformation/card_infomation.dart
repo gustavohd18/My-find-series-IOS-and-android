@@ -30,7 +30,7 @@ class CardInformation extends StatelessWidget {
                   child: Image.network(
                     urlImage,
                     fit: BoxFit.fill,
-                    width: 180,
+                    width: 150,
                     height: 200,
                   ),
                 ),
