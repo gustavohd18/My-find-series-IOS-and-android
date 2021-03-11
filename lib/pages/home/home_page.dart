@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 20), child: BodyMenu()),
+              padding: EdgeInsets.only(top: 10, bottom: 30), child: BodyMenu()),
           MovieCarousel()
         ],
       ),
