@@ -14,7 +14,7 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
-  int selectedCategory = 1;
+  int selectedCategory = 0;
   List<String> categories = ["Top popular movies", "Top popular tv shows"];
   @override
   Widget build(BuildContext context) {
