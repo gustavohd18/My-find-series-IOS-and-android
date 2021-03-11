@@ -29,7 +29,11 @@ class Home extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: [Padding(padding: EdgeInsets.only(top: 10, bottom: 20),  child:BodyMenu()), MovieCarousel()],
+        children: [
+          Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 20), child: BodyMenu()),
+          MovieCarousel()
+        ],
       ),
     );
   }
@@ -45,6 +49,13 @@ class _MovieCarouselState extends State<MovieCarousel> {
   int initialPage = 1;
 
   @override
+  void initState() {
+    super.initState();
+    _pageController =
+        PageController(viewportFraction: 0.8, initialPage: initialPage);
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _pageController.dispose();
@@ -57,10 +68,9 @@ class _MovieCarouselState extends State<MovieCarousel> {
       child: AspectRatio(
         aspectRatio: 0.85,
         child: PageView.builder(
+          controller:_pageController ,
           itemCount: mock.length,
-          itemBuilder: (context, index) => MovieCard(
-              movie: mock[index]
-          ),
+          itemBuilder: (context, index) => MovieCard(movie: mock[index]),
         ),
       ),
     );
@@ -78,26 +88,39 @@ class MovieCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Column(
         children: [
-          Expanded(child: Container(
+          Expanded(
+              child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              boxShadow: [kDefaultShadow],
-              image: DecorationImage(
-                image: NetworkImage(movie.posterPath),
-                fit: BoxFit.fill,
-              )
-            ),
-          )
-          ),
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [kDefaultShadow],
+                image: DecorationImage(
+                  image: NetworkImage(movie.posterPath),
+                  fit: BoxFit.fill,
+                )),
+          )),
           Padding(
             padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-            child: Text(movie.title, style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.w600),),
+            child: Text(
+              movie.title,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.star, color: Colors.yellow,size: 30,),
-              Text(movie.voteAverage, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),)
+              Icon(
+                Icons.star,
+                color: kFillStarColor,
+                size: 30,
+              ),
+              Text(
+                movie.voteAverage,
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+              )
             ],
           )
         ],

@@ -45,5 +45,13 @@ final List<Movie> mock = [
      posterPath: "https://assets0.minhaserie.com.br/uploads/editor_pictures/000/060/166/content_pic.jpg",
      backdropPath: "https://assets0.minhaserie.com.br/uploads/editor_pictures/000/060/166/content_pic.jpg",
      releaseDate: "24/04/22",
+    voteAverage:  "8.5"),
+          Movie(
+     id: "1234",
+     title: "Vingadores guerra infinita",
+     overview: "historia top",
+     posterPath: "https://assets0.minhaserie.com.br/uploads/editor_pictures/000/060/166/content_pic.jpg",
+     backdropPath: "https://assets0.minhaserie.com.br/uploads/editor_pictures/000/060/166/content_pic.jpg",
+     releaseDate: "24/04/22",
     voteAverage:  "8.5")
 ];
