@@ -15,10 +15,7 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   int selectedCategory = 0;
-  List<String> categories = [
-    "Top 10 popular movies",
-    "Top 10 popular tv shows"
-  ];
+  List<String> categories = ["Top 10 popular movies", "Top 10 popular tv shows"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,10 +34,7 @@ class _CategoryState extends State<Category> {
       child: GestureDetector(
         onTap: () {
           setState(() {
-            selectedCategory = 0;
-            final String reference = categories[0];
-            categories[0] = categories[1];
-            categories[1] = reference;
+            selectedCategory = index;
           });
         },
         child: Column(
