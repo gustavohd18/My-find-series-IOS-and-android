@@ -7,42 +7,104 @@ import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return Responsive(
-      mobile:     Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          padding: EdgeInsets.only(left: kDefaultPadding),
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black,
+      mobile: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            padding: EdgeInsets.only(left: kDefaultPadding),
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () => print("hello"),
           ),
-          onPressed: () => print("hello"),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                onPressed: () => print("oii"))
+          ],
         ),
-        actions: <Widget>[
-          IconButton(
+        body: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 30),
+                child: BodyMenu()),
+            MovieCarousel()
+          ],
+        ),
+      ),
+      tablet: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              padding: EdgeInsets.only(left: kDefaultPadding),
               icon: Icon(
-                Icons.search,
+                Icons.menu,
                 color: Colors.black,
               ),
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              onPressed: () => print("oii"))
-        ],
+              onPressed: () => print("hello"),
+            ),
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  onPressed: () => print("oii"))
+            ],
+          ),
+          body: Column(
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 30),
+                  child: BodyMenu()),
+              Container(
+                color: Colors.purple,
+              )
+            ],
+          )),
+      web: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            padding: EdgeInsets.only(left: kDefaultPadding),
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () => print("hello"),
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                onPressed: () => print("oii"))
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 30),
+                child: BodyMenu()),
+            Container(
+              color: Colors.black,
+            )
+          ],
+        ),
       ),
-      body: Column(
-        children: [
-          Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 30), child: BodyMenu()),
-          MovieCarousel()
-        ],
-      ),
-    ),
-       tablet: Container(color: Colors.purple,),
-        web:  Container(color: Colors.black,));
-
-
+    );
   }
 }
 

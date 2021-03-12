@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 
 class BodyMenu extends StatelessWidget {
@@ -15,7 +16,10 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   int selectedCategory = 0;
-  List<String> categories = ["Top 10 popular movies", "Top 10 popular tv shows"];
+  List<String> categories = [
+    "Top 10 popular movies",
+    "Top 10 popular tv shows"
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,14 +43,24 @@ class _CategoryState extends State<Category> {
         },
         child: Column(
           children: [
-            Text(
-              categories[index],
-              style: Theme.of(context).textTheme.headline5.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: index == selectedCategory
-                      ? kTextColor
-                      : Colors.black.withOpacity(0.4)),
-            ),
+            Responsive.isMobile(context)
+                ? Text(
+                    categories[index],
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: index == selectedCategory
+                            ? kTextColor
+                            : Colors.black.withOpacity(0.4)),
+                  )
+                : Text(
+                    categories[index],
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: index == selectedCategory
+                            ? kTextColor
+                            : Colors.black.withOpacity(0.4)),
+                  ),
             Container(
               margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
               height: 6,
