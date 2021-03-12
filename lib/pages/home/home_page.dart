@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
+import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    
+    return Responsive(
+      mobile:     Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -35,7 +38,11 @@ class Home extends StatelessWidget {
           MovieCarousel()
         ],
       ),
-    );
+    ),
+       tablet: Container(color: Colors.purple,),
+        web:  Container(color: Colors.black,));
+
+
   }
 }
 
@@ -68,7 +75,7 @@ class _MovieCarouselState extends State<MovieCarousel> {
       child: AspectRatio(
         aspectRatio: 0.85,
         child: PageView.builder(
-          controller:_pageController ,
+          controller: _pageController,
           itemCount: mock.length,
           itemBuilder: (context, index) => MovieCard(movie: mock[index]),
         ),
