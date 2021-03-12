@@ -48,7 +48,7 @@ class _CategoryState extends State<Category> {
                     categories[index],
                     style: Theme.of(context).textTheme.headline5.copyWith(
                         fontWeight: FontWeight.w600,
-                        fontSize: 20,
+                        fontSize: 15,
                         color: index == selectedCategory
                             ? kTextColor
                             : Colors.black.withOpacity(0.4)),
