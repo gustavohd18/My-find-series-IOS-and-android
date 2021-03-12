@@ -62,14 +62,7 @@ class Home extends StatelessWidget {
             ],
           ),
           body: Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 30),
-                  child: BodyMenu()),
-              Container(
-                color: Colors.purple,
-              )
-            ],
+            children: [BodyMenu(), Expanded(child: MovieCarousel())],
           )),
       web: Scaffold(
         appBar: AppBar(
@@ -94,14 +87,7 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 30),
-                child: BodyMenu()),
-            Container(
-              color: Colors.black,
-            )
-          ],
+          children: [BodyMenu(), Expanded(child: MovieCarousel())],
         ),
       ),
     );
@@ -116,6 +102,7 @@ class MovieCarousel extends StatefulWidget {
 class _MovieCarouselState extends State<MovieCarousel> {
   PageController _pageController;
   int initialPage = 1;
+  double aspectRadio = 0.85;
 
   @override
   void initState() {
@@ -135,7 +122,7 @@ class _MovieCarouselState extends State<MovieCarousel> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
       child: AspectRatio(
-        aspectRatio: 0.85,
+        aspectRatio: setAspectRatio(),
         child: PageView.builder(
           controller: _pageController,
           itemCount: mock.length,
@@ -143,6 +130,16 @@ class _MovieCarouselState extends State<MovieCarousel> {
         ),
       ),
     );
+  }
+
+  double setAspectRatio() {
+    if (Responsive.isMobile(context)) {
+      return 0.85;
+    } else if (Responsive.isTable(context)) {
+      return 1.75;
+    } else {
+      return 2.0;
+    }
   }
 }
 
@@ -191,7 +188,7 @@ class MovieCard extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               )
             ],
-          )
+          ),
         ],
       ),
     );
