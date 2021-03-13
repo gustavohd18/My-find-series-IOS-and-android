@@ -6,7 +6,7 @@ import 'package:my_find_series_and_movies/widgets/movieCard/movie_card.dart';
 import '../../responsive.dart';
 
 class MovieCarousel extends StatefulWidget {
-  final List<Movie> movies;
+  final Future<List<Movie>> movies;
   MovieCarousel(this.movies);
 
   @override
@@ -33,16 +33,37 @@ class _MovieCarouselState extends State<MovieCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return FutureBuilder<List<Movie>>(
+      future: widget.movies,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return snapshot.hasData && snapshot.data.length > 0
+            ?     Padding(
       padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
       child: AspectRatio(
         aspectRatio: setAspectRatio(),
         child: PageView.builder(
           controller: _pageController,
-          itemCount: widget.movies.length,
-          itemBuilder: (context, index) => MovieCard(movie: widget.movies[index]),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) => MovieCard(movie: snapshot.data[index]),
         ),
       ),
+    )
+            : Center(
+                child: Text(
+                  "nothing to show",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              );
+      },
     );
   }
 

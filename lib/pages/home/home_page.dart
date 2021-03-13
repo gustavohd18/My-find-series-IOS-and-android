@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
+import 'package:my_find_series_and_movies/services/imdb_service.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
 import 'package:my_find_series_and_movies/widgets/homeWeb/home_web.dart';
 import 'package:my_find_series_and_movies/widgets/movieCarousel/movie_carousel.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final mocks = mock;
+  
+  Future<List<Movie>> movies;
+ 
+  @override
+  void initState() {
+    super.initState();
+    movies = IMDBService("c1abb65895a3fdceff4cfaa0d2dbdfc2").getTop10Movies();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Responsive(
@@ -37,7 +54,7 @@ class Home extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 30),
                 child: BodyMenu()),
-            MovieCarousel(mock)
+            MovieCarousel(movies)
           ],
         ),
       ),
@@ -64,7 +81,7 @@ class Home extends StatelessWidget {
             ],
           ),
           body: Column(
-            children: [BodyMenu(), Expanded(child: MovieCarousel(mock))],
+            children: [BodyMenu(), Expanded(child: MovieCarousel(movies))],
           )),
       web: Scaffold(
         appBar: AppBar(
@@ -89,7 +106,7 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: [BodyMenu(), Expanded(child: HomeWeb(mock))],
+          children: [BodyMenu(), Expanded(child: HomeWeb(mocks))],
         ),
       ),
     );
