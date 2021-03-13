@@ -8,7 +8,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      initialRoute: home,
+      initialRoute: splash,
       navigatorKey: Modular.navigatorKey,
       onGenerateRoute: Modular.generateRoute,
       theme: ThemeData(
