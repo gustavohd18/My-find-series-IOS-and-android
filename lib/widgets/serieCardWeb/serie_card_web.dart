@@ -21,7 +21,7 @@ class SerieCardWeb extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   boxShadow: [kDefaultShadow],
                   image: DecorationImage(
-                    image: NetworkImage(serie.posterPath),
+                    image: NetworkImage("https://image.tmdb.org/t/p/w185${serie.posterPath}"),
                     fit: BoxFit.fill,
                   )),
             ),

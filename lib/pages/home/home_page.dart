@@ -4,9 +4,10 @@ import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
-import 'package:my_find_series_and_movies/widgets/homeWeb/home_web.dart';
 import 'package:my_find_series_and_movies/widgets/movieCarousel/movie_carousel.dart';
+import 'package:my_find_series_and_movies/widgets/movieHomeWeb/movie_home_web.dart';
 import 'package:my_find_series_and_movies/widgets/serieCarousel/serie_carousel.dart';
+import 'package:my_find_series_and_movies/widgets/serieHomeWeb/serie_home_web.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
 class Home extends StatefulWidget {
@@ -119,7 +120,15 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: Column(
-          children: [BodyMenu(), Expanded(child: HomeWeb(mocks))],
+          children: [
+            BodyMenu(),
+           Expanded(
+             child: RxBuilder(
+                builder: (_) => homeController.isMovies.value
+                    ? MovieHomeWeb(homeController.movies.value)
+                    : SerieHomeWeb(homeController.series.value),
+              ))
+           ],
         ),
       ),
     );
