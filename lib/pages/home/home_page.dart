@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
-import 'package:my_find_series_and_movies/services/imdb_service.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
 import 'package:my_find_series_and_movies/widgets/homeWeb/home_web.dart';
 import 'package:my_find_series_and_movies/widgets/movieCarousel/movie_carousel.dart';
+import 'package:my_find_series_and_movies/widgets/serieCarousel/serie_carousel.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
 class Home extends StatefulWidget {
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
             RxBuilder(
               builder: (_) => homeController.isMovies.value
                   ? MovieCarousel(homeController.movies.value)
-                  : Text('${homeController.isMovies.value}'),
+                  : SerieCarousel(homeController.series.value),
             )
           ],
         ),
@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                   child: RxBuilder(
                 builder: (_) => homeController.isMovies.value
                     ? MovieCarousel(homeController.movies.value)
-                    : Text('${homeController.isMovies.value}'),
+                    : SerieCarousel(homeController.series.value),
               )),
             ],
           )),
