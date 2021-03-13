@@ -44,7 +44,7 @@ class _CategoryState extends State<Category> {
             if (index == 0) {
               homeController.setIsMovie();
             } else {
-                homeController.setIsSeries();
+              homeController.setIsSeries();
             }
           });
         },

@@ -21,7 +21,8 @@ class MovieCardWeb extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   boxShadow: [kDefaultShadow],
                   image: DecorationImage(
-                    image: NetworkImage("https://image.tmdb.org/t/p/w185${movie.posterPath}"),
+                    image: NetworkImage(
+                        "https://image.tmdb.org/t/p/w185${movie.posterPath}"),
                     fit: BoxFit.fill,
                   )),
             ),

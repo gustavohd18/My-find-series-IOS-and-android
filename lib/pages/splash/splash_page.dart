@@ -69,10 +69,8 @@ class _SplashPageState extends State<Splash>
                 },
                 child: Text(
                   "My find Series and Movies",
-                    style: GoogleFonts.pacifico(
-                      fontSize: 10,
-                      color: Colors.white
-                  ),
+                  style:
+                      GoogleFonts.pacifico(fontSize: 10, color: Colors.white),
                 ),
               ),
             ),

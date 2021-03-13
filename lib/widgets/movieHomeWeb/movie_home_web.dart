@@ -18,72 +18,72 @@ class MovieHomeWeb extends StatelessWidget {
             );
           }
           return snapshot.hasData && snapshot.data.length > 0
-              ?
-     Column(
-      children: [
-        Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: MovieCardWeb(
-                  movie: snapshot.data[0],
-                ),
-              ),
-              Expanded(
-                child: MovieCardWeb(
-                  movie: snapshot.data[1],
-                ),
-              ),
-              Expanded(
-                child: MovieCardWeb(
-                  movie: snapshot.data[2],
-                ),
-              ),
-              Expanded(
-                child: MovieCardWeb(
-                  movie: snapshot.data[3],
-                ),
-              ),
-              Expanded(
-                child: MovieCardWeb(
-                  movie: snapshot.data[4],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-            child: Row(
-          children: [
-            Expanded(
-              child: MovieCardWeb(
-                movie: snapshot.data[5],
-              ),
-            ),
-            Expanded(
-              child: MovieCardWeb(
-                movie: snapshot.data[6],
-              ),
-            ),
-            Expanded(
-              child: MovieCardWeb(
-                movie: snapshot.data[7],
-              ),
-            ),
-            Expanded(
-              child: MovieCardWeb(
-                movie: snapshot.data[8],
-              ),
-            ),
-            Expanded(
-              child: MovieCardWeb(
-                movie: snapshot.data[9],
-              ),
-            ),
-          ],
-        ))
-      ],
-    ) : Center(
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: MovieCardWeb(
+                              movie: snapshot.data[0],
+                            ),
+                          ),
+                          Expanded(
+                            child: MovieCardWeb(
+                              movie: snapshot.data[1],
+                            ),
+                          ),
+                          Expanded(
+                            child: MovieCardWeb(
+                              movie: snapshot.data[2],
+                            ),
+                          ),
+                          Expanded(
+                            child: MovieCardWeb(
+                              movie: snapshot.data[3],
+                            ),
+                          ),
+                          Expanded(
+                            child: MovieCardWeb(
+                              movie: snapshot.data[4],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                        child: Row(
+                      children: [
+                        Expanded(
+                          child: MovieCardWeb(
+                            movie: snapshot.data[5],
+                          ),
+                        ),
+                        Expanded(
+                          child: MovieCardWeb(
+                            movie: snapshot.data[6],
+                          ),
+                        ),
+                        Expanded(
+                          child: MovieCardWeb(
+                            movie: snapshot.data[7],
+                          ),
+                        ),
+                        Expanded(
+                          child: MovieCardWeb(
+                            movie: snapshot.data[8],
+                          ),
+                        ),
+                        Expanded(
+                          child: MovieCardWeb(
+                            movie: snapshot.data[9],
+                          ),
+                        ),
+                      ],
+                    ))
+                  ],
+                )
+              : Center(
                   child: Text(
                     "nothing to show",
                     textAlign: TextAlign.center,
@@ -92,6 +92,7 @@ class MovieHomeWeb extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                );});
+                );
+        });
   }
 }

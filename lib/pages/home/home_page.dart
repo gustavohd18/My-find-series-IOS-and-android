@@ -122,13 +122,13 @@ class _HomeState extends State<Home> {
         body: Column(
           children: [
             BodyMenu(),
-           Expanded(
-             child: RxBuilder(
-                builder: (_) => homeController.isMovies.value
-                    ? MovieHomeWeb(homeController.movies.value)
-                    : SerieHomeWeb(homeController.series.value),
-              ))
-           ],
+            Expanded(
+                child: RxBuilder(
+              builder: (_) => homeController.isMovies.value
+                  ? MovieHomeWeb(homeController.movies.value)
+                  : SerieHomeWeb(homeController.series.value),
+            ))
+          ],
         ),
       ),
     );

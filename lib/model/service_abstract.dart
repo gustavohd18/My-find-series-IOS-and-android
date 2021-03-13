@@ -1,4 +1,3 @@
-
 import 'package:my_find_series_and_movies/model/serie.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 

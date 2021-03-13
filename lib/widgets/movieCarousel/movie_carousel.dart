@@ -42,17 +42,18 @@ class _MovieCarouselState extends State<MovieCarousel> {
           );
         }
         return snapshot.hasData && snapshot.data.length > 0
-            ?     Padding(
-      padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
-      child: AspectRatio(
-        aspectRatio: setAspectRatio(),
-        child: PageView.builder(
-          controller: _pageController,
-          itemCount: snapshot.data.length,
-          itemBuilder: (context, index) => MovieCard(movie: snapshot.data[index]),
-        ),
-      ),
-    )
+            ? Padding(
+                padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                child: AspectRatio(
+                  aspectRatio: setAspectRatio(),
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) =>
+                        MovieCard(movie: snapshot.data[index]),
+                  ),
+                ),
+              )
             : Center(
                 child: Text(
                   "nothing to show",
