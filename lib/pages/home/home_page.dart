@@ -16,19 +16,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final mocks = mock;
-  
-  Future<List<Movie>> movies;
- 
+  final homeController = HomeController();
+
   @override
   void initState() {
     super.initState();
-    movies = IMDBService("c1abb65895a3fdceff4cfaa0d2dbdfc2").getTop10Movies();
-
+    homeController.setTopMovies();
+    homeController.setTopSeries();
   }
 
   @override
   Widget build(BuildContext context) {
-     final homeController = HomeController();
     return Responsive(
       mobile: Scaffold(
         appBar: AppBar(
@@ -57,7 +55,11 @@ class _HomeState extends State<Home> {
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 30),
                 child: BodyMenu()),
-            MovieCarousel(movies)
+            RxBuilder(
+              builder: (_) => homeController.isMovies.value
+                  ? MovieCarousel(homeController.movies.value)
+                  : Text('${homeController.isMovies.value}'),
+            )
           ],
         ),
       ),
@@ -86,11 +88,13 @@ class _HomeState extends State<Home> {
           body: Column(
             children: [
               BodyMenu(),
-               Expanded(
-                 child:
-                 RxBuilder(
-        builder: (_) => homeController.isMovies.value ? MovieCarousel(movies) : Text('${homeController.isMovies.value}'),
-    )),],
+              Expanded(
+                  child: RxBuilder(
+                builder: (_) => homeController.isMovies.value
+                    ? MovieCarousel(homeController.movies.value)
+                    : Text('${homeController.isMovies.value}'),
+              )),
+            ],
           )),
       web: Scaffold(
         appBar: AppBar(

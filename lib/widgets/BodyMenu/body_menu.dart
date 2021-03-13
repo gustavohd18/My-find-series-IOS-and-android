@@ -41,7 +41,7 @@ class _CategoryState extends State<Category> {
         onTap: () {
           setState(() {
             selectedCategory = index;
-            if (selectedCategory == 0) {
+            if (index == 0) {
               homeController.setIsMovie();
             } else {
                 homeController.setIsSeries();
