@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 
@@ -15,6 +16,7 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
+  final homeController = HomeController();
   int selectedCategory = 0;
   List<String> categories = [
     "Top 10 popular movies",
@@ -39,6 +41,11 @@ class _CategoryState extends State<Category> {
         onTap: () {
           setState(() {
             selectedCategory = index;
+            if (selectedCategory == 0) {
+              homeController.setIsMovie();
+            } else {
+                homeController.setIsSeries();
+            }
           });
         },
         child: Column(

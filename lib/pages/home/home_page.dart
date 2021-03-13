@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/services/imdb_service.dart';
@@ -6,6 +7,7 @@ import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
 import 'package:my_find_series_and_movies/widgets/homeWeb/home_web.dart';
 import 'package:my_find_series_and_movies/widgets/movieCarousel/movie_carousel.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+     final homeController = HomeController();
     return Responsive(
       mobile: Scaffold(
         appBar: AppBar(
@@ -81,7 +84,13 @@ class _HomeState extends State<Home> {
             ],
           ),
           body: Column(
-            children: [BodyMenu(), Expanded(child: MovieCarousel(movies))],
+            children: [
+              BodyMenu(),
+               Expanded(
+                 child:
+                 RxBuilder(
+        builder: (_) => homeController.isMovies.value ? MovieCarousel(movies) : Text('${homeController.isMovies.value}'),
+    )),],
           )),
       web: Scaffold(
         appBar: AppBar(
