@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
@@ -15,8 +16,7 @@ class Category extends StatefulWidget {
   _CategoryState createState() => _CategoryState();
 }
 
-class _CategoryState extends State<Category> {
-  final homeController = HomeController();
+class _CategoryState extends ModularState<Category, HomeController> {
   int selectedCategory = 0;
   List<String> categories = [
     "Top 10 popular movies",
@@ -42,9 +42,9 @@ class _CategoryState extends State<Category> {
           setState(() {
             selectedCategory = index;
             if (index == 0) {
-              homeController.setIsMovie();
+              this.controller.setIsMovie();
             } else {
-              homeController.setIsSeries();
+              this.controller.setIsSeries();
             }
           });
         },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
@@ -15,15 +16,14 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ModularState<Home, HomeController> {
   final mocks = mock;
-  final homeController = HomeController();
 
   @override
   void initState() {
     super.initState();
-    homeController.setTopMovies();
-    homeController.setTopSeries();
+    this.controller.setTopMovies();
+    this.controller.setTopSeries();
   }
 
   @override
@@ -57,9 +57,9 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(top: 10, bottom: 30),
                 child: BodyMenu()),
             RxBuilder(
-              builder: (_) => homeController.isMovies.value
-                  ? MovieCarousel(homeController.movies.value)
-                  : SerieCarousel(homeController.series.value),
+              builder: (_) => this.controller.isMovies.value
+                  ? MovieCarousel(this.controller.movies.value)
+                  : SerieCarousel(this.controller.series.value),
             )
           ],
         ),
@@ -91,9 +91,9 @@ class _HomeState extends State<Home> {
               BodyMenu(),
               Expanded(
                   child: RxBuilder(
-                builder: (_) => homeController.isMovies.value
-                    ? MovieCarousel(homeController.movies.value)
-                    : SerieCarousel(homeController.series.value),
+                builder: (_) => this.controller.isMovies.value
+                    ? MovieCarousel(this.controller.movies.value)
+                    : SerieCarousel(this.controller.series.value),
               )),
             ],
           )),
@@ -124,9 +124,9 @@ class _HomeState extends State<Home> {
             BodyMenu(),
             Expanded(
                 child: RxBuilder(
-              builder: (_) => homeController.isMovies.value
-                  ? MovieHomeWeb(homeController.movies.value)
-                  : SerieHomeWeb(homeController.series.value),
+              builder: (_) => this.controller.isMovies.value
+                  ? MovieHomeWeb(this.controller.movies.value)
+                  : SerieHomeWeb(this.controller.series.value),
             ))
           ],
         ),
