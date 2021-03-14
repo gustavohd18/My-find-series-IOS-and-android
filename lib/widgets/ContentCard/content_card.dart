@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/pages/details/movie_details.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 
-class MovieCard extends StatelessWidget {
-  final Movie movie;
+class ContentCard extends StatelessWidget {
+  final Content content;
 
-  MovieCard({@required this.movie});
+  ContentCard({@required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: GestureDetector(
-        onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MovieDetails(movie: movie,))),
+       // onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MovieDetails(movie: movie,))),
         child: Column(
           children: [
             Expanded(
@@ -23,14 +23,14 @@ class MovieCard extends StatelessWidget {
                   boxShadow: [kDefaultShadow],
                   image: DecorationImage(
                     image: NetworkImage(
-                        "https://image.tmdb.org/t/p/w185${movie.posterPath}"),
+                        "https://image.tmdb.org/t/p/w185${content.posterPath}"),
                     fit: BoxFit.fill,
                   )),
             )),
             Padding(
               padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
               child: Text(
-                movie.title,
+                content.title,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -47,7 +47,7 @@ class MovieCard extends StatelessWidget {
                   size: 30,
                 ),
                 Text(
-                  movie.voteAverage,
+                  content.voteAverage,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 )
               ],

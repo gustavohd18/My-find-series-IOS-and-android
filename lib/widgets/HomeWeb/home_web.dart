@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
-import 'package:my_find_series_and_movies/widgets/movieCardWeb/movie_card_web.dart';
+import 'package:my_find_series_and_movies/widgets/ContentCardWeb/content_card_web.dart';
 
-class MovieHomeWeb extends StatelessWidget {
-  final Future<List<Movie>> movies;
+class HomeWeb extends StatelessWidget {
+  final Future<List<Content>> contents;
 
-  MovieHomeWeb(this.movies);
+  HomeWeb(this.contents);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Movie>>(
-        future: movies,
+    return FutureBuilder<List<Content>>(
+        future: contents,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -24,28 +25,28 @@ class MovieHomeWeb extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: MovieCardWeb(
-                              movie: snapshot.data[0],
+                            child: ContentCardWeb(
+                              content: snapshot.data[0],
                             ),
                           ),
                           Expanded(
-                            child: MovieCardWeb(
-                              movie: snapshot.data[1],
+                            child: ContentCardWeb(
+                              content: snapshot.data[1],
                             ),
                           ),
                           Expanded(
-                            child: MovieCardWeb(
-                              movie: snapshot.data[2],
+                            child: ContentCardWeb(
+                              content: snapshot.data[2],
                             ),
                           ),
                           Expanded(
-                            child: MovieCardWeb(
-                              movie: snapshot.data[3],
+                            child: ContentCardWeb(
+                              content: snapshot.data[3],
                             ),
                           ),
                           Expanded(
-                            child: MovieCardWeb(
-                              movie: snapshot.data[4],
+                            child: ContentCardWeb(
+                              content: snapshot.data[4],
                             ),
                           ),
                         ],
@@ -55,28 +56,28 @@ class MovieHomeWeb extends StatelessWidget {
                         child: Row(
                       children: [
                         Expanded(
-                          child: MovieCardWeb(
-                            movie: snapshot.data[5],
+                          child: ContentCardWeb(
+                            content: snapshot.data[5],
                           ),
                         ),
                         Expanded(
-                          child: MovieCardWeb(
-                            movie: snapshot.data[6],
+                          child: ContentCardWeb(
+                            content: snapshot.data[6],
                           ),
                         ),
                         Expanded(
-                          child: MovieCardWeb(
-                            movie: snapshot.data[7],
+                          child: ContentCardWeb(
+                            content: snapshot.data[7],
                           ),
                         ),
                         Expanded(
-                          child: MovieCardWeb(
-                            movie: snapshot.data[8],
+                          child: ContentCardWeb(
+                            content: snapshot.data[8],
                           ),
                         ),
                         Expanded(
-                          child: MovieCardWeb(
-                            movie: snapshot.data[9],
+                          child: ContentCardWeb(
+                            content: snapshot.data[9],
                           ),
                         ),
                       ],

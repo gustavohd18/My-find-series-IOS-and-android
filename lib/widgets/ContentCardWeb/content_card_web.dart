@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/pages/details/movie_details.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 
-class MovieCardWeb extends StatelessWidget {
-  final Movie movie;
+class ContentCardWeb extends StatelessWidget {
+  final Content content;
 
-  MovieCardWeb({@required this.movie});
+  ContentCardWeb({@required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: GestureDetector(
-        onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MovieDetails(movie: movie,))),
+       // onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MovieDetails(movie: movie,))),
         child: Column(
           children: [
             Expanded(
@@ -25,7 +25,7 @@ class MovieCardWeb extends StatelessWidget {
                     boxShadow: [kDefaultShadow],
                     image: DecorationImage(
                       image: NetworkImage(
-                          "https://image.tmdb.org/t/p/w185${movie.posterPath}"),
+                          "https://image.tmdb.org/t/p/w185${content.posterPath}"),
                       fit: BoxFit.fill,
                     )),
               ),
@@ -33,7 +33,7 @@ class MovieCardWeb extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
               child: Text(
-                movie.title,
+                content.title,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -50,7 +50,7 @@ class MovieCardWeb extends StatelessWidget {
                   size: 20,
                 ),
                 Text(
-                  movie.voteAverage,
+                  content.voteAverage,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 )
               ],

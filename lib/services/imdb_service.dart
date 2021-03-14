@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:my_find_series_and_movies/model/cast.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/model/serie.dart';
 
@@ -23,7 +24,7 @@ class IMDBService implements Service {
     return this._key;
   }
 
-  Future<List<Movie>> getTop10Movies() async {
+  Future<List<Content>> getTop10Movies() async {
     final String _language = 'en-US';
 
     final response = await _https.get(
@@ -33,7 +34,7 @@ class IMDBService implements Service {
       Map data = jsonDecode(response.body);
 
       var list = (data['results'] as List)
-          .map((listMovies) => Movie.fromJSON(listMovies))
+          .map((listMovies) => Content.movieFromJSON(listMovies))
           .toList();
 
       if (list.length >= 10) {
@@ -46,7 +47,7 @@ class IMDBService implements Service {
     }
   }
 
-  Future<List<Serie>> getTop10Series() async {
+  Future<List<Content>> getTop10Series() async {
     final String _language = 'en-US';
 
     final response = await _https
@@ -56,7 +57,7 @@ class IMDBService implements Service {
       Map data = jsonDecode(response.body);
 
       var list = (data['results'] as List)
-          .map((listSeries) => Serie.fromJSON(listSeries))
+          .map((listSeries) => Content.seriesFromJSON(listSeries))
           .toList();
 
       if (list.length >= 10) {

@@ -1,3 +1,4 @@
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/model/serie.dart';
 import 'package:my_find_series_and_movies/services/imdb_service.dart';
@@ -14,9 +15,9 @@ class HomeController {
 
   final isMovies = RxNotifier<bool>(true);
 
-  final movies = RxNotifier<Future<List<Movie>>>(null);
+  final movies = RxNotifier<Future<List<Content>>>(null);
 
-  final series = RxNotifier<Future<List<Serie>>>(null);
+  final series = RxNotifier<Future<List<Content>>>(null);
 
   setIsMovie() {
     isMovies.value = true;

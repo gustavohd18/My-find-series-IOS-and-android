@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
-import 'package:my_find_series_and_movies/widgets/movieCard/movie_card.dart';
+import 'package:my_find_series_and_movies/widgets/ContentCard/content_card.dart';
 
 import '../../responsive.dart';
 
-class MovieCarousel extends StatefulWidget {
-  final Future<List<Movie>> movies;
-  MovieCarousel(this.movies);
+class Carousel extends StatefulWidget {
+  final Future<List<Content>> contents;
+  Carousel(this.contents);
 
   @override
   _MovieCarouselState createState() => _MovieCarouselState();
 }
 
-class _MovieCarouselState extends State<MovieCarousel> {
+class _MovieCarouselState extends State<Carousel> {
   PageController _pageController;
   int initialPage = 1;
   double aspectRadio = 0.85;
@@ -33,8 +33,8 @@ class _MovieCarouselState extends State<MovieCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Movie>>(
-      future: widget.movies,
+    return FutureBuilder<List<Content>>(
+      future: widget.contents,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -50,7 +50,7 @@ class _MovieCarouselState extends State<MovieCarousel> {
                     controller: _pageController,
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) =>
-                        MovieCard(movie: snapshot.data[index]),
+                        ContentCard(content: snapshot.data[index]),
                   ),
                 ),
               )
