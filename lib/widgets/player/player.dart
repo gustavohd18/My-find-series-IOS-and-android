@@ -19,7 +19,7 @@ class Player extends StatelessWidget {
         return snapshot.hasData
             ? Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: YoutubePlayerIFrame(
         controller: YoutubePlayerController(
       initialVideoId: snapshot.data.key,
