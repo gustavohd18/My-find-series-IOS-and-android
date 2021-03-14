@@ -6,15 +6,15 @@ import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/castList/cast_list.dart';
 
-class BodyDetail extends StatefulWidget {
+class BodyDetailMovie extends StatefulWidget {
   final Movie movie;
-  BodyDetail({@required this.movie});
+  BodyDetailMovie({@required this.movie});
 
   @override
   _BodyDetailState createState() => _BodyDetailState();
 }
 
-class _BodyDetailState extends ModularState<BodyDetail, DetailsController> {
+class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> {
   @override
   void initState() {
     super.initState();
