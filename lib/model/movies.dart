@@ -23,6 +23,7 @@ class Movie {
       title: json['title'].toString(),
       overview: json['overview'].toString(),
       voteAverage: json['vote_average'].toString(),
+      releaseDate: json['release_date'].toString(),
       posterPath: json['poster_path'].toString(),
       backdropPath: json['backdrop_path'].toString() ?? null,
     );

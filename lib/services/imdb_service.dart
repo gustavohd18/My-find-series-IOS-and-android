@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/model/serie.dart';
 
@@ -56,6 +57,52 @@ class IMDBService implements Service {
 
       var list = (data['results'] as List)
           .map((listSeries) => Serie.fromJSON(listSeries))
+          .toList();
+
+      if (list.length >= 10) {
+        list = list.take(10).toList();
+      }
+
+      return list;
+    } else {
+      throw ("some error happen");
+    }
+  }
+
+    Future<List<Cast>> getMovieCast(String id) async {
+    //final String _language = 'en-US';
+
+    final response = await _https
+        .get("$TMDB_API_BASE_URL/movie/$id?api_key=$_key&append_to_response=credits");
+
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+
+      var list = (data['credits']['cast'] as List)
+          .map((listCast) => Cast.fromJSON(listCast))
+          .toList();
+
+      if (list.length >= 10) {
+        list = list.take(10).toList();
+      }
+
+      return list;
+    } else {
+      throw ("some error happen");
+    }
+  }
+
+  Future<List<Cast>> getSeriesCast(String id) async {
+    //final String _language = 'en-US';
+
+    final response = await _https
+        .get("$TMDB_API_BASE_URL/tv/$id?api_key=$_key&append_to_response=credits");
+
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+
+      var list = (data['credits']['cast'] as List)
+          .map((listCast) => Cast.fromJSON(listCast))
           .toList();
 
       if (list.length >= 10) {
