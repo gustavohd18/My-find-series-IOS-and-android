@@ -1,6 +1,5 @@
+import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
-import 'package:my_find_series_and_movies/model/serie.dart';
 import 'package:my_find_series_and_movies/services/imdb_service.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
@@ -19,6 +18,10 @@ class HomeController {
 
   final series = RxNotifier<Future<List<Content>>>(null);
 
+  final castMovies = RxNotifier<Future<List<Cast>>>(null);
+
+  final castSeries = RxNotifier<Future<List<Cast>>>(null);
+
   setIsMovie() {
     isMovies.value = true;
   }
@@ -33,6 +36,15 @@ class HomeController {
 
   setTopSeries() {
     series.value = _imdb.getTop10Series();
+  }
+
+
+  setCastMovies(String id) {
+    castMovies.value = _imdb.getMovieCast(id);
+  }
+
+  setCastSeries(String id) {
+    castSeries.value = _imdb.getSeriesCast(id);
   }
 
   HomeController._internal();

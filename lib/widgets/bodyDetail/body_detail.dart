@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_find_series_and_movies/controller/details.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
+import 'package:my_find_series_and_movies/controller/home.dart';
+import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/castList/cast_list.dart';
 
-class BodyDetailMovie extends StatefulWidget {
-  final Movie movie;
-  BodyDetailMovie({@required this.movie});
+class BodyDetails extends StatefulWidget {
+  final Content content;
+  BodyDetails({@required this.content});
 
   @override
   _BodyDetailState createState() => _BodyDetailState();
 }
 
-class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> {
+class _BodyDetailState extends ModularState<BodyDetails, HomeController> {
   @override
   void initState() {
     super.initState();
-    this.controller.setCastMovies(widget.movie.id);
+    if(this.controller.isMovies.value) {
+       this.controller.setCastMovies(widget.content.id);
+    } else {
+       this.controller.setCastSeries(widget.content.id);
+    }
   }
 
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> 
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://image.tmdb.org/t/p/w185${widget.movie.posterPath}"),
+                                    "https://image.tmdb.org/t/p/w185${widget.content.posterPath}"),
                                 fit: BoxFit.fill)),
                       ),
                       SafeArea(
@@ -55,7 +59,7 @@ class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> 
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0, top: 10),
                         child: Text(
-                          widget.movie.title,
+                          widget.content.title,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
@@ -65,7 +69,7 @@ class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> 
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Text(
-                              widget.movie.releaseDate.split("-")[0],
+                              widget.content.releaseDate.split("-")[0],
                               style: TextStyle(color: kTextLightColor),
                             ),
                           )
@@ -77,7 +81,7 @@ class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    widget.movie.overview,
+                    widget.content.overview,
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
                   ),
@@ -87,8 +91,7 @@ class _BodyDetailState extends ModularState<BodyDetailMovie, DetailsController> 
                 ),
                 SizedBox(
                   height: 160,
-                  child: CardList(cast: this.controller.castMovies.value,)
-      
+                  child: CardList(cast: this.controller.isMovies.value ?  this.controller.castMovies.value : this.controller.castSeries.value)
                 )
               ],
             ),
