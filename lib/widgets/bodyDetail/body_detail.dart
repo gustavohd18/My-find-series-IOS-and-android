@@ -31,216 +31,279 @@ class _BodyDetailState extends ModularState<BodyDetails, HomeController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Responsive(
-        mobile: ListView(
-          shrinkWrap: true,
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: size.height * 0.4,
-                  child: Stack(
-                    children: [
-                             Player(
-                        video: this.controller.isMovies.value
-                            ? this.controller.videosMovies.value
-                            : this.controller.videosSeries.value),
-                      SafeArea(
-                          child: BackButton(
-                        color: Colors.white,
-                      ))
-                    ],
-                  ),
-                ),
-                Row(children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 10),
-                        child: Text(
-                          widget.content.title,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ),
-                      SizedBox(height: kDefaultPadding / 2),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              widget.content.releaseDate.split("-")[0],
-                              style: TextStyle(color: kTextLightColor),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ]),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.content.overview,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                SizedBox(height: 15),
-                SizedBox(
-                    height: 160,
-                    child: CardList(
-                        cast: this.controller.isMovies.value
-                            ? this.controller.castMovies.value
-                            : this.controller.castSeries.value))
-              ],
-            ),
-          ],
-        ),
-        tablet: ListView(
-          shrinkWrap: true,
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: size.height * 0.4,
-                  child: Stack(
-                    children: [
+      mobile: ListView(
+        shrinkWrap: true,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: size.height * 0.4,
+                child: Stack(
+                  children: [
                     Player(
                         video: this.controller.isMovies.value
                             ? this.controller.videosMovies.value
                             : this.controller.videosSeries.value),
-                      SafeArea(
-                          child: BackButton(
-                        color: Colors.white,
-                      ))
-                    ],
-                  ),
+                    SafeArea(
+                        child: BackButton(
+                      color: Colors.white,
+                    ))
+                  ],
                 ),
-                Row(children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 10),
-                        child: Text(
-                          widget.content.title,
-                          style: Theme.of(context).textTheme.headline5.copyWith(fontSize: 32),
-                        ),
+              ),
+              Row(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 10),
+                      child: Text(
+                        widget.content.title,
+                        style: Theme.of(context).textTheme.headline5,
                       ),
-                      SizedBox(height: kDefaultPadding / 2),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              widget.content.releaseDate.split("-")[0],
-                              style: TextStyle(color: kTextLightColor, fontSize: 20),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ]),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.content.overview,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600),
-                  ),
+                    ),
+                    SizedBox(height: kDefaultPadding / 2),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.content.releaseDate.split("-")[0],
+                            style: TextStyle(color: kTextLightColor),
+                          ),
+                        )
+                      ],
+                    ),
+                                      Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0),
+                          child: Icon(
+                            Icons.star,
+                            color: kFillStarColor,
+                            size: 14,
+                          ),
+                        ),
+                        Text(
+                          "${widget.content.voteAverage}/10",
+                          style:
+                              TextStyle(color: kTextLightColor, fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              ]),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.content.overview,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                    height: 160,
-                    child: CardList(
-                        cast: this.controller.isMovies.value
-                            ? this.controller.castMovies.value
-                            : this.controller.castSeries.value))
-              ],
-            ),
-          ],
-        ),
-        web: ListView(
-          shrinkWrap: true,
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: size.height * 0.4,
-                  child: Stack(
-                    children: [
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(height: 15),
+              SizedBox(
+                  height: 160,
+                  child: CardList(
+                      cast: this.controller.isMovies.value
+                          ? this.controller.castMovies.value
+                          : this.controller.castSeries.value))
+            ],
+          ),
+        ],
+      ),
+      tablet: ListView(
+        shrinkWrap: true,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: size.height * 0.4,
+                child: Stack(
+                  children: [
                     Player(
                         video: this.controller.isMovies.value
                             ? this.controller.videosMovies.value
                             : this.controller.videosSeries.value),
-                      SafeArea(
-                          child: BackButton(
-                        color: Colors.white,
-                      ))
-                    ],
-                  ),
+                    SafeArea(
+                        child: BackButton(
+                      color: Colors.white,
+                    ))
+                  ],
                 ),
-                Row(children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 10),
-                        child: Text(
-                          widget.content.title,
-                          style: Theme.of(context).textTheme.headline5.copyWith(fontSize: 42),
-                        ),
+              ),
+              Row(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 10),
+                      child: Text(
+                        widget.content.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontSize: 32),
                       ),
-                      SizedBox(height: kDefaultPadding / 2),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              widget.content.releaseDate.split("-")[0],
-                              style: TextStyle(color: kTextLightColor, fontSize: 25),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ]),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.content.overview,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600),
-                  ),
+                    ),
+                    SizedBox(height: kDefaultPadding / 2),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.content.releaseDate.split("-")[0],
+                            style:
+                                TextStyle(color: kTextLightColor, fontSize: 20),
+                          ),
+                        )
+                      ],
+                    ),
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0),
+                          child: Icon(
+                            Icons.star,
+                            color: kFillStarColor,
+                            size: 18,
+                          ),
+                        ),
+                        Text(
+                          "${widget.content.voteAverage}/10",
+                          style:
+                              TextStyle(color: kTextLightColor, fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              ]),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.content.overview,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
-                  height: 15,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                  height: 160,
+                  child: CardList(
+                      cast: this.controller.isMovies.value
+                          ? this.controller.castMovies.value
+                          : this.controller.castSeries.value))
+            ],
+          ),
+        ],
+      ),
+      web: ListView(
+        shrinkWrap: true,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: size.height * 0.4,
+                child: Stack(
+                  children: [
+                    Player(
+                        video: this.controller.isMovies.value
+                            ? this.controller.videosMovies.value
+                            : this.controller.videosSeries.value),
+                    SafeArea(
+                        child: BackButton(
+                      color: Colors.white,
+                    ))
+                  ],
                 ),
-                SizedBox(
-                    height: 160,
-                    child: CardList(
-                        cast: this.controller.isMovies.value
-                            ? this.controller.castMovies.value
-                            : this.controller.castSeries.value))
-              ],
-            ),
-          ],
-        ),);
+              ),
+              Row(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 10),
+                      child: Text(
+                        widget.content.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontSize: 42),
+                      ),
+                    ),
+                    SizedBox(height: kDefaultPadding / 2),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.content.releaseDate.split("-")[0],
+                            style:
+                                TextStyle(color: kTextLightColor, fontSize: 25),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0),
+                          child: Icon(
+                            Icons.star,
+                            color: kFillStarColor,
+                            size: 20,
+                          ),
+                        ),
+                        Text(
+                          "${widget.content.voteAverage}/10",
+                          style:
+                              TextStyle(color: kTextLightColor, fontSize: 18),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              ]),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.content.overview,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                  height: 160,
+                  child: CardList(
+                      cast: this.controller.isMovies.value
+                          ? this.controller.castMovies.value
+                          : this.controller.castSeries.value))
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
