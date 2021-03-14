@@ -5,6 +5,7 @@ import 'package:my_find_series_and_movies/model/content.dart';
 import 'package:my_find_series_and_movies/responsive.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/castList/cast_list.dart';
+import 'package:my_find_series_and_movies/widgets/player/player.dart';
 
 class BodyDetails extends StatefulWidget {
   final Content content;
@@ -18,10 +19,12 @@ class _BodyDetailState extends ModularState<BodyDetails, HomeController> {
   @override
   void initState() {
     super.initState();
-    if(this.controller.isMovies.value) {
-       this.controller.setCastMovies(widget.content.id);
+    if (this.controller.isMovies.value) {
+      this.controller.setCastMovies(widget.content.id);
+      this.controller.setVideoMovies(widget.content.id);
     } else {
-       this.controller.setCastSeries(widget.content.id);
+      this.controller.setCastSeries(widget.content.id);
+      this.controller.setVideoSeries(widget.content.id);
     }
   }
 
@@ -83,16 +86,26 @@ class _BodyDetailState extends ModularState<BodyDetails, HomeController> {
                   child: Text(
                     widget.content.overview,
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
+                Player(
+                        video: this.controller.isMovies.value
+                            ? this.controller.videosMovies.value
+                            : this.controller.videosSeries.value),
+                SizedBox(height: 15),
                 SizedBox(
-                  height: 160,
-                  child: CardList(cast: this.controller.isMovies.value ?  this.controller.castMovies.value : this.controller.castSeries.value)
-                )
+                    height: 160,
+                    child: CardList(
+                        cast: this.controller.isMovies.value
+                            ? this.controller.castMovies.value
+                            : this.controller.castSeries.value))
               ],
             ),
           ],
@@ -101,4 +114,3 @@ class _BodyDetailState extends ModularState<BodyDetails, HomeController> {
         web: Container());
   }
 }
-

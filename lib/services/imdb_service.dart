@@ -3,10 +3,9 @@ import 'dart:developer';
 
 import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
-import 'package:my_find_series_and_movies/model/serie.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:my_find_series_and_movies/model/youtubeVideo.dart';
 
 class IMDBService implements Service {
   String _key;
@@ -111,6 +110,43 @@ class IMDBService implements Service {
       }
 
       return list;
+    } else {
+      throw ("some error happen");
+    }
+  }
+
+  Future<YoutubeVideo> getMovieVideo(String id) async {
+    //final String _language = 'en-US';
+
+    final response = await _https
+        .get("$TMDB_API_BASE_URL/movie/$id/videos?api_key=$_key#&language=en-US");
+
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+
+      var list = (data['results'] as List)
+          .map((listCast) => YoutubeVideo.fromJSON(listCast))
+          .toList();
+
+      return list[0];
+    } else {
+      throw ("some error happen");
+    }
+  }
+
+  Future<YoutubeVideo> getSerieVideo(String id) async {
+
+    final response = await _https
+        .get("$TMDB_API_BASE_URL/tv/$id/videos?api_key=$_key#&language=en-US");
+
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+
+      var list = (data['results'] as List)
+          .map((listCast) => YoutubeVideo.fromJSON(listCast))
+          .toList();
+
+      return list[0];
     } else {
       throw ("some error happen");
     }

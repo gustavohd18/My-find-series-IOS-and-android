@@ -1,5 +1,6 @@
 import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
+import 'package:my_find_series_and_movies/model/youtubeVideo.dart';
 import 'package:my_find_series_and_movies/services/imdb_service.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
@@ -21,6 +22,10 @@ class HomeController {
   final castMovies = RxNotifier<Future<List<Cast>>>(null);
 
   final castSeries = RxNotifier<Future<List<Cast>>>(null);
+
+  final videosMovies = RxNotifier<Future<YoutubeVideo>>(null);
+
+  final videosSeries = RxNotifier<Future<YoutubeVideo>>(null);
 
   setIsMovie() {
     isMovies.value = true;
@@ -45,6 +50,14 @@ class HomeController {
 
   setCastSeries(String id) {
     castSeries.value = _imdb.getSeriesCast(id);
+  }
+
+  setVideoMovies(String id) {
+    videosMovies.value = _imdb.getMovieVideo(id);
+  }
+
+  setVideoSeries(String id) {
+    videosSeries.value = _imdb.getSerieVideo(id);
   }
 
   HomeController._internal();

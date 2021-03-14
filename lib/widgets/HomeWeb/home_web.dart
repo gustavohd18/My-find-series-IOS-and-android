@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
 import 'package:my_find_series_and_movies/widgets/ContentCardWeb/content_card_web.dart';
 
 class HomeWeb extends StatelessWidget {

@@ -19,6 +19,7 @@ dependencies:
   http: ^0.12.2
   rx_notifier: ^1.0.0
   intl: ^0.17.0
+  youtube_player_iframe: ^1.2.0+2
 
 dev_dependencies:
   flutter_test:

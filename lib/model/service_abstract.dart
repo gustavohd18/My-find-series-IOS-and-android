@@ -1,9 +1,9 @@
-import 'package:my_find_series_and_movies/model/serie.dart';
-import 'package:my_find_series_and_movies/model/movies.dart';
+
+import 'content.dart';
 
 abstract class Service {
-  Future<List<Movie>> getTop10Movies();
-  Future<List<Serie>> getTop10Series();
+  Future<List<Content>> getTop10Movies();
+  Future<List<Content>> getTop10Series();
   void setKey(String key);
   String getKey();
 }
