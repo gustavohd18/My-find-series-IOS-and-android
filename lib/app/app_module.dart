@@ -18,6 +18,7 @@ class AppModule extends MainModule {
   List<ModularRouter> get routers => [
         ModularRouter(home, child: (_, args) => Home()),
         ModularRouter(splash, child: (_, args) => Splash()),
+        ModularRouter(details, child: (_, args) => Details(content: args.data,)),
       ];
 
   static Inject get to => Inject.of();
