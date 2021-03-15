@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:my_find_series_and_movies/model/service_abstract.dart';
 import 'package:my_find_series_and_movies/model/youtubeVideo.dart';
 
-class IMDBService implements Service {
+class IMDBService implements ServiceTMDB {
   String _key;
   IMDBService(this._key);
 
@@ -70,7 +70,6 @@ class IMDBService implements Service {
   }
 
     Future<List<Cast>> getMovieCast(String id) async {
-    //final String _language = 'en-US';
 
     final response = await _https
         .get("$TMDB_API_BASE_URL/movie/$id?api_key=$_key&append_to_response=credits");
@@ -93,7 +92,6 @@ class IMDBService implements Service {
   }
 
   Future<List<Cast>> getSeriesCast(String id) async {
-    //final String _language = 'en-US';
 
     final response = await _https
         .get("$TMDB_API_BASE_URL/tv/$id?api_key=$_key&append_to_response=credits");

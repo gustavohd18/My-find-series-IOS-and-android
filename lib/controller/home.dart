@@ -1,10 +1,11 @@
 import 'package:my_find_series_and_movies/model/cast.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
+import 'package:my_find_series_and_movies/model/home_controller_abstract.dart';
 import 'package:my_find_series_and_movies/model/youtubeVideo.dart';
 import 'package:my_find_series_and_movies/services/imdb_service.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
-class HomeController {
+class HomeController implements HomeControllerAB {
   static final HomeController _singleton = HomeController._internal();
 
   factory HomeController() {
