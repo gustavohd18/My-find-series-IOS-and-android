@@ -1,7 +1,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:my_find_series_and_movies/pages/splash/splash_page.dart';
+import 'package:my_find_series_and_movies/pages/splash/splash.dart';
 void main() {
   testWidgets('Element present in Splash page UI', (WidgetTester tester) async {
     // Build our app and trigger a frame.

@@ -15,25 +15,48 @@ class DetailsInformation extends StatelessWidget {
   DetailsInformation(
       {@required this.video, @required this.content, @required this.cast});
 
-    TextStyle _getTextTitle(BuildContext context) {
-      if (Responsive.isMobile(context)) {
-        return Theme.of(context).textTheme.headline5;
-      } else if (Responsive.isTable(context)) {
-        return Theme.of(context).textTheme.headline5.copyWith(fontSize: 32);
-      } else {
-        return Theme.of(context).textTheme.headline5.copyWith(fontSize: 44);
-      }
+  TextStyle _getTextTitle(BuildContext context) {
+    if (Responsive.isMobile(context)) {
+      return Theme.of(context).textTheme.headline5;
+    } else if (Responsive.isTable(context)) {
+      return Theme.of(context).textTheme.headline5.copyWith(fontSize: 32);
+    } else {
+      return Theme.of(context).textTheme.headline5.copyWith(fontSize: 44);
     }
+  }
 
-    TextStyle _getTextReleaseDate(BuildContext context) {
-      if (Responsive.isMobile(context)) {
-        return TextStyle(color: kTextLightColor);
-      } else if (Responsive.isTable(context)) {
-        return TextStyle(color: kTextLightColor, fontSize: 20);
-      } else {
-        return  TextStyle(color: kTextLightColor, fontSize: 26);
-      }
+  TextStyle _getTextReleaseDate(BuildContext context) {
+    if (Responsive.isMobile(context)) {
+      return TextStyle(color: kTextLightColor);
+    } else if (Responsive.isTable(context)) {
+      return TextStyle(color: kTextLightColor, fontSize: 20);
+    } else {
+      return TextStyle(color: kTextLightColor, fontSize: 26);
     }
+  }
+
+  TextStyle _getTextVoteAverage(BuildContext context) {
+    if (Responsive.isMobile(context)) {
+      return TextStyle(color: kTextLightColor, fontSize: 12);
+    } else if (Responsive.isTable(context)) {
+      return TextStyle(color: kTextLightColor, fontSize: 16);
+    } else {
+      return TextStyle(color: kTextLightColor, fontSize: 18);
+    }
+  }
+
+  TextStyle _getTextOverview(BuildContext context) {
+    if (Responsive.isMobile(context)) {
+      return TextStyle(
+          color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600);
+    } else if (Responsive.isTable(context)) {
+      return TextStyle(
+          color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600);
+    } else {
+      return TextStyle(
+          color: Colors.black, fontSize: 30, fontWeight: FontWeight.w600);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +94,9 @@ class DetailsInformation extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          content.releaseDate.split("-")[0],
-                          style: _getTextReleaseDate(context)),
-                        ),
+                        child: Text(content.releaseDate.split("-")[0],
+                            style: _getTextReleaseDate(context)),
+                      ),
                     ],
                   ),
                   Row(
@@ -90,7 +112,7 @@ class DetailsInformation extends StatelessWidget {
                       ),
                       Text(
                         "${content.voteAverage}/10",
-                        style: TextStyle(color: kTextLightColor, fontSize: 12),
+                        style: _getTextVoteAverage(context),
                       )
                     ],
                   ),
@@ -102,10 +124,7 @@ class DetailsInformation extends StatelessWidget {
               child: Text(
                 content.overview,
                 textAlign: TextAlign.justify,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
+                style: _getTextOverview(context),
               ),
             ),
             SizedBox(
@@ -117,6 +136,5 @@ class DetailsInformation extends StatelessWidget {
         ),
       ],
     );
-
   }
 }
