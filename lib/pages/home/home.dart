@@ -32,7 +32,7 @@ class _HomeState extends ModularState<Home, HomeController> {
           leading: IconButton(
             padding: EdgeInsets.only(left: kDefaultPadding),
             icon: Icon(
-              Icons.menu,
+              Icons.settings,
               color: Colors.black,
             ),
             onPressed: () => print("hello"),
