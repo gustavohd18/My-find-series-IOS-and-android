@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_find_series_and_movies/controller/home.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
-import 'package:my_find_series_and_movies/responsive.dart';
-import 'package:my_find_series_and_movies/util/constants.dart';
 import 'package:my_find_series_and_movies/widgets/DetailsInformation/details_information.dart';
-import 'package:my_find_series_and_movies/widgets/castList/cast_list.dart';
-import 'package:my_find_series_and_movies/widgets/player/player.dart';
 
 class BodyDetails extends StatefulWidget {
   final Content content;
