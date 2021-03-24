@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/app/app_module.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-Future<void> main() async {
+import 'app/app_module.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(ModularApp(
-    module: AppModule(),
-  ));
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
+      .then((_) => runApp(ModularApp(
+            module: AppModule(),
+          )));
 }

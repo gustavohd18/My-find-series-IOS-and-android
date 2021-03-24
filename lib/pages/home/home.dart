@@ -1,71 +1,132 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/stores/home/home_controller.dart';
-import 'package:myFindMovies/widgets/home/content_movies_list.dart';
-import 'package:myFindMovies/widgets/home/content_series_list.dart';
-import 'package:myFindMovies/widgets/home/drawer_menu.dart';
-import 'package:myFindMovies/widgets/home/subtitle.dart';
+import 'package:my_find_series_and_movies/controller/home.dart';
+import 'package:my_find_series_and_movies/responsive.dart';
+import 'package:my_find_series_and_movies/util/constants.dart';
+import 'package:my_find_series_and_movies/widgets/BodyMenu/body_menu.dart';
+import 'package:my_find_series_and_movies/widgets/Carousel/carousel.dart';
+import 'package:my_find_series_and_movies/widgets/HomeWeb/home_web.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
-class Main extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _MainState createState() => _MainState();
+  _HomeState createState() => _HomeState();
 }
 
-class _MainState extends ModularState<Main, HomeController> {
+class _HomeState extends ModularState<Home, HomeController> {
+
   @override
   void initState() {
     super.initState();
-    // this should not be done in build method.
-    this.controller.reload();
+    this.controller.setTopMovies();
+    this.controller.setTopSeries();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      drawer: DrawerMenu(),
-      body: _buildScreen(),
-      appBar: AppBar(
-        title: Observer(
-          builder: (_) => Text(this.controller.title),
-        ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+    return Responsive(
+      mobile: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            padding: EdgeInsets.only(left: kDefaultPadding),
+            icon: Icon(
+              Icons.settings,
+              color: Colors.black,
+            ),
+            onPressed: () => print("hello"),
           ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                onPressed: () => print("oii"))
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 30),
+                child: BodyMenu()),
+            RxBuilder(
+              builder: (_) => this.controller.isMovies.value
+                  ? Carousel(this.controller.movies.value)
+                  : Carousel(this.controller.series.value),
+            )
+          ],
         ),
       ),
-    ));
-  }
-
-  Widget _buildScreen() {
-    return SafeArea(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Observer(
-            builder: (_) => Subtitle(this.controller.topMovies),
+      tablet: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              padding: EdgeInsets.only(left: kDefaultPadding),
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              onPressed: () => print("hello"),
+            ),
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  onPressed: () => print("oii"))
+            ],
           ),
+          body: Column(
+            children: [
+              BodyMenu(),
+              Expanded(
+                  child: RxBuilder(
+                builder: (_) => this.controller.isMovies.value
+                    ? Carousel(this.controller.movies.value)
+                    : Carousel(this.controller.series.value),
+              )),
+            ],
+          )),
+      web: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            padding: EdgeInsets.only(left: kDefaultPadding),
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () => print("hello"),
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                onPressed: () => print("oii"))
+          ],
         ),
-        Expanded(
-            flex: 1,
-            child: Observer(
-                builder: (_) =>
-                    ContentMoviesList(this.controller.movieList, true))),
-        Observer(
-          builder: (_) => Subtitle(this.controller.topSeries),
+        body: Column(
+          children: [
+            BodyMenu(),
+            Expanded(
+                child: RxBuilder(
+              builder: (_) => this.controller.isMovies.value
+                  ? HomeWeb(this.controller.movies.value)
+                  : HomeWeb(this.controller.series.value),
+            ))
+          ],
         ),
-        Expanded(
-            flex: 1,
-            child: Observer(
-                builder: (_) =>
-                    ContentSeriesList(this.controller.serieList, true))),
-      ],
-    ));
+      ),
+    );
   }
 }

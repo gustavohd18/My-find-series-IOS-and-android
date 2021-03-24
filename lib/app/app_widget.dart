@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
 
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      debugShowCheckedModeBanner: true,
+      initialRoute: splash,
       navigatorKey: Modular.navigatorKey,
       onGenerateRoute: Modular.generateRoute,
-      title: 'My find series and movies',
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );

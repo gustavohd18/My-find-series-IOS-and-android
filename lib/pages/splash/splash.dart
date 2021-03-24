@@ -1,37 +1,48 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:myFindMovies/stores/splash/splash_controller.dart';
+import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Splash extends StatefulWidget {
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ModularState<Splash, SplashController> {
+class _SplashPageState extends State<Splash>
+    with SingleTickerProviderStateMixin {
+  Tween<double> _scaleTween = Tween<double>(begin: 1, end: 2);
+  Tween<double> _opacityTween = Tween<double>(begin: 0.0, end: 1.0);
+
+  AnimationController _controller;
+
   Timer _timer;
   startTimeout() {
-    _timer = Timer(Duration(seconds: 5), changeScreen);
+    _timer = Timer(Duration(seconds: 5), _goToHome);
     return _timer;
   }
 
-  changeScreen() async {
-    (this.controller.addUser != null)
-        ? Modular.to.pushReplacementNamed('/home')
-        : Modular.to.pushReplacementNamed('/login');
+  _goToHome() async {
+    Modular.to.pushReplacementNamed(home);
   }
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+    _controller.forward();
     startTimeout();
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -41,42 +52,61 @@ class _SplashPageState extends ModularState<Splash, SplashController> {
       backgroundColor: Colors.blue,
       body: Container(
         margin: EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  top: 15.0,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                top: 15.0,
+              ),
+              child: TweenAnimationBuilder(
+                tween: _scaleTween,
+                duration: Duration(seconds: 2),
+                builder: (context, scale, child) {
+                  return Transform.scale(scale: scale, child: child);
+                },
                 child: Text(
-                  "My find Series Movies",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  "My find Series and Movies",
+                  style:
+                      GoogleFonts.pacifico(fontSize: 10, color: Colors.white),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  top: 15.0,
-                ),
-                child: Observer(
-                  builder: (_) => Text(
-                    (this.controller.builtDescription != null)
-                        ? this.controller.builtDescription
-                        : "Built with",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                top: 15.0,
+              ),
+              child: TweenAnimationBuilder(
+                tween: _opacityTween,
+                duration: Duration(seconds: 2),
+                builder: (context, opacity, child) {
+                  return Opacity(
+                    opacity: opacity,
+                    child: child,
+                  );
+                },
+                child: Text(
+                  "Built with",
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ),
-              SizedBox(height: 1.0),
-              Image(
+            ),
+            SizedBox(height: 1.0),
+            AnimatedBuilder(
+              animation: _controller.view,
+              builder: (context, child) {
+                return Transform.rotate(
+                    angle: _controller.value * 2 * pi, child: child);
+              },
+              child: Image(
                   image: AssetImage('assets/images/Tmdb-logo.png'),
                   width: 60,
                   height: 60),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

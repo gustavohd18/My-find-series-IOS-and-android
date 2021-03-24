@@ -1,0 +1,4 @@
+enum ContentType {
+  movie,
+  series
+}
