@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_find_series_and_movies/model/content.dart';
+import 'package:my_find_series_and_movies/pages/details/details.dart';
 import 'package:my_find_series_and_movies/util/constants.dart';
-import 'package:my_find_series_and_movies/util/routerNames/router_names.dart';
+import 'package:my_find_series_and_movies/widgets/transitions/transition.dart';
 
 class ContentCardWeb extends StatelessWidget {
   final Content content;
@@ -13,7 +13,7 @@ class ContentCardWeb extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: GestureDetector(
-        onTap: () => Modular.to.pushNamed(details, arguments: content),
+        onTap: () => Navigator.push(context, ScaleRoute(page: Details(content: content,))),//Modular.to.pushNamed(details, arguments: content),
         child: Column(
           children: [
             Expanded(
